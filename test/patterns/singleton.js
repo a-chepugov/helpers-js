@@ -16,7 +16,7 @@ function getSource() {
 
 describe('singleton', function () {
 	const singleton = require(getSource() + 'patterns/singleton').default;
-	it('stay', async function () {
+	it('singleton', async function () {
 		class Class {
 			constructor(payload) {
 				this.payload = payload;

@@ -16,7 +16,7 @@ function getSource() {
 
 describe('factory', function () {
 	const factory = require(getSource() + 'patterns/factory').default;
-	it('stay', async function () {
+	it('factory', async function () {
 		class Class {
 			constructor(payload) {
 				this.payload = payload;
