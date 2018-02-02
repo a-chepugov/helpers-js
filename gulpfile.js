@@ -7,7 +7,7 @@ const {name, version} = package;
 
 const paths = {
 	source: 'source/**/*.js',
-	build: '.',
+	build: 'build',
 	doc: 'doc',
 };
 
