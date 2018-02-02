@@ -1,46 +1,47 @@
 "use strict";
-const ERROR_CLASS_ARGUMENT = 'First argument must be a function';
-
-
+const ERROR_CLASS_ARGUMENT = 'First argument must be a constructor function';
 /**
- * Singletons factory function
- * @param {constructor} ClassConstructor - constructor function
- * @throws {Error} - throws an error if `ClassConstructor` is not a function
- * @returns {singletonConstructor}
+ * singleton factory function
+ * @param {constructor} Class - constructor function
+ * @throws {Error} - throws an error if `Class` is not a function
+ * @returns {singletonFactory}
  * @example
  * import singleton from 'helpers-js/patterns/singleton';
- * class ClassConstructor {
+ * class Class {
  *	constructor(payload) {
  * 		this.payload = payload;
  * 	}
  * }
- * let sClass = singleton(ClassConstructor);
+ * let sClass = singleton(Class);
  * const r1 = sClass(1); // r1.payload = 1
  * const r2 = sClass(2); // r2.payload = 1
  */
-export default function (ClassConstructor) {
-	if (!(ClassConstructor instanceof Function || typeof ClassConstructor === 'function')) {
+export default function (Class) {
+	/**
+	 * @typedef {constructor} Class
+	 */
+	if (!(Class instanceof Function || typeof Class === 'function')) {
 		throw new Error(ERROR_CLASS_ARGUMENT)
 	}
-
 	/**
-	 * @memberof ClassConstructor
-	*/
+	 * instance of Class
+	 * @instance {Class}
+	 */
 	let instance;
 
 	/**
-	 * create new instance of `ClassConstructor` or return previous
-	 * @name singletonConstructor
-	 * @param [args] - arguments for `ClassConstructor` initialization
-	 * @returns {ClassConstructor} instance - instance if ClassConstructor
+	 * create new instance of `Class` or return previous
+	 * @name singletonFactory
+	 * @param [args] - arguments for `Class` initialization
+	 * @returns {Class} - instance of `Class`
 	 */
 	return function (...args) {
 		return (
 			instance ?
 				instance :
-				(this && this.constructor === ClassConstructor) ?
+				(this && this.constructor === Class) ?
 					instance = this :
-					instance = new ClassConstructor(...args)
+					instance = new Class(...args)
 		)
 	}
 };
