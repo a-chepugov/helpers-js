@@ -1,3 +1,2 @@
-export loopify from "./loopify";
-export uniq from "./uniq";
-export requireNoCache from "./requireWithoutCache";
+export loopify from './loopify';
+export requireNoCache from './requireWithoutCache';
