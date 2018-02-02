@@ -6,7 +6,7 @@ const package = require('./package.json');
 const {name, version} = package;
 
 const paths = {
-	source: 'source/**/*.js',
+	source: './{patterns,Standard}/**/*.js',
 	build: 'build',
 	doc: 'doc',
 };
