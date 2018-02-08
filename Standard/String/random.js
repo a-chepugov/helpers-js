@@ -1,6 +1,6 @@
+"use strict";
 const DEFAULT_LENGTH = 10;
 const DEFAULT_RADIX = 36;
-
 /**
  * Возвращает случайную строку заданной длины
  * @param length - длинна строки

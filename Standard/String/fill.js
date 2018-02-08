@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Replace placeholders marked by placemarks
  * @param {string} string - sketch
@@ -5,7 +6,7 @@
  * @param {Array.string} [placemarks] - array with custom placemarks string
  * @returns {string}
  */
-export default function (string, params = {}, placemarks) {
+module.exports = function (string, params = {}, placemarks) {
 	placemarks = placemarks instanceof Array && placemarks.length === 2 ? placemarks : [];
 
 	let [left, right] = placemarks;
@@ -23,4 +24,4 @@ export default function (string, params = {}, placemarks) {
 			const regexp = new RegExp(`${left}${key}${right}`);
 			return result.replace(regexp, params[key]);
 		}, sketch)
-}
+};

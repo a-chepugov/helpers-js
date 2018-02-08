@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Creates uniq string
  * @param {string} prefix - prefix for returned value
