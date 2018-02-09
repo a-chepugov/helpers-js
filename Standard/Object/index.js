@@ -1,2 +1,7 @@
-export deepClone from './deepClone';
-export restructure from './restructure';
+import deepClone from './deepClone';
+import restructure from './restructure';
+
+export default {
+	deepClone,
+	restructure,
+};

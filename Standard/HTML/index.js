@@ -1,2 +1,7 @@
-export isChildElement from './isChildElement';
-export stripHTML from './stripHTML';
+import isChildElement from './isChildElement';
+import stripHTML from './stripHTML';
+
+export default {
+	isChildElement,
+	stripHTML,
+}

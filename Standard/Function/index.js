@@ -1,1 +1,5 @@
-export defer from './defer';
+import defer from './defer';
+
+export default {
+	defer,
+}

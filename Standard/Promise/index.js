@@ -1,1 +1,7 @@
-export promisify from './promisify';
+import promisify from './promisify';
+
+export default {
+	promisify,
+}
+
+

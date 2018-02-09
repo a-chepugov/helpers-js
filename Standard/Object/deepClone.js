@@ -3,7 +3,7 @@
  * @param {Object} obj - объект для клонирования
  * @returns {Object} - клон исходного объекта
  */
-export function deepClone(obj) {
+export default function (obj) {
 	// "string", number, boolean
 	if (!(obj instanceof Object || typeof obj === 'object')) {
 		return obj;

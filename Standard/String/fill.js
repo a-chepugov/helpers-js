@@ -6,7 +6,7 @@
  * @param {Array.string} [placemarks] - array with custom placemarks string
  * @returns {string}
  */
-module.exports = function (string, params = {}, placemarks) {
+export default function (string, params = {}, placemarks) {
 	placemarks = placemarks instanceof Array && placemarks.length === 2 ? placemarks : [];
 
 	let [left, right] = placemarks;
