@@ -1,3 +1,4 @@
+"use strict";
 export const DESKTOP_HD = 'desktop HD';
 export const DESKTOP = 'desktop';
 export const TABLET = 'tablet';

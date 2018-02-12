@@ -1,4 +1,3 @@
-"use strict";
 import fill from './fill';
 import random from './random';
 import uniq from './uniq';

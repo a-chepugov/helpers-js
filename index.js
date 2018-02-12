@@ -1,6 +1,7 @@
 module.exports = {
-	patterns: require('./build/patterns'),
+	Patterns: require('./build/Patterns'),
 	Standard: require('./build/Standard'),
-	handlers: require('./build/handlers'),
-	constants: require('./build/constants'),
+	HTML: require('./build/HTML'),
+	Handlers: require('./build/Handlers'),
+	Constants: require('./build/constants'),
 };

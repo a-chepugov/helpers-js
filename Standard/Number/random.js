@@ -1,3 +1,10 @@
+"use strict";
+/**
+ * Returns random number between `max` and `min`
+ * @param {Number} max
+ * @param {Number} min
+ * @returns {Number}
+ */
 export default (max, min) => {
 	max =
 		(typeof max === 'number' || max instanceof Number) ?

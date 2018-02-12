@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @param {function} fn - функция, вызов которой запланирован
  * @param {number} timeout - задержка перед выполнение `fn`

@@ -1,3 +1,10 @@
+"use strict";
+/**
+ * Check is `child` is in `parent` children (deep)
+ * @param {HTMLElement} parent
+ * @param {HTMLElement} child
+ * @returns {boolean}
+ */
 export default function (parent, child) {
 	if (parent instanceof HTMLElement && child instanceof HTMLElement) {
 		let parentNode = child;

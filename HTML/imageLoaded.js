@@ -1,3 +1,9 @@
+"use strict";
+/**
+ * Check was image loaded or not
+ * @param {String} src
+ * @returns {Promise}
+ */
 export default function (src) {
 	if (src instanceof String || typeof src === 'string') {
 		return new Promise((resolve, reject) => {
@@ -11,6 +17,6 @@ export default function (src) {
 			img.src = src;
 		})
 	} else {
-		return Promise.reject('First argument must be a string');
+		return Promise.reject('First argument must be a string, got:', src);
 	}
 };

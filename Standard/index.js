@@ -3,4 +3,3 @@ export Promise from './Promise';
 export Function from './Function';
 export String from './String';
 export Number from './Number';
-export HTML from './HTML';
