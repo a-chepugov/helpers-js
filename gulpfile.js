@@ -6,7 +6,8 @@ const package = require('./package.json');
 const {name, version} = package;
 
 const paths = {
-	source: './{Constants,Handlers,HTML,Standard,Patterns}/**/*.js',
+	source: './{Constants,Handlers,HTML,Standard,Patterns}/**/*[^test].js',
+	tests: './{Constants,Handlers,HTML,Standard,Patterns}/**/*test.js',
 	build: 'build',
 	doc: 'doc',
 };
@@ -25,14 +26,14 @@ gulp.task('build', () => {
 });
 
 
-gulp.task('documentation-md', function () {
+gulp.task('docs:md', function () {
 	const gulpDocumentation = require('gulp-documentation');
 	return gulp.src(paths.source)
 		.pipe(gulpDocumentation('md', {}, {name, version}))
 		.pipe(gulp.dest(paths.doc));
 });
 
-gulp.task('documentation-html', function () {
+gulp.task('docs:html', function () {
 	const gulpDocumentation = require('gulp-documentation');
 	return gulp.src(paths.source)
 		.pipe(gulpDocumentation('html', {}, {name, version}))
@@ -45,14 +46,22 @@ gulp.task('test', function () {
 		.pipe(run('npm run test'));
 });
 
-gulp.task('test:build', function () {
+gulp.task('test:copy', function () {
+	return gulp.src(paths.tests)
+		.pipe(gulp.dest(paths.build))
+		;
+});
+
+gulp.task('test:build', gulp.parallel('test:copy', function () {
 	const run = require('gulp-run');
 	return gulp.src('./package.json')
 		.pipe(run('npm run test:build'));
-});
+}));
 
-gulp.task("watch:build:test", () => {
-	const watcher = gulp.watch(paths.source, gulp.series('clean', 'build', 'test:build'));
+gulp.task('test:copy&test:build', gulp.series('test:copy', 'test:build'));
+
+gulp.task("watch:test", () => {
+	const watcher = gulp.watch(paths.source, gulp.series('clean', 'build', 'test:copy&test:build'));
 	watcher.on('change', function (path, stats) {
 		console.log('File ' + path + ' was changed');
 	});
@@ -60,9 +69,11 @@ gulp.task("watch:build:test", () => {
 });
 
 gulp.task("watch:docs", () => {
-	const watcher = gulp.watch(paths.source, gulp.series('documentation-html'));
+	const watcher = gulp.watch(paths.source, gulp.series('docs:html'));
 	watcher.on('change', function (path, stats) {
 		console.log('File ' + path + ' was changed');
 	});
 	return watcher;
 });
+
+gulp.task('default', gulp.parallel('build'));

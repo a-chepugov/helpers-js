@@ -1,21 +1,7 @@
 const expect = require('chai').expect;
 
-function getSource() {
-	let path;
-	const source = process.env.SOURCE;
-	switch (source) {
-		case 'build':
-			path = 'build';
-			break;
-		case 'source':
-		default:
-			path = 'source'
-	}
-	return `../../${path}/`;
-}
-
 describe('factory', function () {
-	const factory = require(getSource() + 'patterns/factory').default;
+	const factory = require('./factory').default;
 	it('factory', async function () {
 		class Class {
 			constructor(payload) {

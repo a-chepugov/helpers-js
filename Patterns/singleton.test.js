@@ -1,21 +1,7 @@
 const expect = require('chai').expect;
 
-function getSource() {
-	let path;
-	const source = process.env.SOURCE;
-	switch (source) {
-		case 'build':
-			path = 'build';
-			break;
-		case 'source':
-		default:
-			path = 'source'
-	}
-	return `../../${path}/`;
-}
-
 describe('singleton', function () {
-	const singleton = require(getSource() + 'patterns/singleton').default;
+	const singleton = require('./singleton').default;
 	it('singleton', async function () {
 		class Class {
 			constructor(payload) {

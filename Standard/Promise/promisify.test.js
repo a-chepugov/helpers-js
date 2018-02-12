@@ -1,21 +1,7 @@
 const expect = require('chai').expect;
 
-function getSource() {
-	let path;
-	const source = process.env.SOURCE;
-	switch (source) {
-		case 'build':
-			path = 'build';
-			break;
-		case 'source':
-		default:
-			path = 'source'
-	}
-	return `../../${path}/`;
-}
-
 describe('promisify', async function () {
-	const promisify = require(getSource() + 'Standard/Promise/promisify').default;
+	const promisify = require('./promisify').default;
 	it('resolved', async function () {
 		function fn(payload, cb) {
 			cb(null, payload)
