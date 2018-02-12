@@ -1,9 +1,11 @@
 {
   "presets": [
-    "es2015",
-    "minify"
+    "stage-0",
+    "minify",
+		"es2015"
 	],
   "plugins": [
+    "transform-es2015-modules-commonjs",
 		"transform-object-rest-spread"
   ]
 }
