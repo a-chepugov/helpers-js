@@ -2,7 +2,7 @@
 import path from 'path';
 /**
  * import module without cache
- * @param {string} name - module name or name
+ * @param {string} name - module name
  * @returns {*}
  */
 export default function (name) {
