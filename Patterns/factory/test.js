@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 
 describe('factory', function () {
-	const factory = require('./factory').default;
+	const factory = require('./index').default;
 	it('factory', async function () {
 		class Class {
 			constructor(payload) {

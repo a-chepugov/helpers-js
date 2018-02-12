@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 
 describe('singleton', function () {
-	const singleton = require('./singleton').default;
+	const singleton = require('./index').default;
 	it('singleton', async function () {
 		class Class {
 			constructor(payload) {

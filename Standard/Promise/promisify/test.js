@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 
 describe('promisify', async function () {
-	const promisify = require('./promisify').default;
+	const promisify = require('./index').default;
 	it('resolved', async function () {
 		function fn(payload, cb) {
 			cb(null, payload)
