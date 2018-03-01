@@ -9,7 +9,7 @@
  * @param {*} [thisArg] - context for {@link cb} call
  * @returns {bunching}
  * @example
- * import bunching from 'bunching';
+ * import bunching from 'helpers-js/Standard/Function/bunching';
  * // const bunching = require('helpers-js/Standard/Function/bunching').default;
  * function handler() {
  * 	console.dir(arguments, {colors: true, depth: null});
