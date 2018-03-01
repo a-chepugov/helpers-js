@@ -1,17 +1,2 @@
-"use strict";
-/**
- * @param {function} fn - функция, вызов которой запланирован
- * @param {number} timeout - задержка перед выполнение `fn`
- * @param {any} thisArg - контекст вызова функции `fn`
- * @returns {function()} - функция, выполняющая `fn` с задержкой timeout
- */
-export default function (fn, timeout, thisArg) {
-	timeout =
-		typeof timeout === 'number' || timeout instanceof Number && timeout > 0 ?
-			timeout :
-			0;
-
-	return function () {
-		setTimeout(fn.bind(thisArg, ...arguments), timeout);
-	}
-}
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(a,b,c){return b="number"==typeof b||b instanceof Number&&0<b?b:0,function(){setTimeout(a.bind.apply(a,[c].concat(Array.prototype.slice.call(arguments))),b)}};
+//# sourceMappingURL=defer.js.map

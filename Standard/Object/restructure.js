@@ -1,20 +1,2 @@
-"use strict";
-/**
- * Перестраивает словарь, содержащий дочерние объекты, в другой словарь по значению выбранного ключа в дочерних объектах
- * @param {object} dict - словарь, эелементами которого являются объекты
- * @param {string} key - ключ, который берется для создания нового словаря
- * @return {object}
- */
-export default function (dict, key = 'id') {
-	return dict instanceof Object ?
-		Object.values(dict)
-			.reduce((result, item) => {
-				if (item instanceof Object) {
-					let {[key]: value} = item;
-					result[value] = item;
-				}
-				return result
-			}, {})
-		:
-		dict
-}
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(a){var b=1<arguments.length&&arguments[1]!==void 0?arguments[1]:"id";return a instanceof Object?Object.values(a).reduce(function(a,c){if(c instanceof Object){var d=c[b];a[d]=c}return a},{}):a};
+//# sourceMappingURL=restructure.js.map

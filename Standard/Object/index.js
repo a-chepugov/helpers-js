@@ -1,7 +1,2 @@
-import deepClone from './deepClone';
-import restructure from './restructure';
-
-export default {
-	deepClone,
-	restructure,
-};
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0});var _deepClone=require('./deepClone'),_deepClone2=_interopRequireDefault(_deepClone),_restructure=require('./restructure'),_restructure2=_interopRequireDefault(_restructure);function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}exports.default={deepClone:_deepClone2.default,restructure:_restructure2.default};
+//# sourceMappingURL=index.js.map

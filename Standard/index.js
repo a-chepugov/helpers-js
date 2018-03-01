@@ -1,5 +1,2 @@
-export Object from './Object';
-export Promise from './Promise';
-export Function from './Function';
-export String from './String';
-export Number from './Number';
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0}),exports.Number=exports.String=exports.Function=exports.Promise=exports.Object=void 0;var _Object2=require('./Object'),_Object3=_interopRequireDefault(_Object2),_Promise2=require('./Promise'),_Promise3=_interopRequireDefault(_Promise2),_Function2=require('./Function'),_Function3=_interopRequireDefault(_Function2),_String2=require('./String'),_String3=_interopRequireDefault(_String2),_Number2=require('./Number'),_Number3=_interopRequireDefault(_Number2);function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}exports.Object=_Object3.default,exports.Promise=_Promise3.default,exports.Function=_Function3.default,exports.String=_String3.default,exports.Number=_Number3.default;
+//# sourceMappingURL=index.js.map

@@ -1,8 +1,2 @@
-"use strict";
-/**
- * Creates uniq string
- * @param {string} prefix - prefix for returned value
- * @param {string} postfix - postfix for returned value
- * @returns {string} - откорректированная позиция в массиве
- */
-export default (prefix = '', postfix = '') => `${prefix}${Date.now()}${Math.random()}${postfix}`
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0}),exports.default=function(){var a=0<arguments.length&&arguments[0]!==void 0?arguments[0]:'',b=1<arguments.length&&arguments[1]!==void 0?arguments[1]:'';return''+a+Date.now()+Math.random()+b};
+//# sourceMappingURL=uniq.js.map

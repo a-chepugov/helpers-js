@@ -1,22 +1,2 @@
-"use strict";
-/**
- * Check was image loaded or not
- * @param {String} src
- * @returns {Promise}
- */
-export default function (src) {
-	if (src instanceof String || typeof src === 'string') {
-		return new Promise((resolve, reject) => {
-			const img = new Image();
-			img.onload = function (...args) {
-				resolve(...args);
-			};
-			img.onerror = function (...args) {
-				reject(...args);
-			};
-			img.src = src;
-		})
-	} else {
-		return Promise.reject('First argument must be a string, got:', src);
-	}
-};
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0}),exports.default=function(a){return a instanceof String||'string'==typeof a?new Promise(function(b,c){var d=new Image;d.onload=function(){b.apply(void 0,arguments)},d.onerror=function(){c.apply(void 0,arguments)},d.src=a}):Promise.reject('First argument must be a string, got:',a)};
+//# sourceMappingURL=imageLoaded.js.map

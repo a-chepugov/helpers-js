@@ -1,27 +1,2 @@
-"use strict";
-/**
- * Check is `child` is in `parent` children (deep)
- * @param {HTMLElement} parent
- * @param {HTMLElement} child
- * @returns {boolean}
- */
-export default function (parent, child) {
-	if (parent instanceof HTMLElement && child instanceof HTMLElement) {
-		let parentNode = child;
-		while (parentNode instanceof Object) {
-			if (parentNode === parent) {
-				return true;
-			}
-			({parentNode} = parentNode); // Берем родительский элемент родительского
-		}
-		return false
-	} else {
-		const message = 'is not an HTMLElement';
-		if (!parent instanceof HTMLElement) {
-			throw new Error(`parent ${message}`);
-		}
-		if (!child instanceof HTMLElement) {
-			throw new Error(`child ${message}`);
-		}
-	}
-}
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(a,b){if(a instanceof HTMLElement&&b instanceof HTMLElement){for(var e=b;e instanceof Object;){if(e===a)return!0;var c=e;e=c.parentNode}return!1}var d="is not an HTMLElement";if(!a instanceof HTMLElement)throw new Error("parent "+d);if(!b instanceof HTMLElement)throw new Error("child "+d)};
+//# sourceMappingURL=isChildElement.js.map

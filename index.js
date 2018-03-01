@@ -1,7 +1,2 @@
-module.exports = {
-	Patterns: require('./build/Patterns'),
-	Standard: require('./build/Standard'),
-	HTML: require('./build/HTML'),
-	Node: require('./build/Node'),
-	Constants: require('./build/constants'),
-};
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0}),exports.Standard=exports.Patterns=exports.Node=exports.HTML=exports.Constants=void 0;var _Constants2=require('./Constants'),_Constants3=_interopRequireDefault(_Constants2),_HTML2=require('./HTML'),_HTML3=_interopRequireDefault(_HTML2),_Node2=require('./Node'),_Node3=_interopRequireDefault(_Node2),_Patterns2=require('./Patterns'),_Patterns3=_interopRequireDefault(_Patterns2),_Standard2=require('./Standard'),_Standard3=_interopRequireDefault(_Standard2);function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}exports.Constants=_Constants3.default,exports.HTML=_HTML3.default,exports.Node=_Node3.default,exports.Patterns=_Patterns3.default,exports.Standard=_Standard3.default;
+//# sourceMappingURL=index.js.map

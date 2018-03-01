@@ -22,9 +22,10 @@
 	},
 	"scripts": {
 		"build": "gulp",
+		"clean": "gulp clean",
 		"postinstall": "npm run build",
-		"test": "mocha {Constants,Node,HTML,Standard,Patterns}/**/*test.js",
-		"test:build": "mocha build/**/{test,*test}.js"
+		"test": "mocha ./_source/**/*test.js",
+		"test:build": "mocha ./{Constants,HTML,Node,Standard,Patterns}/**/*test.js"
 	},
 	"repository": {
 		"type": "git",

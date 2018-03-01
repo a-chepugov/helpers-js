@@ -2,19 +2,19 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const sourcemaps = require('gulp-sourcemaps');
 
-const package = require('./package.json');
-const {name, version} = package;
+const {name, version} = require('./package.json');
 
 const paths = {
-	source: './{Constants,Node,HTML,Standard,Patterns}/**/*[^test].js',
-	tests: './{Constants,Node,HTML,Standard,Patterns}/**/*test.js',
-	build: 'build',
-	doc: 'doc',
+	source: './_source/**/!(*test).js',
+	tests: './_source/**/*test.js',
+	build: './',
+	clear: ['index.js', 'index.js.map', 'Constants', 'HTML', 'Node', 'Standard', 'Patterns'],
+	doc: '_doc',
 };
 
 gulp.task('clean', () => {
 	const del = require('del');
-	return del([paths.build, paths.doc]);
+	return del([...paths.clear, paths.doc]);
 });
 
 gulp.task('build', () => {
@@ -60,7 +60,7 @@ gulp.task('test:build', gulp.parallel('test:copy', function () {
 
 gulp.task('test:copy&test:build', gulp.series('test:copy', 'test:build'));
 
-gulp.task("watch:test", () => {
+gulp.task("watch:build:test", () => {
 	const watcher = gulp.watch(paths.source, gulp.series('clean', 'build', 'test:copy&test:build'));
 	watcher.on('change', function (path, stats) {
 		console.log('File ' + path + ' was changed');

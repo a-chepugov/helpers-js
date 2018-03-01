@@ -1,13 +1,2 @@
-"use strict";
-/**
- * Delete tags from html
- * @param {String} html - input html
- * @returns {String}
- */
-export default function (html) {
-	return (
-		html instanceof String ?
-			html.replace(/<[^>]+>/g, '') :
-			html
-	)
-}
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(a){return a instanceof String?a.replace(/<[^>]+>/g,""):a};
+//# sourceMappingURL=stripHTML.js.map

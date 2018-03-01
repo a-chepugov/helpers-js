@@ -1,27 +1,2 @@
-"use strict";
-/**
- * Replace placeholders marked by placemarks
- * @param {string} string - sketch
- * @param {object} params - placeholders values
- * @param {Array.string} [placemarks] - array with custom placemarks string
- * @returns {string}
- */
-export default function (string, params = {}, placemarks) {
-	placemarks = placemarks instanceof Array && placemarks.length === 2 ? placemarks : [];
-
-	let [left, right] = placemarks;
-
-	left = typeof left === 'string' || left instanceof String ? left : '{';
-	right = typeof right === 'string' || right instanceof String ? right : '}';
-
-	left = left.split('').map(item => `\\${item}`).join('');
-	right = right.split('').map(item => `\\${item}`).join('');
-
-	const sketch = typeof string === 'string' || string instanceof String ? string : '';
-
-	return Object.keys(params)
-		.reduce((result, key) => {
-			const regexp = new RegExp(`${left}${key}${right}`);
-			return result.replace(regexp, params[key]);
-		}, sketch)
-};
+'use strict';var _slicedToArray=function(){function a(a,b){var c=[],d=!0,e=!1,f=void 0;try{for(var g,h=a[Symbol.iterator]();!(d=(g=h.next()).done)&&(c.push(g.value),!(b&&c.length===b));d=!0);}catch(a){e=!0,f=a}finally{try{!d&&h['return']&&h['return']()}finally{if(e)throw f}}return c}return function(b,c){if(Array.isArray(b))return b;if(Symbol.iterator in Object(b))return a(b,c);throw new TypeError('Invalid attempt to destructure non-iterable instance')}}();Object.defineProperty(exports,'__esModule',{value:!0});exports.default=function(a){var b=1<arguments.length&&arguments[1]!==void 0?arguments[1]:{},c=arguments[2];c=c instanceof Array&&2===c.length?c:[];var d=c,e=_slicedToArray(d,2),f=e[0],g=e[1];f='string'==typeof f||f instanceof String?f:'{',g='string'==typeof g||g instanceof String?g:'}',f=f.split('').map(function(a){return'\\'+a}).join(''),g=g.split('').map(function(a){return'\\'+a}).join('');var h='string'==typeof a||a instanceof String?a:'';return Object.keys(b).reduce(function(a,c){var d=new RegExp(''+f+c+g);return a.replace(d,b[c])},h)};
+//# sourceMappingURL=fill.js.map

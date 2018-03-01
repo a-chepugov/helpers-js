@@ -1,20 +1,2 @@
-"use strict";
-/**
- * Returns random number between `max` and `min`
- * @param {Number} max
- * @param {Number} min
- * @returns {Number}
- */
-export default (max, min) => {
-	max =
-		(typeof max === 'number' || max instanceof Number) ?
-			max :
-			Number.MAX_VALUE;
-
-	min =
-		(typeof min === 'number' || min instanceof Number) && min < max ?
-			min :
-			Number.MIN_VALUE;
-
-	return Math.ceil(Math.random() * (max - min) + min)
-};
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0}),exports.default=function(a,b){return a='number'==typeof a||a instanceof Number?a:Number.MAX_VALUE,b=('number'==typeof b||b instanceof Number)&&b<a?b:Number.MIN_VALUE,Math.ceil(Math.random()*(a-b)+b)};
+//# sourceMappingURL=random.js.map
