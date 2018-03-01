@@ -2,7 +2,7 @@
 const expect = require('chai').expect;
 
 describe('redefine', async function () {
-	const tested = require('./index');
+	const tested = require('./index').default;
 
 	describe('self', async function () {
 		it('is', async function () {
@@ -16,86 +16,57 @@ describe('redefine', async function () {
 		});
 	});
 
-	describe('leading: false', async function () {
+	describe('test', async function () {
 
 		let n = 0;
 		let m = 0;
+		let l = 0;
 
-		const cb = function (a) {
+		const cb = function (a, cb) {
 			n += a;
-			return function (b) {
+			cb(function (b, cb) {
 				m += b;
-				return b
-			}
+
+				cb(function (c, cb) {
+					l += c;
+					return a + b + c
+				});
+
+				return a + b
+			});
+
+			return a
 		};
 
 		let w = tested(cb);
-		it('define', function () {
+		it('init', function () {
 			expect(n).to.equal(0);
 			expect(m).to.equal(0);
+			expect(l).to.equal(0);
 		});
 
-		it('init', function () {
-			const result = w(10);
-			expect(result).to.equal(undefined);
-			expect(n).to.equal(10);
+		it('redefined 0', function () {
+			const result = w(1);
+			expect(result).to.equal(1);
+			expect(n).to.equal(1);
 			expect(m).to.equal(0);
+			expect(l).to.equal(0);
 		});
 
 		it('redefined 1', function () {
-			const result = w(1000);
-			expect(result).to.equal(1000);
-			expect(n).to.equal(10);
-			expect(m).to.equal(1000);
-		});
-
-		it('redefined 2', function () {
-			const result = w(1000);
-			expect(result).to.equal(1000);
-			expect(n).to.equal(10);
-			expect(m).to.equal(2000);
-		});
-
-	});
-
-	describe('leading: true', async function () {
-		let n = 0;
-		let m = 0;
-
-		const cb = function (a) {
-			n += a;
-			return function (b) {
-				m += b;
-				return b
-			}
-		};
-
-		let w = tested(cb, true);
-		it('define', function () {
-			expect(n).to.equal(0);
-			expect(m).to.equal(0);
-		});
-
-		it('init', function () {
 			const result = w(10);
-			expect(result).to.equal(10);
-			expect(n).to.equal(10);
+			expect(result).to.equal(11);
+			expect(n).to.equal(1);
 			expect(m).to.equal(10);
-		});
-
-		it('redefined 1', function () {
-			const result = w(1000);
-			expect(result).to.equal(1000);
-			expect(n).to.equal(10);
-			expect(m).to.equal(1010);
+			expect(l).to.equal(0);
 		});
 
 		it('redefined 2', function () {
-			const result = w(1000);
-			expect(result).to.equal(1000);
-			expect(n).to.equal(10);
-			expect(m).to.equal(2010);
+			const result = w(100);
+			expect(result).to.equal(111);
+			expect(n).to.equal(1);
+			expect(m).to.equal(10);
+			expect(l).to.equal(100);
 		});
-
-	})
+	});
 });

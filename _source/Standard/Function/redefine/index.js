@@ -1,13 +1,12 @@
 "use strict";
 /**
  * @param {function} cb - {@link cb}
- * @param {Boolean} leading - define is immediately invoke of {@link redifine} needed
- * @param {*} thisArg - `this` context for {@link cb} and {@link redifine}
- * @returns {function}
+ * @param {*} thisArg - `this` context for {@link cb} and {@link redefined}
+ * @returns {function} - {@link init}
  * @throws {Error} - {@link cb} must be a function
  * @throws {Error} - {@link cb} must returns a function
  */
-module.exports = function (cb, leading, thisArg) {
+export default function (cb, thisArg) {
 	/**
 	 * init function (must return a function)
 	 * @name cb
@@ -15,27 +14,34 @@ module.exports = function (cb, leading, thisArg) {
 
 	/**
 	 * {@link cb} invoke result
-	 * @name redifine
+	 * @params {...args} - any arguments
+	 * @params {redefine} - last argument is {@link redefine} function
+	 * @name redefined
 	 */
-	let redifine;
+	let redefined;
 
-	function run() {
-		return redifine.apply(thisArg, arguments)
+	/**
+	 *
+	 * @param {function} cb - function which will be invoke on next invoke of {@link init}
+	 * @param thisArg
+	 */
+	function redefine(cb, thisArg) {
+		if (cb instanceof Function || typeof cb === 'function') {
+			redefined = cb.bind(thisArg)
+		} else {
+			throw new Error('First argument must be a function')
+		}
 	}
 
-	if (cb instanceof Function || typeof cb === 'function') {
-		redifine = function () {
-			const result = cb.apply(thisArg, arguments);
-			if (result instanceof Function || typeof result === 'function') {
-				redifine = result;
-				return leading ? run.apply(thisArg, arguments) : undefined;
-			} else {
-				throw new Error('First argument invoke result must be a function')
-			}
-		};
-
-		return run;
-	} else {
-		throw new Error('First argument must be a function')
+	/**
+	 *
+	 * @param {*} args
+	 * @returns {*}
+	 */
+	function init(...args) {
+		return redefined.apply(thisArg, [...args, redefine])
 	}
+
+	redefine(cb, thisArg);
+	return init;
 };
