@@ -21,7 +21,7 @@
 		"mocha": "^5.0.0"
 	},
 	"scripts": {
-		"build": "gulp",
+		"build": "gulp build",
 		"clean": "gulp clean",
 		"postinstall": "npm run build",
 		"test": "mocha ./_source/**/*test.js",
