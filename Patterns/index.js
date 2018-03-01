@@ -1,2 +1,0 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:!0}),exports.singleton=exports.factory=void 0;var _factory2=require('./factory'),_factory3=_interopRequireDefault(_factory2),_singleton2=require('./singleton'),_singleton3=_interopRequireDefault(_singleton2);function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}exports.factory=_factory3.default,exports.singleton=_singleton3.default;
-//# sourceMappingURL=index.js.map

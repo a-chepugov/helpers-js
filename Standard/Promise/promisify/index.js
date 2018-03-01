@@ -1,2 +1,0 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:!0}),exports.default=function(a,b){if(!(a instanceof Function||'function'==typeof a))throw new Error(ERROR_FIRST_ARGUMENT);return function(){for(var c=arguments.length,d=Array(c),e=0;e<c;e++)d[e]=arguments[e];return new Promise(function(c,e){a.call.apply(a,[b].concat(d,[function(a,b){a?e(a):c(b)}]))})}};var ERROR_FIRST_ARGUMENT='First argument must be a function with callback (last argument)';
-//# sourceMappingURL=index.js.map

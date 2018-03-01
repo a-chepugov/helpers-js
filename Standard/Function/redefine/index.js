@@ -1,2 +1,0 @@
-'use strict';module.exports=function(a,b,c){function d(){return e.apply(c,arguments)}var e;if(a instanceof Function||'function'==typeof a)return e=function redifine(){var f=a.apply(c,arguments);if(f instanceof Function||'function'==typeof f)return e=f,b?d.apply(c,arguments):void 0;throw new Error('First argument invoke result must be a function')},d;throw new Error('First argument must be a function')};
-//# sourceMappingURL=index.js.map

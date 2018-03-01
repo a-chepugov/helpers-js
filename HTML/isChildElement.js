@@ -1,2 +1,0 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(a,b){if(a instanceof HTMLElement&&b instanceof HTMLElement){for(var e=b;e instanceof Object;){if(e===a)return!0;var c=e;e=c.parentNode}return!1}var d="is not an HTMLElement";if(!a instanceof HTMLElement)throw new Error("parent "+d);if(!b instanceof HTMLElement)throw new Error("child "+d)};
-//# sourceMappingURL=isChildElement.js.map

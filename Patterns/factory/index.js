@@ -1,2 +1,0 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:!0}),exports.default=function(a){if(!(a instanceof Function||'function'==typeof a))throw new Error(ERROR_CLASS_ARGUMENT);return function(){for(var b=arguments.length,c=Array(b),d=0;d<b;d++)c[d]=arguments[d];return new(Function.prototype.bind.apply(a,[null].concat(c)))}};var ERROR_CLASS_ARGUMENT='First argument must be a constructor function';
-//# sourceMappingURL=index.js.map
