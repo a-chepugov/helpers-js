@@ -1,17 +1,26 @@
 "use strict";
 /**
- * @param {function} fn - функция, вызов которой запланирован
+ * @param {function} fn - функция, вызов которой отложен
  * @param {number} timeout - задержка перед выполнение `fn`
  * @param {any} thisArg - контекст вызова функции `fn`
  * @returns {function()} - функция, выполняющая `fn` с задержкой timeout
  */
 export default function (fn, timeout, thisArg) {
 	timeout =
-		typeof timeout === 'number' || timeout instanceof Number && timeout > 0 ?
+		(timeout instanceof Number || typeof timeout === 'number') && timeout > 0 ?
 			timeout :
 			0;
 
 	return function () {
-		setTimeout(fn.bind(thisArg, ...arguments), timeout);
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				try {
+					resolve(fn.apply(thisArg, arguments))
+				} catch (error) {
+					reject(error)
+				}
+
+			}, timeout);
+		})
 	}
 }
