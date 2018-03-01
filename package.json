@@ -23,7 +23,7 @@
 	"scripts": {
 		"build": "gulp",
 		"postinstall": "npm run build",
-		"test": "mocha {Constants,Handlers,HTML,Standard,Patterns}/**/*test.js",
+		"test": "mocha {Constants,Node,HTML,Standard,Patterns}/**/*test.js",
 		"test:build": "mocha build/**/{test,*test}.js"
 	},
 	"repository": {
