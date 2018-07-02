@@ -1,10 +1,9 @@
-"use strict";
 const ERROR_CLASS_ARGUMENT = 'First argument must be a constructor function';
 /**
  * singleton factory function
  * @param {constructor} Class - constructor function
  * @throws {Error} - throws an error if `Class` is not a function
- * @returns {singletonFactory}
+ * @return {singletonFactory}
  * @example
  * import singleton from 'helpers-js/patterns/singleton';
  * class Class {
@@ -16,12 +15,12 @@ const ERROR_CLASS_ARGUMENT = 'First argument must be a constructor function';
  * const r1 = sClass(1); // r1.payload = 1
  * const r2 = sClass(2); // r2.payload = 1
  */
-export default function (Class) {
+module.exports = function (Class) {
 	/**
 	 * @typedef {constructor} Class
 	 */
 	if (!(Class instanceof Function || typeof Class === 'function')) {
-		throw new Error(ERROR_CLASS_ARGUMENT)
+		throw new Error(ERROR_CLASS_ARGUMENT);
 	}
 	/**
 	 * instance of Class
@@ -32,16 +31,14 @@ export default function (Class) {
 	/**
 	 * create new instance of `Class` or return previous
 	 * @name singletonFactory
-	 * @param [args] - arguments for `Class` initialization
-	 * @returns {Class} - instance of `Class`
+	 * @param {any} [args] - arguments for `Class` initialization
+	 * @return {Class} - instance of `Class`
 	 */
 	return function (...args) {
-		return (
-			instance ?
-				instance :
-				(this && this.constructor === Class) ?
-					instance = this :
-					instance = new Class(...args)
-		)
-	}
+		return instance ?
+			instance :
+			(this && this.constructor === Class) ?
+				instance = this :
+				instance = new Class(...args);
+	};
 };
