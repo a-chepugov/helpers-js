@@ -12,7 +12,7 @@ module.exports = class {
 
 	get(key) {
 		const record = this._data.get(key);
-		return record ? record.value : undefined
+		return record ? record.value : undefined;
 	}
 
 	set(key, value, ttl) {
@@ -28,16 +28,16 @@ module.exports = class {
 		this._data.set(key, record);
 
 		if (ttl) {
-			setTimeout(this.delete.bind(this), ttl, key)
+			setTimeout(this.delete.bind(this), ttl, key);
 		}
 	}
 
 	delete(key) {
-		return this._data.delete(key)
+		return this._data.delete(key);
 	}
 
 	clear() {
-		return this._data.clear()
+		return this._data.clear();
 	}
 
 	keys() {
@@ -57,11 +57,11 @@ module.exports = class {
 					const {key, value, till} = item;
 					const ttl = Number.isFinite(till) ? till - Date.now() : undefined;
 					if (ttl === undefined || ttl > 0) {
-						this.set(key, value, ttl)
+						this.set(key, value, ttl);
 					}
-				})
+				});
 		} else {
-			throw new Error('Argument must be an array')
+			throw new Error('Argument must be an array');
 		}
 	}
 };

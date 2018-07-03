@@ -1,5 +1,5 @@
 /**
- * Check is `child` is in `parent` children (deep)
+ * Check is `child` is in `parent` children list (deep)
  * @param {HTMLElement} parent
  * @param {HTMLElement} child
  * @return {boolean}

@@ -1,7 +1,3 @@
-const promisify = require('./promisify');
-
-module.exports =  {
-	promisify,
-}
-
-
+module.exports = {
+	promisify: require('./promisify')
+};

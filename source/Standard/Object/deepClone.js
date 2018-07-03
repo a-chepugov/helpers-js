@@ -1,10 +1,9 @@
-"use strict";
 /**
  * Выполняет глубокое клонирование объекта
  * @param {Object} obj - объект для клонирования
- * @returns {Object} - клон исходного объекта
+ * @return {Object} - клон исходного объекта
  */
-module.exports =  function (obj) {
+module.exports = function (obj) {
 	// "string", number, boolean
 	if (!(obj instanceof Object || typeof obj === 'object')) {
 		return obj;
@@ -17,4 +16,4 @@ module.exports =  function (obj) {
 		}
 	}
 	return result;
-}
+};

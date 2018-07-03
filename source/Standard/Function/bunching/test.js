@@ -13,7 +13,7 @@ describe('fn', function () {
 	config.map(item => {
 		it(JSON.stringify(item.options), async function () {
 			const {options, result} = item;
-			const promise = new Promise((resolve, reject) => {
+			const promise = new Promise((resolve) => {
 				const INTERVAL_BUNCHED = 50;
 
 				const invoke = bunching(function () {
@@ -28,11 +28,10 @@ describe('fn', function () {
 
 			let response = await promise;
 			const {
-				['0']: first = [],
-				['0']: [firstElement] = [],
+				[0]: first = []
 			} = response;
-			expect(typeof firstElement).to.equal(result.first);
+			expect(typeof first[0]).to.equal(result.first);
 			expect(first.length).to.equal(result.length);
-		})
+		});
 	});
 });

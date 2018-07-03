@@ -1,4 +1,3 @@
-"use strict";
 const expect = require('chai').expect;
 
 const Class = require('./index');
@@ -31,7 +30,7 @@ describe('KVStorage', function () {
 		i.set(1, value, 25);
 		let result = await new Promise((resolve, reject) => {
 			setTimeout(() => {
-				resolve(i.get(1))
+				resolve(i.get(1));
 			}, 50);
 		});
 		expect(result).to.equal(undefined);
@@ -46,7 +45,7 @@ describe('KVStorage', function () {
 
 		let result = await new Promise((resolve, reject) => {
 			setTimeout(() => {
-				resolve(i.get(1))
+				resolve(i.get(1));
 			}, 50);
 		});
 		expect(result).to.equal(undefined);
@@ -57,7 +56,6 @@ describe('KVStorage', function () {
 		const keys = i.keys();
 		expect(Array.isArray(keys) && keys.length === 0).to.equal(true);
 	});
-
 
 	it('dump', async function () {
 		i.clear();
@@ -72,7 +70,7 @@ describe('KVStorage', function () {
 		i.clear();
 		const dump = [
 			{key: 4, value: 4},
-			{key: 5, value: 5},
+			{key: 5, value: 5}
 		];
 
 		i.import(dump);

@@ -1,9 +1,5 @@
-const deepClone = require('./deepClone');
-const get = require('./get');
-const restructure = require('./restructure');
-
-module.exports =  {
-	deepClone,
-	get,
-	restructure,
+module.exports = {
+	deepClone: require('./deepClone'),
+	get: require('./get'),
+	restructure: require('./restructure')
 };

@@ -1,4 +1,3 @@
-"use strict";
 const expect = require('chai').expect;
 
 describe('redefine', async function () {
@@ -29,13 +28,13 @@ describe('redefine', async function () {
 
 				cb(function (c, cb) {
 					l += c;
-					return a + b + c
+					return a + b + c;
 				});
 
-				return a + b
+				return a + b;
 			});
 
-			return a
+			return a;
 		};
 
 		let w = tested(cb);

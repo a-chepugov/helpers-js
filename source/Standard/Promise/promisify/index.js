@@ -1,11 +1,10 @@
-"use strict";
 const ERROR_FIRST_ARGUMENT = 'First argument must be a function with callback (last argument)';
 /**
  * promisify
  * @param {fn} fn - function {@link fn} (number of arguments must be the same with returned function {@link invoker} )
  * @param {any} [thisArg] - this context for `fn`
  * @throws {Error} - throws an error if `fn` is not a function
- * @returns {invoker} - function to invoke `fn` and return Promise for it
+ * @return {invoker} - function to invoke `fn` and return Promise for it
  * @example
  * const promisify = require('helpers-js/Standard/Promise/promisify');
  * function fn(payload, cb) {
@@ -14,7 +13,7 @@ const ERROR_FIRST_ARGUMENT = 'First argument must be a function with callback (l
  *
  * let p = await promisify(fn)(1); // return 1
  */
-module.exports =  function (fn, thisArg) {
+module.exports = function (fn, thisArg) {
 	/**
 	 * function which last argument is callback function in node-style
 	 * @name fn
@@ -23,24 +22,24 @@ module.exports =  function (fn, thisArg) {
 	 * @param {function} callback - callback function in node-style
 	 */
 	if (!(fn instanceof Function || typeof fn === 'function')) {
-		throw new Error(ERROR_FIRST_ARGUMENT)
+		throw new Error(ERROR_FIRST_ARGUMENT);
 	}
 
 	/**
 	 * create Promise from `fn`
 	 * @name invoker
 	 * @param {...any} [arguments] - any number of arguments
-	 * @returns {Promise}
+	 * @return {Promise}
 	 */
 	return function (...args) {
 		return new Promise((resolve, reject) => {
 			fn.call(thisArg, ...args, (error, response) => {
 				if (error) {
-					reject(error)
+					reject(error);
 				} else {
-					resolve(response)
+					resolve(response);
 				}
 			});
-		})
-	}
+		});
+	};
 };

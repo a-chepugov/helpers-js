@@ -1,2 +1,4 @@
-export factory from './factory';
-export singleton from './singleton';
+module.exports = {
+	factory: require('./factory'),
+	singleton: require('./singleton')
+};

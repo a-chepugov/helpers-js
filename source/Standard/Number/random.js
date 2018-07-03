@@ -1,11 +1,10 @@
-"use strict";
 /**
  * Returns random number between `max` and `min`
  * @param {Number} max
  * @param {Number} min
- * @returns {Number}
+ * @return {Number}
  */
-module.exports =  (max, min) => {
+module.exports = (max, min) => {
 	max =
 		(typeof max === 'number' || max instanceof Number) ?
 			max :
@@ -16,5 +15,5 @@ module.exports =  (max, min) => {
 			min :
 			Number.MIN_VALUE;
 
-	return Math.ceil(Math.random() * (max - min) + min)
+	return Math.ceil(Math.random() * (max - min) + min);
 };

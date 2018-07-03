@@ -1,9 +1,5 @@
-const fill = require('./fill');
-const random = require('./random');
-const uniq = require('./uniq');
-
-module.exports =  {
-	fill,
-	random,
-	uniq,
-}
+module.exports = {
+	fill: require('./fill'),
+	random: require('./random'),
+	uniq: require('./uniq')
+};

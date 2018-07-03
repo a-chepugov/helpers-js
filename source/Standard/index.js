@@ -6,5 +6,3 @@ module.exports = {
 	Promise: require('./Promise'),
 	String: require('./String')
 };
-
-

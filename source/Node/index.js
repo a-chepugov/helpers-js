@@ -1,1 +1,3 @@
-export requireNoCache from './requireWithoutCache';
+module.exports = {
+	requireNoCache: require('./requireWithoutCache')
+};

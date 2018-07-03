@@ -1,13 +1,12 @@
-"use strict";
 const DEFAULT_LENGTH = 10;
 const DEFAULT_RADIX = 36;
 /**
  * Возвращает случайную строку заданной длины
- * @param length - длинна строки
- * @param radix - "разнообразие" символов
- * @returns {string}
+ * @param {number} length - длинна строки
+ * @param {number} radix - "разнообразие" символов
+ * @return {string}
  */
-module.exports =  function (length, radix) {
+module.exports = function (length, radix) {
 	length =
 		(typeof length === 'number' || length instanceof Number) && length >= 0 ?
 			Math.ceil(length) :

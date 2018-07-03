@@ -60,7 +60,7 @@ module.exports = function (cb, timeout, options = {}, thisArg) {
 				const value = bunch[key];
 				delete bunch[key];
 				result.push(value);
-				return result
+				return result;
 			}, []);
 
 			if (bunchToHandle.length) {
