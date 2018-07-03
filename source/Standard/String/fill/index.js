@@ -2,7 +2,7 @@
  * Replace placeholders marked by placemarks
  * @param {string} string - sketch
  * @param {object} params - placeholders values
- * @param {Array.string} [placemarks] - array with custom placemarks string
+ * @param {Array.string} [placemarks=['{','}']] - array with custom placemarks string
  * @return {string}
  */
 module.exports = function (string, params = {}, placemarks) {
