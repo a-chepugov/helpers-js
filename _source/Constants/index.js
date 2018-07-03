@@ -1,1 +1,0 @@
-export devices from './devices';
