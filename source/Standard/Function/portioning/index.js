@@ -1,49 +1,72 @@
+'use strict';
 const FIRST_ARGUMENT = 'Первый аргумент должен быть функцией';
-const SECOND_ARGUMENT = 'Второй аргумент должен быть массивом';
 const THIRD_ARGUMENT = 'Третий аргумент должен быть целым положительным числом';
 
 /**
  * Выполняет обработку данных порциями
  * @param {Function} handler - обработчик для порции данных
- * @param {Array.any} data - массив аргументов (`arguments`) для вызова `handler` как handler.apply(thisArg, item)
- * @param {Number} CHUNK_SIZE - размер порции для одновременной обработки
- * @param {*} thisArg - контекст для вызова `handler`
+ * @param {Iterable} argsBunch - массив аргументов (`arguments`) для вызова `handler` как handler.apply(thisArg, args)
+ * @param {Number} [CHUNK_SIZE=10] - размер порции для одновременной обработки
+ * @param {*} [thisArg] - контекст для вызова `handler`
+ * @param {boolean} [returns] - указывает нужно ли возвращает результаты выполнения
  * @return {Promise<Array>}
  */
-module.exports = async function (handler, data, CHUNK_SIZE = Number.MAX_SAFE_INTEGER, thisArg) {
-	if (!(typeof handler === 'function' && (handler instanceof Function))) {
+module.exports = async function (handler, argsBunch, CHUNK_SIZE = 10, thisArg, returns) {
+	if (!(typeof handler === 'function' || (handler instanceof Function))) {
 		throw new Error(FIRST_ARGUMENT);
 	}
-	if (!Array.isArray(data)) {
-		throw new Error(SECOND_ARGUMENT);
-	}
-	if (!Number.isInteger(CHUNK_SIZE) || CHUNK_SIZE < 1) {
+	if (!(Number.isInteger(CHUNK_SIZE)) || CHUNK_SIZE < 1) {
 		throw new Error(THIRD_ARGUMENT);
 	}
 
-	let chunk;
-	let result = [];
-	let i = 0;
-	while ((chunk = data.splice(0, CHUNK_SIZE)).length) {
-		await Promise.all(chunk.map((item) => {
-				const index = i++;
-				i++;
-				return new Promise((resolve, reject) => {
-					try {
-						resolve(handler.apply(thisArg, item));
-					} catch (error) {
-						reject(error);
-					}
-				})
-					.then(payload => result.push({index, item, result: payload}))
-					.catch(error => result.push({index, item, error}))
-					;
-			})
-		);
+	const handleItemBasic = (args) =>
+		new Promise((resolve, reject) => {
+			try {
+				resolve(handler.apply(thisArg, args));
+			} catch (error) {
+				reject(error);
+			}
+		});
+
+	const handleItem = returns ?
+		(args) => handleItemBasic(args)
+			.then(result => ({args, result}))
+			.catch(error => ({args, error})) :
+		(args) => handleItemBasic(args)
+			.catch(console.error);
+
+	const handleChunkBasic = (chunk) => Promise.all(
+		chunk
+			.splice(0, chunk.length)
+			.map((args) => handleItem(args)
+			));
+
+	const handleChunk = returns ?
+		((results) =>
+			(chunk) => handleChunkBasic(chunk)
+				.then((result) => {
+					results = results.concat(result);
+					return results;
+				}))([]) :
+		handleChunkBasic
+	;
+
+	let next;
+	let chunk = [];
+
+	const iterator = argsBunch[Symbol.iterator]();
+	while (!((next = iterator.next()).done)) {
+		if (chunk.length >= CHUNK_SIZE) {
+			await handleChunk(chunk);
+		}
+		chunk.push(next.value);
 	}
-	return result;
+
+	// Обрабатываем остаток, если argsBunch не кратен CHUNK_SIZE
+	// и возвращаем, при необходимости, значения вычислений
+	return handleChunk(chunk)
+		.then((results) => returns ? results : undefined);
 };
 
 module.exports.FIRST_ARGUMENT = FIRST_ARGUMENT;
-module.exports.SECOND_ARGUMENT = SECOND_ARGUMENT;
 module.exports.THIRD_ARGUMENT = THIRD_ARGUMENT;
