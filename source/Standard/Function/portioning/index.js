@@ -30,8 +30,8 @@ module.exports = async function (handler, argsBunch, CHUNK_SIZE = 10, thisArg, r
 
 	const handleItem = returns ?
 		(args) => handleItemBasic(args)
-			.then(result => ({args, result}))
-			.catch(error => ({args, error})) :
+			.then((result) => ({args, result}))
+			.catch((error) => ({args, error})) :
 		(args) => handleItemBasic(args)
 			.catch(console.error);
 
@@ -48,8 +48,7 @@ module.exports = async function (handler, argsBunch, CHUNK_SIZE = 10, thisArg, r
 					results = results.concat(result);
 					return results;
 				}))([]) :
-		handleChunkBasic
-	;
+		handleChunkBasic;
 
 	let next;
 	let chunk = [];
