@@ -1,6 +1,7 @@
 module.exports = function (arrays, portions) {
 	const generator = function* (arrays, portions) {
-		iterators = Array.from(arrays, (item) => item[Symbol.iterator]());
+		const iterators = Array.from(arrays, (item) => item[Symbol.iterator]());
+		portions = Array.from(portions, (item) => Number.isFinite(item) && item >= 0 ? item : 0);
 		while (iterators.length) {
 			for (let i in iterators) {
 				const it = iterators[i];
@@ -11,6 +12,7 @@ module.exports = function (arrays, portions) {
 
 					if (done) {
 						iterators.splice(i, 1);
+						portions.splice(i, 1);
 					} else {
 						yield value;
 					}
