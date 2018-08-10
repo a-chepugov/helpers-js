@@ -19,11 +19,12 @@ describe('portioner', async function () {
 
 	});
 
-	describe('throw', async function () {
+	describe('throws', async function () {
 
 		it('First argument must has [Symbol.iterator]', async function () {
 			expect(() => Array.from(tested(undefined, 3))).to.throw();
 		});
+
 	});
-	
+
 });

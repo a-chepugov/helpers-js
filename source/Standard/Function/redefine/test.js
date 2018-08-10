@@ -15,7 +15,7 @@ describe('redefine', async function () {
 		});
 	});
 
-	describe('test', async function () {
+	describe('run', async function () {
 
 		let n = 0;
 		let m = 0;

@@ -19,7 +19,7 @@ describe('asynchronizer', async function () {
 
 	});
 
-	describe('throw', async function () {
+	describe('throws', async function () {
 
 		it('First argument must be a function', async function () {
 			return tested(123, [])

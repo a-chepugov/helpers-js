@@ -9,7 +9,7 @@ const config = [
 
 const bunching = require('./index');
 
-describe('fn', function () {
+describe('bunching', function () {
 	config.map(item => {
 		it(JSON.stringify(item.options), async function () {
 			const {options, result} = item;
