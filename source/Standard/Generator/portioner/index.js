@@ -1,5 +1,11 @@
-module.exports = function* (array, count) {
-	const iterator = array[Symbol.iterator]();
+/**
+ * Creates bunching iterator for `iterable`
+ * @param {IterableIterator} iterable - any data implements [Symbol.iterator] method
+ * @param {number} count - portion size for bunching `iterable`
+ * @yield {IterableIterator<any[]>}
+ */
+module.exports = function* (iterable, count) {
+	const iterator = iterable[Symbol.iterator]();
 
 	function portioning(iterator, count) {
 		let item;
