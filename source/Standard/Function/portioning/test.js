@@ -9,7 +9,7 @@ describe('portioning', async function () {
 
 	it('run', async function () {
 		const handler = (item) => {
-			return new Promise((resolve, reject)=> {
+			return new Promise((resolve)=> {
 				if (item < 5) {
 					resolve({input: item, output: item * 2});
 				} else {
@@ -34,7 +34,7 @@ describe('portioning', async function () {
 				setTimeout(() => resolve(i++), item);
 			});
 
-		tested(handler, [[0], [15], [25], [0], [15], [25], [0], [15], [25]], 3)
+		tested(handler, [[0], [15], [25], [0], [15], [25], [0], [15], [25]], 3);
 
 		return new Promise((resolve) => {
 			setTimeout(() => expect(i).to.equal(1), 10);
