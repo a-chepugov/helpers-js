@@ -9,23 +9,35 @@ describe('portioning', async function () {
 
 	describe('run', async function () {
 
-		it('run', async function () {
+		it('with reject', async function () {
 			const handler = (item) => {
-				return new Promise((resolve) => {
+				return new Promise((resolve, reject) => {
 					if (item < 5) {
 						resolve({input: item, output: item * 2});
 					} else {
-						resolve(new Error(item));
+						reject(new Error(item));
 					}
 				});
 			};
 
-			return tested(handler, [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]], 3, undefined, true)
-				.then(
-					(response) => {
-						let is = response.every((item = {}) => Array.isArray(item));
+			return tested((item) => handler(item), [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]], 3)
+				.catch((error) => expect(error).to.be.an.instanceof(Error));
+		});
+
+		it('with reject catched', async function () {
+			const handler = (item) => {
+				return new Promise((resolve, reject) => {
+					if (item < 5) {
+						resolve({input: item, output: item * 2});
+					} else {
+						reject(new Error(item));
 					}
-				);
+				});
+			};
+
+			return tested((item) => handler(item).catch(() => {
+			}), [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]], 3)
+				.then((response) => expect(response.length).to.equal(10));
 		});
 
 		it('portioning', async function () {
@@ -36,20 +48,19 @@ describe('portioning', async function () {
 					setTimeout(() => resolve(i++), item);
 				});
 
-			tested(handler, [[0], [15], [25], [0], [15], [25], [0], [15], [25]], 3);
+			tested(handler, [[0], [30], [50], [0], [30], [50], [0], [30], [50]], 3);
 
 			return new Promise((resolve) => {
-				setTimeout(() => expect(i).to.equal(1), 10);
-				setTimeout(() => expect(i).to.equal(2), 20);
-				setTimeout(() => expect(i).to.equal(4), 30);
-				setTimeout(() => expect(i).to.equal(5), 45);
-				setTimeout(() => expect(i).to.equal(7), 55);
-				setTimeout(() => expect(i).to.equal(8), 70);
-				setTimeout(() => expect(i).to.equal(9), 100);
+				setTimeout(() => expect(i).to.equal(1), 20);
+				setTimeout(() => expect(i).to.equal(2), 40);
+				setTimeout(() => expect(i).to.equal(4), 60);
+				setTimeout(() => expect(i).to.equal(5), 90);
+				setTimeout(() => expect(i).to.equal(7), 110);
+				setTimeout(() => expect(i).to.equal(8), 140);
+				setTimeout(() => expect(i).to.equal(9), 200);
 
-				setTimeout(() => resolve(), 125);
+				setTimeout(() => resolve(), 250);
 			});
-
 		});
 
 	});
