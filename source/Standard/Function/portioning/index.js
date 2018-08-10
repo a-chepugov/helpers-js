@@ -2,16 +2,18 @@
 const FIRST_ARGUMENT = 'Первый аргумент должен быть функцией';
 const THIRD_ARGUMENT = 'Третий аргумент должен быть целым положительным числом';
 
+const portioner = require('../../Generator/portioner');
+const asynchronizer = require('../../Promise/asynchronizer');
+
 /**
  * Выполняет обработку данных порциями
  * @param {Function} handler - обработчик для порции данных
  * @param {Iterable} argsBunch - массив аргументов (`arguments`) для вызова `handler` как handler.apply(thisArg, args)
  * @param {Number} [CHUNK_SIZE=10] - размер порции для одновременной обработки
  * @param {*} [thisArg] - контекст для вызова `handler`
- * @param {boolean} [returns] - указывает нужно ли возвращает результаты выполнения
  * @return {Promise<Array>}
  */
-module.exports = async function (handler, argsBunch, CHUNK_SIZE = 10, thisArg, returns) {
+module.exports = async function (handler, argsBunch, CHUNK_SIZE = 10, thisArg) {
 	if (!(typeof handler === 'function' || (handler instanceof Function))) {
 		throw new Error(FIRST_ARGUMENT);
 	}
@@ -19,52 +21,14 @@ module.exports = async function (handler, argsBunch, CHUNK_SIZE = 10, thisArg, r
 		throw new Error(THIRD_ARGUMENT);
 	}
 
-	const handleItemBasic = (args) =>
-		new Promise((resolve, reject) => {
-			try {
-				resolve(handler.apply(thisArg, args));
-			} catch (error) {
-				reject(error);
-			}
-		});
+	const iterator = portioner(argsBunch, CHUNK_SIZE);
 
-	const handleItem = returns ?
-		(args) => handleItemBasic(args)
-			.then((result) => ({args, result}))
-			.catch((error) => ({args, error})) :
-		(args) => handleItemBasic(args)
-			.catch(console.error);
-
-	const handleChunkBasic = (chunk) => Promise.all(
-		chunk
-			.splice(0, chunk.length)
-			.map((args) => handleItem(args)
-			));
-
-	const handleChunk = returns ?
-		((results) =>
-			(chunk) => handleChunkBasic(chunk)
-				.then((result) => {
-					results = results.concat(result);
-					return results;
-				}))([]) :
-		handleChunkBasic;
-
-	let next;
-	let chunk = [];
-
-	const iterator = argsBunch[Symbol.iterator]();
-	while (!((next = iterator.next()).done)) {
-		if (chunk.length >= CHUNK_SIZE) {
-			await handleChunk(chunk);
-		}
-		chunk.push(next.value);
+	const result = [];
+	for (let chunk of iterator) {
+		const chunkResult = await Promise.all(chunk.map((args) => asynchronizer(handler, args, thisArg)));
+		result.push(chunkResult);
 	}
-
-	// Обрабатываем остаток, если argsBunch не кратен CHUNK_SIZE
-	// и возвращаем, при необходимости, значения вычислений
-	return handleChunk(chunk)
-		.then((results) => returns ? results : undefined);
+	return result;
 };
 
 module.exports.FIRST_ARGUMENT = FIRST_ARGUMENT;

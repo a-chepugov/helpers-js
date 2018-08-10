@@ -9,18 +9,19 @@ describe('portioning', async function () {
 
 	it('run', async function () {
 		const handler = (item) => {
-			if (item % 2) {
-				return item * 2;
-			} else {
-				throw new Error(item);
-			}
+			return new Promise((resolve, reject)=> {
+				if (item < 5) {
+					resolve({input: item, output: item * 2});
+				} else {
+					resolve(new Error(item));
+				}
+			});
 		};
 
 		return tested(handler, [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]], 3, undefined, true)
 			.then(
 				(response) => {
-					let is = response.every((item = {}) => item.args[0] % 2 ? !!item.result : !!item.error);
-					expect(is).to.equal(true);
+					let is = response.every((item = {}) => Array.isArray(item));
 				}
 			);
 	});
