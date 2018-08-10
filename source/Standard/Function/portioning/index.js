@@ -11,9 +11,10 @@ const asynchronizer = require('../../Promise/asynchronizer');
  * @param {Iterable} argsBunch - массив аргументов (`arguments`) для вызова `handler` как handler.apply(thisArg, args)
  * @param {Number} [CHUNK_SIZE=10] - размер порции для одновременной обработки
  * @param {*} [thisArg] - контекст для вызова `handler`
+ * @param {boolean} [returns] - указывает нужно ли возвращает результаты выполнения
  * @return {Promise<Array>}
  */
-module.exports = async function (handler, argsBunch, CHUNK_SIZE = 10, thisArg) {
+module.exports = async function (handler, argsBunch, CHUNK_SIZE = 10, thisArg, returns) {
 	if (!(typeof handler === 'function' || (handler instanceof Function))) {
 		throw new Error(FIRST_ARGUMENT);
 	}
@@ -25,8 +26,10 @@ module.exports = async function (handler, argsBunch, CHUNK_SIZE = 10, thisArg) {
 
 	const result = [];
 	for (let chunk of iterator) {
-		const chunkResult = await Promise.all(chunk.map((args) => asynchronizer(handler, args, thisArg)));
-		result.push(chunkResult);
+		await Promise.all(
+			chunk.map((args) =>
+				asynchronizer(handler, args, thisArg)
+					.then((response) => returns ? result.push(response) : undefined)));
 	}
 	return result;
 };
