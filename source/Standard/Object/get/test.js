@@ -20,4 +20,9 @@ describe('get', async function () {
 		const result = tested(source, 'data.user.score');
 		expect(result).to.deep.equal(source.data.user.score);
 	});
+
+	it('custom separator', function () {
+		const result = tested(source, 'data/user/score', '/');
+		expect(result).to.deep.equal(source.data.user.score);
+	});
 });
