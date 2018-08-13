@@ -21,7 +21,7 @@ describe('redefine', async function () {
 		let m = 0;
 		let l = 0;
 
-		const cb = function (a, cb) {
+		const fn = function (a, cb) {
 			n += a;
 			cb(function (b, cb) {
 				m += b;
@@ -37,7 +37,7 @@ describe('redefine', async function () {
 			return a;
 		};
 
-		let w = tested(cb);
+		let w = tested(fn);
 		it('init', function () {
 			expect(n).to.equal(0);
 			expect(m).to.equal(0);

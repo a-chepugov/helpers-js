@@ -7,8 +7,8 @@ const MOBILE_M = 'mobile m';
 const MOBILE_S = 'mobile s';
 
 /**
- * parameters of devices screens
  * @name devices
+ * @memberof Constants
  * @readonly
  * @enum {object}
  */

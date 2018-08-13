@@ -1,9 +1,13 @@
-const ERROR_CLASS_ARGUMENT = 'First argument must be a constructor function';
+'use strict';
+
 /**
  * factory function
+ * @name factory
+ * @memberof Patterns
  * @param {constructor} Class - constructor function
  * @throws {Error} - throws an error if `Class` is not a function
- * @return {factoryConstructor}
+ * @return {factory~generator}
+ * @memberof Patterns
  * @example
  * const factory = require('helpers-js/patterns/factory');
  * class Class {
@@ -17,19 +21,14 @@ const ERROR_CLASS_ARGUMENT = 'First argument must be a constructor function';
  */
 module.exports = function (Class) {
 	/**
-	 * @typedef {constructor} Class
-	 */
-	if (!(Class instanceof Function || typeof Class === 'function')) {
-		throw new Error(ERROR_CLASS_ARGUMENT);
-	}
-
-	/**
 	 * create new instance of `Class`
-	 * @name factoryConstructor
+	 * @function
+	 * @name factory~generator
+	 * @memberof Patterns
 	 * @param {*} [args] - arguments for `Class` initialization
 	 * @return {Class} - instance of `Class`
 	 */
-	return function (...args) {
-		return new Class(...args);
+	return function () {
+		return new (Function.prototype.bind.apply(Class, Array.prototype.concat.apply(Array, arguments)));
 	};
 };

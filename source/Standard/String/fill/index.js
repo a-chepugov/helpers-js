@@ -1,5 +1,9 @@
+'use strict';
+
 /**
  * Replace placeholders marked by placemarks
+ * @name fill
+ * @memberof Standard/String
  * @param {string} string - sketch
  * @param {object} params - placeholders values
  * @param {Array.string} [placemarks=['{','}']] - array with custom placemarks string

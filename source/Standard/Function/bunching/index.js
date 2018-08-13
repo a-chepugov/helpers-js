@@ -1,5 +1,7 @@
 /**
  * Create function to bunching data of multiply {@link bunching} function invokes and processing them after `timeout` with {@link cb} function
+ * @name bunching
+ * @memberof Standard/Function
  * @param {cb} cb - function for processing {@link bunch} of data
  * @param {Number} [timeout=0] - interval between {@link cb} invokes
  * @param {Object} [options] - options for data handling
@@ -31,6 +33,7 @@
 module.exports = function (cb, timeout, options = {}, thisArg) {
 	/**
 	 * @callback cb
+	 * @inner
 	 * @param {Array|*} [arguments] - {@link bunch} of arguments collected by {@link bunching}
 	 */
 	if (cb instanceof Function || typeof cb === 'function') {
@@ -46,6 +49,7 @@ module.exports = function (cb, timeout, options = {}, thisArg) {
 		/**
 		 * dictionary grouped by first arguments of {@link bunching} invokes (as a key)
 		 * @name bunch
+		 * @inner
 		 * @type {Object.<string, *>}
 		 */
 		const bunch = {};
@@ -71,9 +75,6 @@ module.exports = function (cb, timeout, options = {}, thisArg) {
 		}
 
 		// Normal processing cycle
-		/**
-		 * @return {number}
-		 */
 		function run() {
 			return timer = (timer ? timer : setTimeout(invoke, timeout));
 		}
@@ -90,6 +91,7 @@ module.exports = function (cb, timeout, options = {}, thisArg) {
 		/**
 		 * function which will be called and aggregate data into a {@link bunch}
 		 * @name bunching
+		 * @inner
 		 * @param {*} key - key to group invoke arguments into {@link bunch}
 		 * @param {*} [arguments] - arguments which will be bunched and transferred to {@link cb} function
 		 * @return {number}

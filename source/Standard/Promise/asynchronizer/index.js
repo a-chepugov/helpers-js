@@ -1,15 +1,20 @@
+'use strict';
+
 /**
- * Call function in async manner
- * @param {function} fn
- * @param {(undefined|array)[]} args - array of arguments for fn invoke like fn.apply(thisArgs, args[x])
- * @param {any} thisArgs - context for `fn`
- * @return {Promise<any>}
+ * Wrap function with a Promise and call it in async manner
+ * @name asynchronizer
+ * @memberof Standard/Promise
+ * @param {Function} fn
+ * @param {any} thisArg - context for `fn`
+ * @return {Function<Promise>}
  */
-module.exports = (fn, args, thisArgs) =>
-	new Promise((resolve, reject) => {
-		try {
-			resolve(fn.apply(thisArgs, args));
-		} catch (error) {
-			reject(error);
-		}
-	});
+module.exports = (fn, thisArg) =>
+	function () {
+		return new Promise((resolve, reject) => {
+			try {
+				resolve(fn.apply(thisArg, Array.prototype.slice.call(arguments)));
+			} catch (error) {
+				reject(error);
+			}
+		});
+	};

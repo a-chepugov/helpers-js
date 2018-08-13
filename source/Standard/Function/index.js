@@ -1,5 +1,6 @@
+/** @namespace Standard/Function */
 module.exports = {
 	bunching: require('./bunching'),
-	redefine: require('./redefine'),
-	portioning: require('./portioning')
+	concurrent: require('./concurrent'),
+	redefine: require('./redefine')
 };

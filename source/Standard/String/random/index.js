@@ -1,7 +1,11 @@
+'use strict';
+
 const DEFAULT_LENGTH = 10;
 const DEFAULT_RADIX = 36;
 /**
  * Возвращает случайную строку заданной длины
+ * @name random
+ * @memberof Standard/String
  * @param {number} length - длинна строки
  * @param {number} radix - "разнообразие" символов
  * @return {string}

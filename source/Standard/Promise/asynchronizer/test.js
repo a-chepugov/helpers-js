@@ -4,7 +4,7 @@ const tested = require('./index');
 describe('asynchronizer', async function () {
 
 	describe('run', async function () {
-		const promise = tested((a, b) => a + b, [24, 42]);
+		const promise = tested((a, b) => a + b)(24, 42);
 
 		it('promise', async function () {
 			expect(promise).to.be.an.instanceof(Promise);
@@ -22,20 +22,20 @@ describe('asynchronizer', async function () {
 	describe('throws', async function () {
 
 		it('First argument must be a function', async function () {
-			return tested(123, [])
+			return tested(123)([])
 				.catch((error) => expect(error).to.be.an.instanceof(Error));
 		});
 
 		it('Second argument must be a function', async function () {
 			return tested(() => {
-			}, 1423)
+			})(1423)
 				.catch((error) => expect(error).to.be.an.instanceof(Error));
 		});
 
 		it('function throws', async function () {
 			return tested(() => {
 				throw new Error();
-			}, [])
+			})([])
 				.catch((error) => expect(error).to.be.an.instanceof(Error));
 		});
 

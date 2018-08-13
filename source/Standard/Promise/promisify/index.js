@@ -2,25 +2,25 @@
 
 /**
  * Wrap node-style function with a Promise
- * @module promisify
- * @param {function} fn - node-style function (last argument is callback) {@link fn} (number of arguments must be the same with returned function {@link invoker} )
+ * @name promisify
+ * @memberof Standard/Promise
+ * @param {function} fn - node-style function (last argument is callback)
  * @param {any} [thisArg] - context for `fn`
- * @throws {Error} - throws an error if `fn` is not a function
- * @return {function<Promise>} - function to invoke `fn` and return Promise for it
+ * @return {function<Promise>} - function returns Promise for `fn` invoking
  * @example
  * const promisify = require('helpers-js/Standard/Promise/promisify');
  * function fn(payload, cb) {
- * 	payload +=1;
- *  cb(null, payload)
+ *  payload += 1;
+ *  cb(null, payload)ж
  * }
  *
  * promisify(fn)(1)
  *  .then((payload)=> {
- * 		console.log(payload); // 2
- * 	});
+ *    console.log(payload); // 2
+ *  });
  */
-module.exports = function (fn, thisArg) {
-	return function () {
+module.exports = (fn, thisArg) =>
+	function () {
 		return new Promise((resolve, reject) => {
 			try {
 				fn.apply(thisArg,
@@ -35,4 +35,3 @@ module.exports = function (fn, thisArg) {
 			}
 		});
 	};
-};

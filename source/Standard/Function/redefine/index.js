@@ -1,46 +1,25 @@
 /**
- * @param {function} cb - {@link cb}
- * @param {*} thisArg - `this` context for {@link cb} and {@link redefined}
- * @return {function} - {@link init}
- * @throws {Error} - {@link cb} must be a function
- * @throws {Error} - {@link cb} must returns a function
+ * Creates function wrapper with self-redefine ability
+ * @name redefine
+ * @memberof Standard/Function
+ * @param {function} fn - function which will be invoke on next call of `init`
+ * @param {*} thisArg - context for `fn` call
+ * @return {function} init - function which will invoke `fn` with adding `redefine` callback as last argument
+ * @throws {Error} - {@link fn} must be a function
+ * @throws {Error} - {@link fn} must returns a function
  */
-module.exports = function (cb, thisArg) {
-	/**
-	 * init function (must return a function)
-	 * @name cb
-	 */
+module.exports = function (fn, thisArg) {
+	let fnActual;
 
-	/**
-	 * {@link cb} invoke result
-	 * @params {...args} - any arguments
-	 * @params {redefine} - last argument is {@link redefine} function
-	 * @name redefined
-	 */
-	let redefined;
+	const redefine = (fn, thisArg) => fnActual = fn.bind(thisArg);
 
-	/**
-	 *
-	 * @param {function} cb - function which will be invoke on next invoke of {@link init}
-	 * @param {*} thisArg
-	 */
-	function redefine(cb, thisArg) {
-		if (cb instanceof Function || typeof cb === 'function') {
-			redefined = cb.bind(thisArg);
-		} else {
-			throw new Error('First argument must be a function');
-		}
+	function init() {
+		return fnActual.apply(
+			thisArg,
+			Array.prototype.slice.apply(arguments).concat(redefine)
+		);
 	}
 
-	/**
-	 *
-	 * @param {*} args
-	 * @return {*}
-	 */
-	function init(...args) {
-		return redefined.apply(thisArg, [...args, redefine]);
-	}
-
-	redefine(cb, thisArg);
+	redefine(fn, thisArg);
 	return init;
 };

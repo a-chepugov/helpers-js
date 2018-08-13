@@ -2,6 +2,8 @@ const pattern = /<[^>]+>/g;
 
 /**
  * Delete tags from string
+ * @name stripHTML
+ * @memberof HTML
  * @param {String} string - input string
  * @return {String}
  */

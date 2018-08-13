@@ -1,3 +1,14 @@
+'use strict';
+
+/**
+ * Mix arrays according to proportions
+ * @name mixer
+ * @memberof Standard/Array
+ * @param {any[]} arrays - arrays to mix
+ * @param {number[]} portions - mix proportions
+ * @memberof Standard/Array
+ * @return {any[]}
+ */
 module.exports = function (arrays, portions) {
 	const generator = function* (arrays, portions) {
 		portions = Array.from(portions, (item) => Number.isFinite(item) && item >= 0 ? item : 0);

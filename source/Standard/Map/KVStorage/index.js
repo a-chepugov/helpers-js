@@ -1,3 +1,11 @@
+'use strict';
+
+/**
+ * @name KVStorage
+ * @memberof Standard/Map
+ * @constructor
+ * @param {Number} ttl - key "time to live"
+ */
 module.exports = class {
 	constructor(ttl) {
 		if (Number.isFinite(ttl) && ttl > 0) {
