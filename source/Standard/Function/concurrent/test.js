@@ -5,7 +5,7 @@ const {
 	THIRD_ARGUMENT
 } = require('./index');
 
-describe('portioning', async function () {
+describe('concurrent', async function () {
 
 	describe('run', async function () {
 
