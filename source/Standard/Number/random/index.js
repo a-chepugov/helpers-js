@@ -1,5 +1,9 @@
+'use strict';
+
 /**
  * Returns random number between `max` and `min`
+ * @name random
+ * @memberof Standard/Number
  * @param {Number} max
  * @param {Number} min
  * @return {Number}

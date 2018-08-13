@@ -1,6 +1,8 @@
 const path = require('path');
 /**
  * import module without cache
+ * @name requireWithoutCache
+ * @memberof Node
  * @param {string} name - module name
  * @return {*}
  */

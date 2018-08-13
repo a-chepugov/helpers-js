@@ -1,5 +1,7 @@
 /**
  * Check was image loaded or not
+ * @name imageLoaded
+ * @memberof HTML
  * @param {String} src
  * @return {Promise}
  */

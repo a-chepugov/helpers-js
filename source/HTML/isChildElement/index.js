@@ -1,5 +1,7 @@
 /**
  * Check is `child` is in `parent` children list (deep)
+ * @name isChildElement
+ * @memberof HTML
  * @param {HTMLElement} parent
  * @param {HTMLElement} child
  * @return {boolean}

@@ -1,5 +1,9 @@
+'use strict';
+
 /**
  * Выполняет глубокое клонирование объекта
+ * @name deepClone
+ * @memberof Standard/Object
  * @param {Object} obj - объект для клонирования
  * @return {Object} - клон исходного объекта
  */
