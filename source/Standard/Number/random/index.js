@@ -1,23 +1,23 @@
 'use strict';
 
 /**
- * Returns random number between `max` and `min`
+ * Returns random number between `a` and `b`
  * @name random
  * @memberof Standard/Number
- * @param {Number} max
- * @param {Number} min
+ * @param {Number} a
+ * @param {Number} b
  * @return {Number}
  */
-module.exports = (max, min) => {
-	max =
-		(typeof max === 'number' || max instanceof Number) ?
-			max :
-			Number.MAX_VALUE;
+module.exports = (a, b) => {
+	a =
+		Number.isFinite(a) ?
+			a :
+			Number.MIN_SAFE_INTEGER;
 
-	min =
-		(typeof min === 'number' || min instanceof Number) && min < max ?
-			min :
-			Number.MIN_VALUE;
+	b =
+		Number.isFinite(b) ?
+			b :
+			Number.MAX_SAFE_INTEGER;
 
-	return Math.ceil(Math.random() * (max - min) + min);
+	return Math.floor((Math.random() * (b - a)) + a);
 };
