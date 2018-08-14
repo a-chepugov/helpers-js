@@ -3,7 +3,7 @@ const FIRST_ARGUMENT = 'Первый аргумент должен быть фу
 const THIRD_ARGUMENT = 'Третий аргумент должен быть целым положительным числом';
 
 const portioner = require('../../Generator/portioner');
-const asynchronizer = require('../../Promise/asynchronizer');
+const promisify = require('../../Promise/promisify');
 
 /**
  * Выполняет обработку данных порциями
@@ -26,11 +26,11 @@ module.exports = async function (handler, argsArray, concurrency = 10, thisArg, 
 
 	const itemHandler = omit ?
 		function () {
-			return asynchronizer(handler, thisArg)
+			return promisify(handler, thisArg)
 				.apply(undefined, arguments);
 		} :
 		function () {
-			return asynchronizer(handler, thisArg)
+			return promisify(handler, thisArg)
 				.apply(undefined, arguments)
 				.then((response) => result.push(response));
 		};

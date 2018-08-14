@@ -1,27 +1,44 @@
 const expect = require('chai').expect;
-const promisify = require('./index');
+const tested = require('./index');
 
 describe('promisify', async function () {
 
-	it('resolved', async function () {
-		function fn(payload, cb) {
-			payload += 1;
-			cb(null, payload);
-		}
+	describe('run', async function () {
+		const promise = tested((a, b) => a + b)(24, 42);
 
-		let p = promisify(fn)(1);
-		expect(p instanceof Promise).to.equal(true);
-		let r = await p;
-		expect(r).to.equal(2);
-	});
-	it('rejected', async function () {
-		function fn(payload, cb) {
-			cb(new Error, payload);
-		}
+		it('promise', async function () {
+			expect(promise).to.be.an.instanceof(Promise);
+		});
 
-		let p = promisify(fn)(1);
-		expect(p instanceof Promise).to.equal(true);
-		let r = await p.catch((error) => error);
-		expect(r instanceof Error).to.equal(true);
+		it('result', async function () {
+			return promise
+				.then((response) => {
+					expect(response).to.equal(66);
+				});
+		});
+
 	});
+
+	describe('throws', async function () {
+
+		it('First argument must be a function', async function () {
+			return tested(123)([])
+				.catch((error) => expect(error).to.be.an.instanceof(Error));
+		});
+
+		it('Second argument must be a function', async function () {
+			return tested(() => {
+			})(1423)
+				.catch((error) => expect(error).to.be.an.instanceof(Error));
+		});
+
+		it('function throws', async function () {
+			return tested(() => {
+				throw new Error();
+			})([])
+				.catch((error) => expect(error).to.be.an.instanceof(Error));
+		});
+
+	});
+
 });

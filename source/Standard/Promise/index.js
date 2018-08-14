@@ -1,5 +1,5 @@
 /** @namespace Standard/Promise */
 module.exports = {
-	asynchronizer: require('./asynchronizer'),
-	promisify: require('./promisify')
+	promisify: require('./promisify'),
+	'promisify-node': require('./promisify-node')
 };
