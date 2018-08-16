@@ -40,7 +40,7 @@ describe('concurrent', async function () {
 				.then((response) => expect(response.length).to.equal(10));
 		});
 
-		it('portioning', async function () {
+		it('with setTimeout', async function () {
 			let i = 0;
 
 			const handler = (item) =>
@@ -48,18 +48,18 @@ describe('concurrent', async function () {
 					setTimeout(() => resolve(i++), item);
 				});
 
-			tested(handler, [[0], [30], [50], [0], [30], [50], [0], [30], [50]], 3);
+			tested(handler, [[0], [60], [100], [0], [60], [100], [0], [60], [100]], 3);
 
 			return new Promise((resolve) => {
-				setTimeout(() => expect(i).to.equal(1), 20);
-				setTimeout(() => expect(i).to.equal(2), 40);
-				setTimeout(() => expect(i).to.equal(4), 60);
-				setTimeout(() => expect(i).to.equal(5), 90);
-				setTimeout(() => expect(i).to.equal(7), 110);
-				setTimeout(() => expect(i).to.equal(8), 140);
-				setTimeout(() => expect(i).to.equal(9), 200);
+				setTimeout(() => expect(i).to.equal(1), 40);
+				setTimeout(() => expect(i).to.equal(2), 80);
+				setTimeout(() => expect(i).to.equal(4), 120);
+				setTimeout(() => expect(i).to.equal(5), 180);
+				setTimeout(() => expect(i).to.equal(7), 220);
+				setTimeout(() => expect(i).to.equal(8), 280);
+				setTimeout(() => expect(i).to.equal(9), 400);
 
-				setTimeout(() => resolve(), 250);
+				setTimeout(() => resolve(), 500);
 			});
 		});
 
