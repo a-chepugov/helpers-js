@@ -4,31 +4,31 @@
  * factory function
  * @name factory
  * @memberof Patterns
- * @param {constructor} Class - constructor function
- * @throws {Error} - throws an error if `Class` is not a function
+ * @param {function} ctor - constructor function
+ * @throws {Error} - throws an error if `ctor` is not a function
  * @return {factory~generator}
  * @memberof Patterns
  * @example
  * const factory = require('helpers-js/patterns/factory');
- * class Class {
+ * class ctor {
  * 	constructor(payload) {
  * 		this.payload = payload;
  * 	}
  * }
- * let fClass = factory(Class);
- * const r1 = fClass(1); // r1.payload = 1
- * const r2 = fClass(2); // r2.payload = 2
+ * let classFactory = factory(ctor);
+ * const r1 = classFactory(1); // r1.payload = 1
+ * const r2 = classFactory(2); // r2.payload = 2
  */
-module.exports = function (Class) {
+module.exports = function (ctor) {
 	/**
-	 * create new instance of `Class`
+	 * creates new instance of `ctor`
 	 * @function
 	 * @name factory~generator
 	 * @memberof Patterns
-	 * @param {*} [args] - arguments for `Class` initialization
-	 * @return {Class} - instance of `Class`
+	 * @param {*} [args] - arguments for `ctor` initialization
+	 * @return {Object} - instance of `ctor`
 	 */
 	return function () {
-		return new (Function.prototype.bind.apply(Class, Array.prototype.concat.apply(Array, arguments)));
+		return new (Function.prototype.bind.apply(ctor, Array.prototype.concat.apply(Array, arguments)));
 	};
 };

@@ -4,36 +4,35 @@
  * singleton factory function
  * @name singleton
  * @memberof Patterns
- * @param {constructor} Class - constructor function
- * @throws {Error} - throws an error if `Class` is not a function
+ * @param {function} ctor - constructor function
  * @return {singleton~generator}
  * @example
  * const singleton = require('helpers-js/patterns/singleton');
- * class Class {
+ * class ctor {
  *  constructor(payload) {
  *    this.payload = payload;
  *  }
  * }
- * let sClass = singleton(Class);
- * const r1 = sClass(1); // r1.payload === 1
- * const r2 = sClass(2); // r2.payload === 1
+ * let classFactory = singleton(ctor);
+ * const r1 = classFactory(1); // r1.payload === 1
+ * const r2 = classFactory(2); // r2.payload === 1
  */
-module.exports = function (Class) {
+module.exports = function (ctor) {
 	let instance;
 
 	/**
-	 * creates new instance of `Class` or return previous
+	 * creates new instance of `ctor` or returns previous
 	 * @name singleton~generator
 	 * @function
 	 * @memberof Patterns
-	 * @param {any} [args] - arguments for `Class` initialization
-	 * @return {Class} - instance of `Class`
+	 * @param {any} [args] - arguments for `ctor` initialization
+	 * @return {Object} - instance of `ctor`
 	 */
 	return function () {
 		return instance ?
 			instance :
-			(this && this.constructor === Class) ?
+			(this && this.constructor === ctor) ?
 				instance = this :
-				instance = new (Function.prototype.bind.apply(Class, Array.prototype.concat.apply(Array, arguments)));
+				instance = new (Function.prototype.bind.apply(ctor, Array.prototype.concat.apply(Array, arguments)));
 	};
 };
