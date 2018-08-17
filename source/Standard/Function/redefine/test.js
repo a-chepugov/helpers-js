@@ -1,17 +1,17 @@
 const expect = require('chai').expect;
 
 describe('redefine', async function () {
-	const tested = require('./index');
+	const testee = require('./index');
 
 	describe('self', async function () {
 		it('is', async function () {
-			expect(typeof tested === 'function').to.equal(true);
+			expect(typeof testee === 'function').to.equal(true);
 		});
 
 		it('result', async function () {
 			const cb = (a) => (b) => undefined;
 
-			expect(typeof tested(cb) === 'function').to.equal(true);
+			expect(typeof testee(cb) === 'function').to.equal(true);
 		});
 	});
 
@@ -37,7 +37,7 @@ describe('redefine', async function () {
 			return a;
 		};
 
-		let w = tested(fn);
+		let w = testee(fn);
 		it('init', function () {
 			expect(n).to.equal(0);
 			expect(m).to.equal(0);

@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const tested = require('./index');
+const testee = require('./index');
 
 const source = {
 	1: {
@@ -18,7 +18,7 @@ const source = {
 
 describe('repack', async function () {
 	it('id', function () {
-		const result = tested(source);
+		const result = testee(source);
 		expect(result).to.deep.equal({
 			2: {
 				id: 2,
@@ -36,7 +36,7 @@ describe('repack', async function () {
 	});
 
 	it('value', function () {
-		const result = tested(source, 'value');
+		const result = testee(source, 'value');
 		expect(result).to.deep.equal({
 			3: {
 				id: 2,

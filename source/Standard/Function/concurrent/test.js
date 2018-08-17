@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const tested = require('./index');
+const testee = require('./index');
 const {
 	FIRST_ARGUMENT,
 	THIRD_ARGUMENT
@@ -20,7 +20,7 @@ describe('concurrent', async function () {
 				});
 			};
 
-			return tested((item) => handler(item), [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]], 3)
+			return testee((item) => handler(item), [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]], 3)
 				.catch((error) => expect(error).to.be.an.instanceof(Error));
 		});
 
@@ -35,7 +35,7 @@ describe('concurrent', async function () {
 				});
 			};
 
-			return tested((item) => handler(item).catch(() => {
+			return testee((item) => handler(item).catch(() => {
 			}), [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]], 3)
 				.then((response) => expect(response.length).to.equal(10));
 		});
@@ -48,7 +48,7 @@ describe('concurrent', async function () {
 					setTimeout(() => resolve(i++), item);
 				});
 
-			tested(handler, [[0], [60], [100], [0], [60], [100], [0], [60], [100]], 3);
+			testee(handler, [[0], [60], [100], [0], [60], [100], [0], [60], [100]], 3);
 
 			return new Promise((resolve) => {
 				setTimeout(() => expect(i).to.equal(1), 40);
@@ -68,12 +68,12 @@ describe('concurrent', async function () {
 	describe('throws', async function () {
 
 		it(FIRST_ARGUMENT, async function () {
-			return tested()
+			return testee()
 				.catch(error => expect(error.message).to.equal(FIRST_ARGUMENT));
 		});
 
 		it(THIRD_ARGUMENT, async function () {
-			return tested(new Function(), [], 1.5)
+			return testee(new Function(), [], 1.5)
 				.catch(error => expect(error.message).to.equal(THIRD_ARGUMENT));
 		});
 

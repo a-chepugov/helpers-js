@@ -1,11 +1,11 @@
 const expect = require('chai').expect;
 
-const Class = require('./index');
+const testee = require('./index');
 
 describe('InMemoryStorage', function () {
 
 	it('set & get & has', async function () {
-		const i = new Class();
+		const i = new testee();
 		i.set(1, {q: 'q'});
 		expect(i.get(1)).to.deep.equal({q: 'q'});
 		expect(i.has(1)).to.deep.equal(true);
@@ -16,7 +16,7 @@ describe('InMemoryStorage', function () {
 	});
 
 	it('del', async function () {
-		const i = new Class();
+		const i = new testee();
 		i.set(1, 123);
 		expect(i.get(1)).to.equal(123);
 		i.del(1);
@@ -24,7 +24,7 @@ describe('InMemoryStorage', function () {
 	});
 
 	it('expire', async function () {
-		const i = new Class();
+		const i = new testee();
 		i.set(1, {q: 'q'});
 		i.expire(1, 25);
 		return new Promise((resolve) => {
@@ -36,7 +36,7 @@ describe('InMemoryStorage', function () {
 	});
 
 	it('clear', async function () {
-		const i = new Class();
+		const i = new testee();
 		i.set(1, {qqq: 'qqq'});
 		i.clear();
 		const keys = i.keys();
@@ -44,7 +44,7 @@ describe('InMemoryStorage', function () {
 	});
 
 	it('export', async function () {
-		const i = new Class();
+		const i = new testee();
 		i.set(1, 1);
 		i.set(2, 2);
 		i.expire(2, 25);
@@ -54,7 +54,7 @@ describe('InMemoryStorage', function () {
 	});
 
 	it('import', async function () {
-		const i = new Class();
+		const i = new testee();
 		const dump = [
 			[1, {value: 1, timestamp: 1534249657765}],
 			[2, {value: 2, timestamp: 1534249657765, till: Date.now() + 100}],
@@ -66,7 +66,7 @@ describe('InMemoryStorage', function () {
 	});
 
 	it('import. expire', async function () {
-		const i = new Class();
+		const i = new testee();
 		const dump = [
 			[1, {value: 1, timestamp: 1534249657765}],
 			[2, {value: 2, timestamp: 1534249657765, till: Date.now() + 100}],
@@ -79,7 +79,7 @@ describe('InMemoryStorage', function () {
 	});
 
 	it('import. expire old', async function () {
-		const i = new Class();
+		const i = new testee();
 		const dump = [
 			[1, {value: 1, timestamp: 1534249657765, till: Date.now() + 100}],
 		];

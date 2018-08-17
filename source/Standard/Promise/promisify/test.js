@@ -1,10 +1,10 @@
 const expect = require('chai').expect;
-const tested = require('./index');
+const testee = require('./index');
 
 describe('promisify', async function () {
 
 	describe('run', async function () {
-		const promise = tested((a, b) => a + b)(24, 42);
+		const promise = testee((a, b) => a + b)(24, 42);
 
 		it('promise', async function () {
 			expect(promise).to.be.an.instanceof(Promise);
@@ -22,18 +22,18 @@ describe('promisify', async function () {
 	describe('throws', async function () {
 
 		it('First argument must be a function', async function () {
-			return tested(123)([])
+			return testee(123)([])
 				.catch((error) => expect(error).to.be.an.instanceof(Error));
 		});
 
 		it('Second argument must be a function', async function () {
-			return tested(() => {
+			return testee(() => {
 			})(1423)
 				.catch((error) => expect(error).to.be.an.instanceof(Error));
 		});
 
 		it('function throws', async function () {
-			return tested(() => {
+			return testee(() => {
 				throw new Error();
 			})([])
 				.catch((error) => expect(error).to.be.an.instanceof(Error));
