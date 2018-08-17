@@ -1,21 +1,14 @@
 /**
- * Check was image loaded or not
+ * Check image loaded event
  * @name imageLoaded
  * @memberof HTML
- * @param {String} src
+ * @param {Image} img
  * @return {Promise}
  */
-module.exports = function (src) {
-	return (src instanceof String || typeof src === 'string') ?
+module.exports = (img) =>
+	img instanceof Image ?
 		new Promise((resolve, reject) => {
-			const img = new Image();
-			img.onload = function (...args) {
-				resolve(...args);
-			};
-			img.onerror = function (...args) {
-				reject(...args);
-			};
-			img.src = src;
+			img.onload = (...args) => resolve(...args);
+			img.onerror = (...args) => reject(...args);
 		}) :
-		Promise.reject('First argument must be a string, got:', src);
-};
+		Promise.reject('First argument must be an instance of Image, got:', img);
