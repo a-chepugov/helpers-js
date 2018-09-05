@@ -12,7 +12,7 @@ module.exports = (fn, thisArg) =>
 	function () {
 		return new Promise((resolve, reject) => {
 			try {
-				resolve(fn.apply(thisArg, Array.prototype.slice.call(arguments)));
+				resolve(fn.apply(thisArg, arguments));
 			} catch (error) {
 				reject(error);
 			}
