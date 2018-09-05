@@ -1,7 +1,9 @@
 'use strict';
+
+const promisify = require('../../Promise/promisify');
 /**
  * Creates function throttling wrapper
- * @name throttled
+ * @name throttled-async
  * @memberof Standard/Function
  * @param {function} fn
  * @param {function} stay - function which define must `fn` be invoked or not
@@ -18,8 +20,12 @@ module.exports = (fn, stay = () => false) => {
 	}
 
 	return function () {
-		return stay.apply(this, arguments) ?
-			undefined :
-			fn.apply(this, arguments);
+		return new Promise((resolve, reject) => {
+			try {
+				resolve(stay.apply(this, arguments));
+			} catch (error) {
+				reject(error);
+			}
+		}).then((stay) => stay ? undefined : fn.apply(this, arguments));
 	};
 };

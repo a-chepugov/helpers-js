@@ -3,5 +3,6 @@ module.exports = {
 	bunching: require('./bunching'),
 	concurrent: require('./concurrent'),
 	redefine: require('./redefine'),
-	throttled: require('./throttled')
+	throttled: require('./throttled'),
+	'throttled-async': require('./throttled-async')
 };

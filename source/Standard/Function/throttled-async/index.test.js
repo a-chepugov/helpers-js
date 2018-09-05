@@ -2,18 +2,19 @@ const expect = require('chai').expect;
 
 const tested = require('./index');
 
-describe('throttled', () => {
+describe('throttled-async', () => {
 	describe('run', () => {
 
 		it('arguments', () => {
 			let i = 0;
 			const wrapped = tested(() => i++, (a, b) => a % b);
-			wrapped(0, 2);
-			expect(i).to.deep.equal(1);
-			wrapped(1, 2);
-			expect(i).to.deep.equal(1);
-			wrapped(2, 2);
-			expect(i).to.deep.equal(2);
+
+			return wrapped(0, 2)
+				.then(() => expect(i).to.deep.equal(1))
+				.then(() => wrapped(1, 2))
+				.then(() => expect(i).to.deep.equal(1))
+				.then(() => wrapped(2, 2))
+				.then(() => expect(i).to.deep.equal(2));
 		});
 
 		it('this', () => {
@@ -21,7 +22,7 @@ describe('throttled', () => {
 			const wrapped = tested(() => true, function () {
 				expect(this).to.deep.equal(ctx);
 			});
-			wrapped.call(ctx);
+			return wrapped.call(ctx);
 		});
 
 		it('this binded', () => {
@@ -30,7 +31,7 @@ describe('throttled', () => {
 			const wrapped = tested(() => true, function () {
 				expect(this).to.deep.equal(ctx2);
 			}.bind(ctx2));
-			wrapped.call(ctx1);
+			return wrapped.call(ctx1);
 		});
 
 	});
