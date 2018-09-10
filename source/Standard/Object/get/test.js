@@ -11,7 +11,7 @@ const source = {
 };
 
 describe('get', async function () {
-	it('first name', function () {
+	it('nested', function () {
 		const result = testee(source, 'data.user.name.first');
 		expect(result).to.deep.equal(source.data.user.name.first);
 	});
@@ -22,7 +22,7 @@ describe('get', async function () {
 	});
 
 	it('custom separator', function () {
-		const result = testee(source, 'data/user/score', '/');
+		const result = testee(source, 'data->user->score', '->');
 		expect(result).to.deep.equal(source.data.user.score);
 	});
 });
