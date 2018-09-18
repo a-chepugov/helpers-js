@@ -4,9 +4,9 @@
  * get value of Object key, defined by string
  * @name get
  * @memberof Standard/Object
- * @param source
- * @param path
- * @param separator
- * @return {string}
+ * @param {any} source
+ * @param {String} path
+ * @param {String} separator
+ * @return {any}
  */
-module.exports = (source, path = '', separator = '.') => (path.split(separator)).reduce(((result = {}, key) => result[key]), source);
+module.exports = (source, path = '', separator = '.') => (path.split(separator)).reduce(((result, key) => result ? result[key] : undefined), source);
