@@ -2,13 +2,34 @@
  * Check image loaded event
  * @name imageLoaded
  * @memberof HTML
- * @param {Image} img
+ * @param {Image} image
  * @return {Promise}
  */
-module.exports = (img) =>
-	img instanceof Image ?
+module.exports = function (image) {
+	return image instanceof Image ?
 		new Promise((resolve, reject) => {
-			img.onload = (...args) => resolve(...args);
-			img.onerror = (...args) => reject(...args);
+			function onLoad() {
+				resolve.apply(image, arguments);
+				removeEventListeners();
+			}
+
+			function onError() {
+				reject.apply(image, arguments);
+				removeEventListeners();
+			}
+
+			function removeEventListeners() {
+				image.removeEventListener('load', onLoad);
+				image.removeEventListener('error', onError);
+			}
+
+			image.addEventListener('load', onLoad);
+			image.addEventListener('error', onError);
+
+			if (image.complete) {
+				resolve.apply(image);
+				removeEventListeners();
+			}
 		}) :
-		Promise.reject('First argument must be an instance of Image, got:', img);
+		Promise.reject('First argument must be an instance of Image, got:', image);
+};
