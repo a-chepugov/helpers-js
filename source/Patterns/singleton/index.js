@@ -33,6 +33,6 @@ module.exports = function (ctor) {
 			instance :
 			(this && this.constructor === ctor) ?
 				instance = this :
-				instance = new (Function.prototype.bind.apply(ctor, Array.prototype.concat.apply(Array, arguments)));
+				instance = new (Function.prototype.bind.apply(ctor, Array.prototype.concat.call(Array, Array.prototype.slice.call(arguments))));
 	};
 };
