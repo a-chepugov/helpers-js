@@ -29,6 +29,6 @@ module.exports = function (ctor) {
 	 * @return {Object} - instance of `ctor`
 	 */
 	return function () {
-		return new (Function.prototype.bind.apply(ctor, Array.prototype.concat.apply(Array, arguments)));
+		return new (Function.prototype.bind.apply(ctor, Array.prototype.concat.call(Array, Array.prototype.slice.call(arguments))));
 	};
 };
