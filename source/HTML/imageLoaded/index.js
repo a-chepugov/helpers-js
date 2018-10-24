@@ -6,7 +6,7 @@
  * @return {Promise}
  */
 module.exports = function (image) {
-	return image instanceof Image ?
+	return image instanceof Image || (image && String.prototype.toLowerCase.apply(image.tagName) === 'img') ?
 		new Promise((resolve, reject) => {
 			function onLoad() {
 				resolve.apply(image, arguments);
