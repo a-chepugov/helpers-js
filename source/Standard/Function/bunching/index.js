@@ -1,106 +1,83 @@
 /**
- * Create function to bunching data of multiply {@link bunching} function invokes and processing them after `timeout` with {@link cb} function
+ * Create function to bunching data of multiply {@link bunching} function
  * @name bunching
  * @memberof Standard/Function
- * @param {cb} cb - function for processing {@link bunch} of data
- * @param {Number} [timeout=0] - interval between {@link cb} invokes
- * @param {Object} [options] - options for data handling
- * @param {Boolean} [options.leading=false] - if it can be describe as "true", force to invoke {@link cb} immediately at start
- * @param {Boolean} [options.unfold=false] - if it can be describe as "true", every bunched data element will be transfered to {@link cb} as separate element, otherwise data will be transfered as an array
- * @param {Function} [options.hasher=JSON.stringify] - internal functions used to create `key` from first argument of {@link bunching} call for saving calling arguments in {@link bunch}
- * @param {*} [thisArg] - context for {@link cb} call
- * @return {bunching}
+ * @param {Function} handler - function for processing {@link `bunch`} of data
+ * @param {Function} checker - function to invoke handler
+ * @param {Function} separator - function to parse result from `handler`
+ * @param {*} [thisArg] - context for `handler` call
+ * @return {Function}
  * @example
- * const bunching = require('helpers-js/Standard/Function/bunching');
- * // const bunching = require('helpers-js/Standard/Function/bunching').default;
- * function handler() {
- * 	console.dir(arguments, {colors: true, depth: null});
- * 	// returns Array with up to 36 elements, not 1000 (3000/3)
+ * // const bunching = require('helpers-js/Standard/Function/bunching');
+ * let timer;
+ * const invoke = bunching(
+ *   (...args) => args.map(({0: item}) => item),
+ *   (resolve, bunch) => {
+ *     timer = timer ? timer : setTimeout(() => {
+ *       timer = undefined;
+ *       resolve();
+ *     }, 50);
+ *   }
+ * );
+ *
+ * for (let i = 0; i < 3; i++) {
+ *   setTimeout(() => invoke(i).then((payload) => expect(payload).to.equal(i)), 0);
  * }
- *
- * const INTERVAL_BUNCHED = 3000;
- * const INTERVAL_INVOKE = 3;
- *
- * const invoke = bunching(handler, INTERVAL_BUNCHED, {leading: true, unfold: true});
- *
- * setInterval(function () {
- * 	let key = Math.round(Math.random() * 35);
- * 	let value1 = Math.round(Math.random() * 35).toString(36);
- * 	let value2 = Math.round(Math.random() * 999);
- * 	invoke(key, value1, value2)
- * }, INTERVAL_INVOKE);
  */
-module.exports = function (cb, timeout, options = {}, thisArg) {
-	/**
-	 * @callback cb
-	 * @inner
-	 * @param {Array|*} [arguments] - {@link bunch} of arguments collected by {@link bunching}
-	 */
-	if (cb instanceof Function || typeof cb === 'function') {
-		let {
-			leading,
-			unfold,
-			hasher
-		} = options;
+module.exports = function (
+	handler,
+	checker = (resolve) => resolve(),
+	separator = (responce, index) => responce[index],
+	thisArg
+) {
+	const bunch = [];
+	let __defer = {};
 
-		timeout = Number.isFinite(timeout) && timeout > 0 ? timeout : 0;
-		hasher = hasher instanceof Function || typeof hasher === 'function' ? hasher : JSON.stringify;
+	function createPromise() {
+		if (!__defer.promise) {
+			__defer.promise = new Promise((resolve, reject) => {
+				__defer.reject = (error) => {
+					reject(error);
+					__defer = {};
+				};
 
-		/**
-		 * dictionary grouped by first arguments of {@link bunching} invokes (as a key)
-		 * @name bunch
-		 * @inner
-		 * @type {Object.<string, *>}
-		 */
-		const bunch = {};
+				__defer.resolve = () => {
+					try {
+						const argumentsBunch = bunch.splice(0, bunch.length);
+						resolve(handler.apply(thisArg, argumentsBunch));
+						__defer = {};
+					} catch (error) {
+						reject(error);
+						__defer = {};
+					}
+				};
 
-		let timer;
-
-		// Prepare bunch of data and transfer it to cb
-		function invoke() {
-			timer = undefined;
-
-			const bunchToHandle = Object.keys(bunch).reduce((result, key) => {
-				const value = bunch[key];
-				delete bunch[key];
-				result.push(value);
-				return result;
-			}, []);
-
-			if (bunchToHandle.length) {
-				unfold ?
-					cb.apply(thisArg, bunchToHandle) :
-					cb.call(thisArg, bunchToHandle);
-			}
+			});
 		}
-
-		// Normal processing cycle
-		function run() {
-			return timer = (timer ? timer : setTimeout(invoke, timeout));
-		}
-
-		// self declaring function to handle leading invoke
-		function init() {
-			if (leading) {
-				invoke();
-			}
-			init = run;
-			return run();
-		}
-
-		/**
-		 * function which will be called and aggregate data into a {@link bunch}
-		 * @name bunching
-		 * @inner
-		 * @param {*} key - key to group invoke arguments into {@link bunch}
-		 * @param {*} [arguments] - arguments which will be bunched and transferred to {@link cb} function
-		 * @return {number}
-		 */
-		return function (key) {
-			bunch[hasher(key)] = arguments;
-			return init();
-		};
-	} else {
-		throw new Error('First arguments must be a function');
+		return __defer.promise;
 	}
+
+	return function () {
+		bunch.push(arguments);
+		const index = bunch.length - 1;
+		const promise = createPromise().then((response) => separator(response, index, arguments));
+
+		return new Promise((resolve, reject) => {
+			try {
+				resolve(
+					checker.call(
+						thisArg,
+						function () {
+							__defer.resolve();
+						},
+						bunch
+					)
+				);
+			} catch (error) {
+				reject(error);
+				__defer = {};
+			}
+		})
+			.then(() => promise);
+	};
 };
