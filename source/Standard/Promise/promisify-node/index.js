@@ -11,7 +11,7 @@
  * const promisify = require('helpers-js/Standard/Promise/promisify');
  * function fn(payload, cb) {
  *  payload += 1;
- *  cb(null, payload)ж
+ *  cb(null, payload);
  * }
  *
  * promisify(fn)(1)
