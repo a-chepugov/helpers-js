@@ -1,4 +1,5 @@
 /** @namespace Standard/Generator */
 module.exports = {
-	portioner: require('./portioner'),
+	plunger: require('./plunger'),
+	portioner: require('./portioner')
 };

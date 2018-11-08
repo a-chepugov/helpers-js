@@ -1,0 +1,24 @@
+/**
+ * Creates iterator for any object
+ * @name generator
+ * @memberof Generator/plunger
+ * @param {*} object
+ * @param {Function} plunger - determines to return a value or destruct and take its keys
+ * @yield {IterableIterator<*|*>}
+ */
+module.exports = function* (object, plunger) {
+	plunger = typeof plunger === 'function' ? plunger : (k, v) => typeof v === 'object';
+
+	function* walkByKeys(o) {
+		const keys = Object.keys(o);
+		for (let key of keys) {
+			if (plunger(key, o[key], o)) {
+				yield* walkByKeys(o[key]);
+			} else {
+				yield o[key];
+			}
+		}
+	}
+
+	yield* walkByKeys(object);
+};
