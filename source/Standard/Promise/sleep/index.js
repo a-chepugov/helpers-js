@@ -4,7 +4,4 @@
  * @param {Number} timeout
  * @return {Promise<any>}
  */
-module.exports = (timeout) =>
-	new Promise((resolve) =>
-		setTimeout(() => resolve(timeout), timeout)
-	);
+module.exports = (timeout) => new Promise((resolve) => setTimeout(resolve, timeout, timeout));
