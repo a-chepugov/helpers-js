@@ -1,17 +1,17 @@
 const expect = require('chai').expect;
 const testee = require('./index');
 
-describe('portioner', async function () {
+describe('portioner', () => {
 
-	describe('run', async function () {
+	describe('run', () => {
 
-		it('result', async function () {
+		it('result', () => {
 			const iterator = testee([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 3);
 			const result = Array.from(iterator);
 			expect(result).to.deep.equal([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]);
 		});
 
-		it('result 0 ', async function () {
+		it('result 0 ', () => {
 			const iterator = testee([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 0);
 			const result = Array.from(iterator);
 			expect(result).to.deep.equal([]);
@@ -19,9 +19,9 @@ describe('portioner', async function () {
 
 	});
 
-	describe('throws', async function () {
+	describe('throws', () => {
 
-		it('First argument must has [Symbol.iterator]', async function () {
+		it('First argument must has [Symbol.iterator]', () => {
 			expect(() => Array.from(testee(undefined, 3))).to.throw();
 		});
 

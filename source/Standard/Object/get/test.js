@@ -10,19 +10,21 @@ const source = {
 	}
 };
 
-describe('get', async function () {
-	it('nested', function () {
+describe('get', () => {
+
+	it('nested', () => {
 		const result = testee(source, 'data.user.name.first');
 		expect(result).to.deep.equal(source.data.user.name.first);
 	});
 
-	it('score', function () {
+	it('score', () => {
 		const result = testee(source, 'data.user.score');
 		expect(result).to.deep.equal(source.data.user.score);
 	});
 
-	it('custom separator', function () {
+	it('custom separator', () => {
 		const result = testee(source, 'data->user->score', '->');
 		expect(result).to.deep.equal(source.data.user.score);
 	});
+
 });

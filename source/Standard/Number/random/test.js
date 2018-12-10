@@ -1,11 +1,11 @@
 const expect = require('chai').expect;
 const testee = require('./index');
 
-describe('random', async function () {
+describe('random', () => {
 
-	describe('run', async function () {
+	describe('run', () => {
 
-		it('is in range', async function () {
+		it('is in range', () => {
 
 			let r = testee(1000, 2000);
 			expect(r >= 1000 && r <= 2000).to.equal(true);

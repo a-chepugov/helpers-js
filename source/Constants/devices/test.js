@@ -1,10 +1,11 @@
 const expect = require('chai').expect;
 const testee = require('./index').default;
 
-describe('device', async function () {
+describe('device', () => {
+
 	let devicesList = Object.values(testee).sort(({min: A} = {}, {min: B} = {}) => A - B);
 
-	it('sizes coverage', async function () {
+	it('sizes coverage', () => {
 		const is = devicesList.every(({min} = {}, index, array) => {
 			const {max: maxPrevious = 0} = array[index - 1] || {};
 			return maxPrevious === min - 1;
@@ -12,4 +13,5 @@ describe('device', async function () {
 
 		expect(is).to.equal(true);
 	});
+
 });

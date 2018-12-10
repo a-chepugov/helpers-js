@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
 
-describe('singleton', function () {
+describe('singleton', () => {
 	const singleton = require('./index');
-	it('singleton', async function () {
+	it('singleton', () => {
 		class C {
 			constructor(payload) {
 				this.payload = payload;
@@ -18,7 +18,7 @@ describe('singleton', function () {
 		expect(r1).to.deep.equal(r2);
 	});
 
-	it('arguments', async function () {
+	it('arguments', () => {
 		class C {
 			constructor(a1, a2, a3, a4) {
 				this.a1 = a1;

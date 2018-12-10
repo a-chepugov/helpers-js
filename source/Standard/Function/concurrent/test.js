@@ -5,11 +5,11 @@ const {
 	THIRD_ARGUMENT
 } = require('./index');
 
-describe('concurrent', async function () {
+describe('concurrent', () => {
 
-	describe('run', async function () {
+	describe('run', () => {
 
-		it('with reject', async function () {
+		it('with reject', () => {
 			const handler = (item) => {
 				return new Promise((resolve, reject) => {
 					if (item < 5) {
@@ -24,7 +24,7 @@ describe('concurrent', async function () {
 				.catch((error) => expect(error).to.be.an.instanceof(Error));
 		});
 
-		it('with reject catched', async function () {
+		it('with reject catched', () => {
 			const handler = (item) => {
 				return new Promise((resolve, reject) => {
 					if (item < 5) {
@@ -40,7 +40,7 @@ describe('concurrent', async function () {
 				.then((response) => expect(response.length).to.equal(10));
 		});
 
-		it('with setTimeout', async function () {
+		it('with setTimeout', () => {
 			let i = 0;
 
 			const handler = (item) =>
@@ -65,14 +65,14 @@ describe('concurrent', async function () {
 
 	});
 
-	describe('throws', async function () {
+	describe('throws', () => {
 
-		it(FIRST_ARGUMENT, async function () {
+		it(FIRST_ARGUMENT, () => {
 			return testee()
 				.catch(error => expect(error.message).to.equal(FIRST_ARGUMENT));
 		});
 
-		it(THIRD_ARGUMENT, async function () {
+		it(THIRD_ARGUMENT, () => {
 			return testee(new Function(), [], 1.5)
 				.catch(error => expect(error.message).to.equal(THIRD_ARGUMENT));
 		});

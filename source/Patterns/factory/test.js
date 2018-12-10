@@ -1,8 +1,9 @@
 const expect = require('chai').expect;
 
 describe('factory', function () {
+
 	const factory = require('./index');
-	it('factory', async function () {
+	it('factory', () => {
 		class C {
 			constructor(payload) {
 				this.payload = payload;
@@ -19,4 +20,5 @@ describe('factory', function () {
 		let r2 = classFactory(payload2);
 		expect(r2.payload).to.deep.equal(payload2);
 	});
+
 });

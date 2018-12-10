@@ -1,21 +1,21 @@
 const expect = require('chai').expect;
 
-describe('redefine', async function () {
+describe('redefine', () => {
 	const testee = require('./index');
 
-	describe('self', async function () {
-		it('is', async function () {
+	describe('self', () => {
+		it('is', () => {
 			expect(typeof testee === 'function').to.equal(true);
 		});
 
-		it('result', async function () {
+		it('result', () => {
 			const cb = (a) => (b) => undefined;
 
 			expect(typeof testee(cb) === 'function').to.equal(true);
 		});
 	});
 
-	describe('run', async function () {
+	describe('run', () => {
 
 		let n = 0;
 		let m = 0;
@@ -38,13 +38,13 @@ describe('redefine', async function () {
 		};
 
 		let w = testee(fn);
-		it('init', function () {
+		it('init', () => {
 			expect(n).to.equal(0);
 			expect(m).to.equal(0);
 			expect(l).to.equal(0);
 		});
 
-		it('redefined 0', function () {
+		it('redefined 0', () => {
 			const result = w(1);
 			expect(result).to.equal(1);
 			expect(n).to.equal(1);
@@ -52,7 +52,7 @@ describe('redefine', async function () {
 			expect(l).to.equal(0);
 		});
 
-		it('redefined 1', function () {
+		it('redefined 1', () => {
 			const result = w(10);
 			expect(result).to.equal(11);
 			expect(n).to.equal(1);
@@ -60,7 +60,7 @@ describe('redefine', async function () {
 			expect(l).to.equal(0);
 		});
 
-		it('redefined 2', function () {
+		it('redefined 2', () => {
 			const result = w(100);
 			expect(result).to.equal(111);
 			expect(n).to.equal(1);

@@ -2,9 +2,9 @@ const expect = require('chai').expect;
 
 const Class = require('./index');
 
-describe('InMemoryStorage', function () {
+describe('InMemoryStorage', () => {
 
-	it('set & get & has', async function () {
+	it('set & get & has', () => {
 		const i = new Class();
 		i.set(1, {q: 'q'});
 		expect(i.get(1)).to.deep.equal({q: 'q'});
@@ -15,7 +15,7 @@ describe('InMemoryStorage', function () {
 
 	});
 
-	it('del', async function () {
+	it('del', () => {
 		const i = new Class();
 		i.set(1, 123);
 		expect(i.get(1)).to.equal(123);
@@ -23,7 +23,7 @@ describe('InMemoryStorage', function () {
 		expect(i.get(1)).to.equal(undefined);
 	});
 
-	it('expire', async function () {
+	it('expire', () => {
 		const i = new Class();
 		i.set(1, {q: 'q'});
 		i.expire(1, 25);
@@ -31,7 +31,7 @@ describe('InMemoryStorage', function () {
 			.then((result) => expect(result).to.equal(undefined));
 	});
 
-	it('clear', async function () {
+	it('clear', () => {
 		const i = new Class();
 		i.set(1, {qqq: 'qqq'});
 		i.clear();
@@ -39,7 +39,7 @@ describe('InMemoryStorage', function () {
 		expect(Array.isArray(keys) && keys.length === 0).to.equal(true);
 	});
 
-	it('export', async function () {
+	it('export', () => {
 		const i = new Class();
 		i.set(1, 1);
 		i.set(2, 2);
@@ -49,7 +49,7 @@ describe('InMemoryStorage', function () {
 		expect(Array.isArray(dump) && dump.length === 3).to.equal(true);
 	});
 
-	it('import', async function () {
+	it('import', () => {
 		const i = new Class();
 		const dump = [
 			[1, {value: 1, timestamp: 1534249657765}],
@@ -61,7 +61,7 @@ describe('InMemoryStorage', function () {
 		expect(Array.isArray(keys) && keys.length === 2).to.equal(true);
 	});
 
-	it('import. expire', async function () {
+	it('import. expire', () => {
 		const i = new Class();
 		const dump = [
 			[1, {value: 1, timestamp: 1534249657765}],
@@ -74,7 +74,7 @@ describe('InMemoryStorage', function () {
 		expect(i.get(3)).to.equal(undefined);
 	});
 
-	it('import. expire old', async function () {
+	it('import. expire old', () => {
 		const i = new Class();
 		const dump = [
 			[1, {value: 1, timestamp: 1534249657765, till: Date.now() + 100}],

@@ -16,8 +16,9 @@ const source = {
 	}
 };
 
-describe('repack', async function () {
-	it('id', function () {
+describe('repack', () => {
+
+	it('id', () => {
 		const result = testee(source);
 		expect(result).to.deep.equal({
 			2: {
@@ -35,7 +36,7 @@ describe('repack', async function () {
 		});
 	});
 
-	it('value', function () {
+	it('value', () => {
 		const result = testee(source, 'value');
 		expect(result).to.deep.equal({
 			3: {
@@ -52,4 +53,5 @@ describe('repack', async function () {
 			}
 		});
 	});
+
 });

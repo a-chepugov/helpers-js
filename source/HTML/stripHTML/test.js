@@ -1,9 +1,9 @@
 const expect = require('chai').expect;
 const testee = require('./index');
 
-describe('stripHtml', async function () {
+describe('stripHtml', () => {
 
-	it('strip', async function () {
+	it('strip', () => {
 		expect(testee('<p>text<p>')).to.equal('text');
 	});
 
