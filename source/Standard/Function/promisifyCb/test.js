@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const promisify = require('./index');
 
-describe('promisify-node', () => {
+describe('promisifyCb', () => {
 
 	it('resolved', () => {
 		function fn(payload, cb) {
@@ -17,12 +17,16 @@ describe('promisify-node', () => {
 
 	it('rejected', () => {
 		function fn(payload, cb) {
-			cb(new Error, payload);
+			cb(new Error('Oops'), payload);
 		}
 
 		let p = promisify(fn)(1);
 		expect(p instanceof Promise).to.equal(true);
 		return p
-			.catch((error) => error).then((error) => expect(error).to.be.an.instanceof(Error));
+			.catch((error) => error)
+			.then((payload) => {
+				expect(payload).to.be.an.instanceof(Error);
+				expect(payload.message).to.equal('Oops');
+			});
 	});
 });

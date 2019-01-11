@@ -3,18 +3,27 @@ const testee = require('./index');
 
 describe('promisify', () => {
 
-	describe('run', () => {
-		const promise = testee((a, b) => a + b)(24, 42);
+	const sync = (a, b) => a + b;
+	const async = (a, b) => Promise.resolve(a + b);
 
-		it('promise', () => {
+	describe('run', () => {
+
+		it('sync', () => {
+			const promise = testee(sync)(24, 42);
+
 			expect(promise).to.be.an.instanceof(Promise);
+
+			return promise
+				.then((response) => expect(response).to.equal(66));
 		});
 
-		it('result', () => {
+		it('async', () => {
+			const promise = testee(async)(24, 42);
+
+			expect(promise).to.be.an.instanceof(Promise);
+
 			return promise
-				.then((response) => {
-					expect(response).to.equal(66);
-				});
+				.then((response) => expect(response).to.equal(66));
 		});
 
 	});
@@ -26,17 +35,24 @@ describe('promisify', () => {
 				.catch((error) => error).then((error) => expect(error).to.be.an.instanceof(Error));
 		});
 
-		it('Second argument must be a function', () => {
-			return testee(() => {
-			})(1423)
-				.catch((error) => error).then((error) => expect(error).to.be.an.instanceof(Error));
-		});
-
 		it('function throws', () => {
 			return testee(() => {
-				throw new Error();
+				throw new Error('Oops');
 			})([])
-				.catch((error) => error).then((error) => expect(error).to.be.an.instanceof(Error));
+				.catch((error) => error)
+				.then((payload) => {
+					expect(payload).to.be.an.instanceof(Error);
+					expect(payload.message).to.equal('Oops');
+				});
+		});
+
+		it('function catch', () => {
+			return testee(() => new Promise((resolve, reject) => reject(new Error('Oops'))))([])
+				.catch((error) => error)
+				.then((payload) => {
+					expect(payload).to.be.an.instanceof(Error);
+					expect(payload.message).to.equal('Oops');
+				});
 		});
 
 	});
