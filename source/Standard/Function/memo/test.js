@@ -32,15 +32,4 @@ describe('memo', () => {
 
 	});
 
-	describe('meta', () => {
-
-		it('length', () => {
-			function counter(a, b, c) {
-			}
-
-			const wrapped = testee(counter);
-			expect(wrapped.length).to.deep.equal(counter.length);
-		});
-
-	});
 });

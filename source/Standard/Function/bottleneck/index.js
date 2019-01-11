@@ -34,11 +34,7 @@ module.exports = function (fn, count) {
 		return waiterNew.then(([promise]) => promise);
 	}
 
-	return Object.defineProperty(
-		function () {
-			return run.apply(null, arguments);
-		},
-		'length',
-		Object.assign(Object.getOwnPropertyDescriptor(fn, 'length'))
-	);
+	return function () {
+		return run.apply(null, arguments);
+	};
 };

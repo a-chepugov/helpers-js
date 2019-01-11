@@ -3,7 +3,7 @@ const FIRST_ARGUMENT = 'Первый аргумент должен быть фу
 const THIRD_ARGUMENT = 'Третий аргумент должен быть целым положительным числом';
 
 const portioner = require('../../Generator/portioner');
-const promisify = require('../../Promise/promisify');
+const promisify = require('../../Function/promisify');
 
 /**
  * Выполняет обработку данных порциями

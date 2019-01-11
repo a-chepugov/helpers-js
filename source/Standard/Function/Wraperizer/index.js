@@ -47,6 +47,7 @@ module.exports = Wraperizer;
 /////////////
 
 Wraperizer.prototype
-	[add]('limit', require('./wrappers/limit'))
-	[add]('memo', require('./wrappers/memo'))
-	[add]('promisify', require('./wrappers/promisify'))
+	[add]('limit', require('../limit'))
+	[add]('memo', require('../memo'))
+	[add]('promisify', require('../promisify'))
+;

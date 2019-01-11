@@ -3,7 +3,7 @@
 /**
  * Wrap function with a Promise and call it in async manner
  * @name promisify
- * @memberof Standard/Promise
+ * @memberof Standard/Function
  * @param {Function} fn
  * @param {any} thisArg - context for `fn`
  * @return {Function<Promise>}

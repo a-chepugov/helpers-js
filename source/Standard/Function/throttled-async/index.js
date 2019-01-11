@@ -1,6 +1,6 @@
 'use strict';
 
-const promisify = require('../../Promise/promisify');
+const promisify = require('../../Function/promisify');
 /**
  * Creates function throttling wrapper
  * @name throttled-async
