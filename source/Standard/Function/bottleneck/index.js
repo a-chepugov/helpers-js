@@ -1,13 +1,4 @@
-const promisify = (fn, thisArg) =>
-	function () {
-		return new Promise((resolve, reject) => {
-			try {
-				resolve(fn.apply(thisArg, arguments));
-			} catch (error) {
-				reject(error);
-			}
-		});
-	};
+const promisify = require('../promisify');
 
 module.exports = function (fn, count) {
 	const pool = new Map(Array.from(new Array(count), (v, i) => [i, Promise.resolve(i)]));
