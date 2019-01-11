@@ -1,7 +1,13 @@
 const promisify = require('../promisify');
 
-module.exports = function (fn, count) {
-	const pool = new Map(Array.from(new Array(count), (v, i) => [i, Promise.resolve(i)]));
+/**
+ * Creates queue for `fn` invokes with concurrency limitation
+ * @param {Function} fn
+ * @param {Number} [concurrency=1] - count of concurrently running `fn`
+ * @return {function}
+ */
+module.exports = function (fn, concurrency = 1) {
+	const pool = new Map(Array.from(new Array(concurrency), (v, i) => [i, Promise.resolve(i)]));
 
 	const waitForPlace = () => Promise.race(Array.from(pool.values()));
 
