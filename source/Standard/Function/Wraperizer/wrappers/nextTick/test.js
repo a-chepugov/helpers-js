@@ -6,60 +6,91 @@ describe('nextTick', () => {
 
 	describe('run', () => {
 
-		it('no args', () => {
-			let counter = 0;
-			const fn = () => counter++;
-
-			const wrapped = testee(fn);
-
-			const promise = wrapped().then((payload) => {
-				expect(counter).to.deep.equal(1);
-				expect(payload).to.deep.equal(0);
-			});
-
-			expect(counter).to.deep.equal(0);
-
-			return promise;
-		});
-
-		it('args', () => {
+		it('sync', () => {
 			let counter = 0;
 			const fn = (a) => counter += a;
 
 			const wrapped = testee(fn);
 
 			const promise = wrapped(5).then((payload) => {
-				expect(counter).to.deep.equal(5);
-				expect(payload).to.deep.equal(5);
+				expect(counter).to.equal(5);
+				expect(payload).to.equal(5);
 			});
 
-			expect(counter).to.deep.equal(0);
+			expect(counter).to.equal(0);
+
+			return promise;
+		});
+
+		it('async', () => {
+			let counter = 0;
+
+			const fn = (a) =>
+				new Promise((resolve) => {
+					counter += a;
+					resolve(counter + 1);
+				});
+
+			const wrapped = testee(fn);
+
+			const promise = wrapped(5)
+				.then((payload) => {
+					expect(counter).to.equal(5);
+					expect(payload).to.equal(6);
+				});
+
+			expect(counter).to.equal(0);
 
 			return promise;
 		});
 
 	});
 
-	//@todo fn  возвращает promise (ошибка и нормальная ошибка)
-
 	describe('catch', () => {
 
-		it('args', () => {
+		it('sync', () => {
 			let counter = 0;
 
-			const fn = (a) => {
+			const fn = () => {
 				counter++;
 				throw new Error('Oops');
 			};
 
 			const wrapped = testee(fn);
 
-			const promise = wrapped(5).then((payload) => {
-				expect(counter).to.deep.equal(5);
-				expect(payload).to.deep.equal(5);
-			});
+			const promise = wrapped(5)
+				.catch((error) => error)
+				.then((payload) => {
+					expect(counter).to.equal(1);
+					expect(payload).to.be.an.instanceof(Error);
+					expect(payload.message).to.equal('Oops');
+				});
 
-			expect(counter).to.deep.equal(0);
+			expect(counter).to.equal(0);
+
+			return promise;
+		});
+
+		it('async', () => {
+			let counter = 0;
+
+			const fn = () =>
+				new Promise((resolve, reject) => {
+					counter++;
+					reject(new Error('Oops'));
+				});
+
+			const wrapped = testee(fn);
+
+			const promise = wrapped(5)
+				.catch((error) => error)
+				.then((payload) => {
+					expect(counter).to.equal(1);
+					expect(payload).to.be.an.instanceof(Error);
+					expect(payload.message).to.equal('Oops');
+				});
+
+			expect(counter).to.equal(0);
 
 			return promise;
 		});
@@ -73,7 +104,7 @@ describe('nextTick', () => {
 			}
 
 			const wrapped = testee(counter);
-			expect(wrapped.length).to.deep.equal(counter.length);
+			expect(wrapped.length).to.equal(counter.length);
 		});
 
 	});
