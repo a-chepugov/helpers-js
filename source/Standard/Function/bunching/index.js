@@ -1,12 +1,12 @@
 /**
- * Create function to bunching data of multiply {@link bunching} function
+ * Creates function to bunching data of multiply {@link bunching} function result invokes
  * @name bunching
  * @memberof Standard/Function
  * @param {Function} handler - function for processing {@link `bunch`} of data
  * @param {Function} checker - function to invoke handler
  * @param {Function} separator - function to parse result from `handler`
  * @param {*} [thisArg] - context for `handler` call
- * @return {Function}
+ * @return {Function} result
  * @example
  * // const bunching = require('helpers-js/Standard/Function/bunching');
  * let timer;
