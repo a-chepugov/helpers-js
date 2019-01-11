@@ -3,11 +3,13 @@ const expect = require('chai').expect;
 const testee = require('./index');
 
 describe('bottleneck', function () {
-	this.timeout(15000);
+	before(function () {
+		this.timeout(15000);
+	});
 
-	describe('run', function () {
+	describe('run', () => {
 
-		// Уменьшение может вызвать ошибку при прохождении тестов
+		// Уменьшение может вызвать ошибку при прохождении тестов т.к. они оценивают время
 		const TIMEOUT = 100;
 
 		const counter = (a) =>

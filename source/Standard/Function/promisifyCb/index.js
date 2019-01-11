@@ -4,11 +4,11 @@
  * Wrap node-style function with a Promise
  * @name promisifyCb
  * @memberof Standard/Function
- * @param {function} fn - node-style function (last argument is callback)
+ * @param {Function} fn - node-style function (last argument is callback)
  * @param {any} [thisArg] - context for `fn`
  * @return {function<Promise>} - function returns Promise for `fn` invoking
  * @example
- * const promisify = require('helpers-js/Standard/Promise/promisify');
+ * const promisify = require('helpers-js/Standard/Function/promisifyCb');
  * function fn(payload, cb) {
  *  payload += 1;
  *  cb(null, payload);

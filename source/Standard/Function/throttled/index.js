@@ -3,10 +3,10 @@
  * Creates function throttling wrapper
  * @name throttled
  * @memberof Standard/Function
- * @param {function} fn
- * @param {function} stay - function which define must `fn` be invoked or not
+ * @param {Function} fn
+ * @param {Function} stay - function which define must `fn` be invoked or not
  * @param {any} thisArg - context for `fn`
- * @return {function}
+ * @return {Function}
  */
 module.exports = (fn, stay = () => false, thisArg) =>
 	function () {

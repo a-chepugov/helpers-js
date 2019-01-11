@@ -4,16 +4,17 @@ const promisify = require('../promisify');
  * Creates queue for `fn` invokes with concurrency limitation
  * @param {Function} fn
  * @param {Number} [concurrency=1] - count of concurrently running `fn`
- * @return {function}
+ * @param {any} thisArgs - context for `fn`
+ * @return {Function}
  */
-module.exports = function (fn, concurrency = 1) {
+module.exports = function (fn, concurrency = 1, thisArgs) {
 	const pool = new Map(Array.from(new Array(concurrency), (v, i) => [i, Promise.resolve(i)]));
 
 	const waitForPlace = () => Promise.race(Array.from(pool.values()));
 
 	const takePlace = (index, promise) => pool.set(index, promise.then(() => index, () => index));
 
-	const fnP = promisify(fn);
+	const fnP = promisify(fn, thisArgs);
 
 	let waiter = Promise.resolve();
 
