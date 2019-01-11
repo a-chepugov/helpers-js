@@ -12,7 +12,7 @@ describe('promisify-node', () => {
 		let p = promisify(fn)(1);
 		expect(p instanceof Promise).to.equal(true);
 		return p
-			.then((r) => expect(r).to.equal(2))
+			.then((r) => expect(r).to.equal(2));
 	});
 
 	it('rejected', () => {
@@ -22,6 +22,7 @@ describe('promisify-node', () => {
 
 		let p = promisify(fn)(1);
 		expect(p instanceof Promise).to.equal(true);
-		return p.catch((error) => expect(error instanceof Error).to.equal(true));
+		return p
+			.catch((error) => error).then((error) => expect(error).to.be.an.instanceof(Error));
 	});
 });
