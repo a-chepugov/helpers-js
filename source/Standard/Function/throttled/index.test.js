@@ -18,10 +18,13 @@ describe('throttled', () => {
 
 		it('this', () => {
 			const ctx = [1, 2, 3];
-			const wrapped = tested(() => true, function () {
-				expect(this).to.deep.equal(ctx);
-			});
-			wrapped.call(ctx);
+			const wrapped = tested(
+				() => true,
+				function () {
+					expect(this).to.deep.equal(ctx);
+				}, ctx);
+
+			wrapped();
 		});
 
 		it('this binded', () => {
@@ -37,17 +40,9 @@ describe('throttled', () => {
 
 	describe('throws', () => {
 
-		it('fn', () => {
-			expect(() => {
-				const wrapped = tested(1);
-			}).to.throw();
-		});
+		it('fn', () => expect(() => tested(1)()).to.throw());
 
-		it('stay', () => {
-			expect(() => {
-				const wrapped = tested(() => true, 1);
-			}).to.throw();
-		});
+		it('stay', () => expect(() => tested(() => true, 1)()).to.throw());
 
 	});
 
