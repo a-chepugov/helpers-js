@@ -30,11 +30,6 @@ describe('promisify', () => {
 
 	describe('throws', () => {
 
-		it('First argument must be a function', () => {
-			return testee(123)([])
-				.catch((error) => error).then((error) => expect(error).to.be.an.instanceof(Error));
-		});
-
 		it('function throws', () => {
 			return testee(() => {
 				throw new Error('Oops');
