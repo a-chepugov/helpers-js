@@ -24,9 +24,6 @@ describe('promisifyCb', () => {
 		expect(p instanceof Promise).to.equal(true);
 		return p
 			.catch((error) => error)
-			.then((payload) => {
-				expect(payload).to.be.an.instanceof(Error);
-				expect(payload.message).to.equal('Oops');
-			});
+			.then((payload) => expect(payload).to.be.an.instanceof(Error).and.to.have.property('message', 'Oops'))
 	});
 });

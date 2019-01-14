@@ -27,10 +27,8 @@ describe('bottleneck', function () {
 
 	});
 
-	describe('async', () => {
-		before(function () {
-			this.timeout(15000);
-		});
+	describe('async', function () {
+		this.timeout(9999);
 
 		// Уменьшение может вызвать ошибку при прохождении тестов т.к. они снованы на времи исполнения
 		const TIMEOUT = 150;

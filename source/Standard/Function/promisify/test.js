@@ -35,19 +35,13 @@ describe('promisify', () => {
 				throw new Error('Oops');
 			})([])
 				.catch((error) => error)
-				.then((payload) => {
-					expect(payload).to.be.an.instanceof(Error);
-					expect(payload.message).to.equal('Oops');
-				});
+				.then((payload) => expect(payload).to.be.an.instanceof(Error).and.to.have.property('message', 'Oops'))
 		});
 
 		it('function catch', () => {
 			return testee(() => new Promise((resolve, reject) => reject(new Error('Oops'))))([])
 				.catch((error) => error)
-				.then((payload) => {
-					expect(payload).to.be.an.instanceof(Error);
-					expect(payload.message).to.equal('Oops');
-				});
+				.then((payload) => expect(payload).to.be.an.instanceof(Error).and.to.have.property('message', 'Oops'));
 		});
 
 	});

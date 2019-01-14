@@ -60,11 +60,8 @@ describe('nextTick', () => {
 
 			const promise = wrapped(5)
 				.catch((error) => error)
-				.then((payload) => {
-					expect(counter).to.equal(1);
-					expect(payload).to.be.an.instanceof(Error);
-					expect(payload.message).to.equal('Oops');
-				});
+				.then((payload) => expect(payload).to.be.an.instanceof(Error).and.to.have.property('message', 'Oops'))
+				.then(() => expect(counter).to.equal(1));
 
 			expect(counter).to.equal(0);
 
@@ -84,11 +81,8 @@ describe('nextTick', () => {
 
 			const promise = wrapped(5)
 				.catch((error) => error)
-				.then((payload) => {
-					expect(counter).to.equal(1);
-					expect(payload).to.be.an.instanceof(Error);
-					expect(payload.message).to.equal('Oops');
-				});
+				.then((payload) => expect(payload).to.be.an.instanceof(Error).and.to.have.property('message', 'Oops'))
+				.then(() => expect(counter).to.equal(1));
 
 			expect(counter).to.equal(0);
 
