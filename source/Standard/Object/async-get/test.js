@@ -34,29 +34,32 @@ describe('async-get', () => {
 				});
 		});
 
-		it('thisArg', () => {
+		it('this', () => {
 			let i = 0;
 
 			const _this = {a: 2, b: 3};
 
 			function initiator() {
+				expect(this).to.equal(_this);
 				i++;
 				return this;
 			}
 
 			let formatter = {
 				a({a}) {
+					expect(this).to.equal(_this);
 					return this.a * a;
 				},
 				b({b}) {
+					expect(this).to.equal(_this);
 					return this.b * b;
 				}
 			};
 
-			let wrapped = testee(initiator, formatter, 10, _this);
+			let wrapped = testee.call(_this, initiator, formatter, 10);
 
 			return Promise.all([wrapped.a, wrapped.b])
-				.then(([a, b, c]) => {
+				.then(([a, b]) => {
 					expect(i).to.equal(1);
 					expect(a).to.equal(4);
 					expect(b).to.equal(9);

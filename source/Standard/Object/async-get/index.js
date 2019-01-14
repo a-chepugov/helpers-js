@@ -7,10 +7,10 @@
  * @param {Function} initiator - функция для инициализации. Получает перечень запрошенных полей
  * @param {Object<Function>} formatter - словарь функций для постобработки результата
  * @param {Number} timeout - задержка, для агрегации ключей
- * @param {any} thisArg - контекст для вызова `initiator` и элементов formatter
  * @return {Proxy}
  */
-module.exports = (initiator = new Function(), formatter = {}, timeout, thisArg = formatter) => {
+module.exports = function (initiator = new Function(), formatter = {}, timeout) {
+	const thisArg = this ? this : formatter;
 	timeout = Number.isFinite(timeout) && timeout > 0 ? Math.floor(timeout) : 0;
 	const keys = new Set();
 
