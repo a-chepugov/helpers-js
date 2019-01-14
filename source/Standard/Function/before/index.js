@@ -5,4 +5,6 @@
  * @return {Function}
  */
 module.exports = (fn, wrapper) =>
-	(...args) => fn(wrapper(...args));
+	function () {
+		return fn.call(this, wrapper.apply(this, arguments));
+	};

@@ -6,16 +6,15 @@
  * @memberof Standard/Function
  * @param {Function} fn
  * @param {Function} stay - function which define must `fn` be invoked or not
- * @param {any} thisArg - context for `fn`
  * @return {Function}
  */
-module.exports = (fn, stay = () => false, thisArg) =>
+module.exports = (fn, stay = () => false) =>
 	function () {
 		return new Promise((resolve, reject) => {
 			try {
-				resolve(stay.apply(thisArg, arguments));
+				resolve(stay.apply(this, arguments));
 			} catch (error) {
 				reject(error);
 			}
-		}).then((stay) => stay ? undefined : fn.apply(thisArg, arguments));
+		}).then((stay) => stay ? undefined : fn.apply(this, arguments));
 	};

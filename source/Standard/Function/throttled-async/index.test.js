@@ -24,9 +24,8 @@ describe('throttled-async', () => {
 				() => true,
 				function () {
 					expect(this).to.deep.equal(ctx);
-				},
-				ctx
-			);
+				}
+			).bind(ctx);
 			return wrapped();
 		});
 

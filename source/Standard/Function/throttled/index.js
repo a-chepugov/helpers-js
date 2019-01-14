@@ -5,12 +5,11 @@
  * @memberof Standard/Function
  * @param {Function} fn
  * @param {Function} stay - function which define must `fn` be invoked or not
- * @param {any} thisArg - context for `fn`
  * @return {Function}
  */
-module.exports = (fn, stay = () => false, thisArg) =>
+module.exports = (fn, stay = () => false) =>
 	function () {
-		return stay.apply(thisArg, arguments) ?
+		return stay.apply(this, arguments) ?
 			undefined :
-			fn.apply(thisArg, arguments);
+			fn.apply(this, arguments);
 	};

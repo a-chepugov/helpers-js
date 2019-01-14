@@ -25,6 +25,26 @@ describe('bunching', () => {
 			return new Promise((resolve) => setTimeout(() => resolve(), 150));
 		});
 
+		it('this', () => {
+			const _this = {a: 1};
+			const invoke = bunching(
+				function (...args) {
+					expect(this).to.equal(_this);
+					return args[0];
+				},
+				function (call) {
+					expect(this).to.equal(_this);
+					call();
+				},
+				function (responce, index) {
+					expect(this).to.equal(_this);
+					return responce[index];
+				}
+			).bind(_this);
+
+			return invoke(123).then((payload) => expect(payload).to.equal(123));
+		});
+
 		it('async', () => {
 			let timer;
 

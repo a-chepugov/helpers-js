@@ -5,14 +5,13 @@
  * @name promisify
  * @memberof Standard/Function
  * @param {Function} fn
- * @param {any} thisArg - context for `fn`
  * @return {Function<Promise>}
  */
-module.exports = (fn, thisArg) =>
+module.exports = (fn) =>
 	function () {
 		return new Promise((resolve, reject) => {
 			try {
-				resolve(fn.apply(thisArg, arguments));
+				resolve(fn.apply(this, arguments));
 			} catch (error) {
 				reject(error);
 			}

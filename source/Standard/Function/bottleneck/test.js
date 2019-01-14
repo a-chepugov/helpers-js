@@ -3,6 +3,7 @@ const expect = require('chai').expect;
 const testee = require('./index');
 
 describe('bottleneck', function () {
+
 	describe('sync', () => {
 		const counterSync = (a) => a;
 
@@ -25,6 +26,18 @@ describe('bottleneck', function () {
 		factorySync(20, 15);
 		factorySync(Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1);
 
+		it('this', () => {
+			const _this = {a: 1};
+
+			function counter(a) {
+				expect(this).to.deep.equal(_this);
+				return a;
+			}
+
+			const wrapped = testee(counter, 5).bind(_this);
+
+			return Promise.all(Array.from(new Array(10), (v, i) => wrapped(i)));
+		});
 	});
 
 	describe('async', function () {

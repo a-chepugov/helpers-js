@@ -33,7 +33,7 @@ describe('Wraperizer', () => {
 
 		it('sync2', () => {
 			function q(a) {
-				console.log('DEBUG:test.js(q):39 =>', this);
+				console.log('DEBUG:test.js(q):39 =>');
 				return this;
 			}
 
@@ -44,7 +44,7 @@ describe('Wraperizer', () => {
 			fnPromisified()
 				.then((payload) => {
 					console.log('DEBUG:test():49 =====>');
-					console.dir(payload, {colors: true, depth: null});
+					// console.dir(payload, {colors: true, depth: null});
 					console.log('DEBUG:test():51 ===>');
 					return payload;
 				})

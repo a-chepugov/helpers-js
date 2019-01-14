@@ -5,7 +5,6 @@
  * @name promisifyCb
  * @memberof Standard/Function
  * @param {Function} fn - node-style function (last argument is callback)
- * @param {any} [thisArg] - context for `fn`
  * @return {function<Promise>} - function returns Promise for `fn` invoking
  * @example
  * const promisify = require('helpers-js/Standard/Function/promisifyCb');
@@ -19,11 +18,11 @@
  *    console.log(payload); // 2
  *  });
  */
-module.exports = (fn, thisArg) =>
+module.exports = (fn) =>
 	function () {
 		return new Promise((resolve, reject) => {
 			try {
-				fn.apply(thisArg,
+				fn.apply(this,
 					Array.prototype.slice.call(arguments).concat(
 						(error, response) =>
 							error ?
