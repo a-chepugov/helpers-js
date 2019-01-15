@@ -24,38 +24,13 @@ describe('Wraperizer', () => {
 			function q2(a) {
 				console.log('DEBUG:test.js(q2):31 =>');
 			}
+
 			const z2 = new testee(q2);
 			const fnMemo = z2.memo().$;
 
 			fnMemo(1);
 			fnMemo(1);
 		});
-
-		it('sync2', () => {
-			function q(a) {
-				console.log('DEBUG:test.js(q):39 =>');
-				return this;
-			}
-
-			const z = new testee(q);
-
-			const fnPromisified = z.promisify({a: 123}).$;
-
-			fnPromisified()
-				.then((payload) => {
-					console.log('DEBUG:test():49 =====>');
-					// console.dir(payload, {colors: true, depth: null});
-					console.log('DEBUG:test():51 ===>');
-					return payload;
-				})
-				.catch((error) => {
-					console.error('DEBUG:test():55 =====>');
-					console.error(error);
-					console.error('DEBUG:test():57 ===>');
-					throw error;
-				})
-
-		})
 
 	});
 

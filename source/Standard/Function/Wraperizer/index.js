@@ -46,8 +46,24 @@ module.exports = Wraperizer;
 
 /////////////
 
-Wraperizer.prototype
-	[add]('limit', require('../limit'))
-	[add]('memo', require('../memo'))
-	[add]('promisify', require('../promisify'))
-;
+const wrappers = [
+	'after',
+	'before',
+	'bottleneck',
+	'bunching',
+	'compose',
+	'curry',
+	'length',
+	'limit',
+	'memo',
+	'nextTick',
+	'pipe',
+	'promisify',
+	'promisifyCb',
+	'redefine',
+	'retry',
+	'throttled',
+	'throttled-async'
+];
+
+wrappers.forEach((name) => Wraperizer.prototype[add](name, require(`../${name}`)));
