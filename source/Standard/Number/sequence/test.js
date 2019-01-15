@@ -28,10 +28,10 @@ describe('sequence', () => {
 	describe('invalid input', () => {
 
 		it('borders. start',
-			() => expect(Array.from(testee(1, NaN)).length).to.equal(0));
+			() => expect(Array.from(testee(NaN, 1)).length).to.equal(0));
 
 		it('borders. finish',
-			() => expect(Array.from(testee(NaN, 1)).length).to.equal(0));
+			() => expect(Array.from(testee(1, NaN)).length).to.equal(0));
 
 		it('step',
 			() => expect(Array.from(testee(1, 10, NaN)).length).to.equal(1));
