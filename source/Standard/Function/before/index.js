@@ -6,5 +6,12 @@
  */
 module.exports = (fn, wrapper) =>
 	function () {
-		return fn.call(this, wrapper.apply(this, arguments));
+		return new Promise((resolve, reject) => {
+			try {
+				resolve(wrapper.apply(this, arguments));
+			} catch (error) {
+				reject(error);
+			}
+		})
+			.then(fn.bind(this));
 	};

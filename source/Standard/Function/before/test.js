@@ -5,14 +5,28 @@ const testee = require('./index');
 describe('before', () => {
 
 	describe('run', () => {
-		const fn = (a) => a ** 2;
-		const before = (a) => a + 1;
-		const wrapped = testee(fn, before);
 
-		it('0', () => expect(wrapped(0)).to.deep.equal(1));
-		it('1', () => expect(wrapped(1)).to.deep.equal(4));
-		it('2', () => expect(wrapped(2)).to.deep.equal(9));
-		it('3', () => expect(wrapped(3)).to.deep.equal(16));
+		it('1', () => {
+			const fn1 = (a) => a * 2;
+			const fn2 = (a) => a + 1;
+
+			return testee(fn1, fn2)(1)
+				.then((payload) => expect(payload).to.equal(4));
+		});
+
+		it('this', () => {
+			const _this = {a: 1};
+
+			function fn1() {
+				expect(_this).to.deep.equal(this);
+			}
+
+			function fn2() {
+				expect(_this).to.deep.equal(this);
+			}
+
+			return testee(fn1, fn2).call(_this);
+		});
 
 	});
 
