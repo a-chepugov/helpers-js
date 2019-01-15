@@ -3,16 +3,16 @@
 /**
  * @name sequence
  * @memberof Standard/Number
- * @param min
- * @param max
- * @param step
+ * @param {Number} [start=0]
+ * @param {Number} [finish=0]
+ * @param {Number} [step=1]
  * @return {{[Symbol.iterator]: Function}}
  */
-module.exports = function (min, max, step = 1) {
+module.exports = function (start = 0, finish = 0, step = 1) {
 	return {
 		[Symbol.iterator]: function* () {
-			for (let index = min; index <= max; index += step) {
-				yield index;
+			for (let current = start; current <= finish; current += step) {
+				yield current;
 			}
 		}
 	};
