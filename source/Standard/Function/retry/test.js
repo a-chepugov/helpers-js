@@ -16,7 +16,6 @@ describe('retry', () => {
 				}
 			};
 			const wrapped = testee(fn, 2);
-
 			return wrapped(1)
 				.then((payload) => expect(payload).to.equal(4))
 				.then(() => expect(count).to.equal(3));
@@ -32,7 +31,6 @@ describe('retry', () => {
 				}
 			};
 			const wrapped = testee(fn, 2);
-
 			return wrapped(1)
 				.catch((error) => error)
 				.then((payload) => expect(payload).to.be.an.instanceof(Error).and.to.have.property('message', 'Oops'))
@@ -56,7 +54,6 @@ describe('retry', () => {
 			};
 
 			const wrapped = testee(fn, 2, handler);
-
 			return wrapped(1)
 				.then((payload) => expect(payload).to.equal(4))
 				.then(() => expect(count).to.equal(3))
@@ -71,7 +68,6 @@ describe('retry', () => {
 			}
 
 			const wrapped = testee(fn, 2);
-
 			return wrapped.call(_this, 1);
 		});
 	});
@@ -92,7 +88,6 @@ describe('retry', () => {
 			});
 
 			const wrapped = testee(fn, 2);
-
 			return wrapped(1)
 				.then((payload) => expect(payload).to.equal(4))
 				.then(() => expect(count).to.equal(3));
@@ -108,7 +103,6 @@ describe('retry', () => {
 				}
 			});
 			const wrapped = testee(fn, 2);
-
 			return wrapped(1)
 				.catch((error) => error)
 				.then((payload) => expect(payload).to.be.an.instanceof(Error).and.to.have.property('message', 'Oops'))
@@ -138,7 +132,6 @@ describe('retry', () => {
 				.then((payload) => expect(payload).to.equal(4))
 				.then(() => expect(count).to.equal(3))
 				.then(() => expect(countHandler).to.equal(2));
-
 		});
 
 		it('this', () => {
@@ -149,7 +142,6 @@ describe('retry', () => {
 			}
 
 			const wrapped = testee(fn, 2);
-
 			return wrapped.call(_this, 1);
 		});
 

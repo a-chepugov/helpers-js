@@ -6,15 +6,27 @@
  * @return {Function}
  */
 module.exports = (fn, retries = 1, handler = (error, argsObject) => argsObject) =>
-	async function call() {
-		try {
-			return await fn.apply(this, arguments);
-		} catch (error) {
-			if (retries > 0) {
-				retries--;
-				return call.apply(this, await handler(error, arguments));
-			} else {
-				throw error;
+	function call() {
+		return new Promise((resolve, reject) => {
+			try {
+				resolve(fn.apply(this, arguments));
+			} catch (error) {
+				reject(error);
 			}
-		}
+		})
+			.catch((error) => {
+				if (retries > 0) {
+					retries--;
+					return new Promise((resolve, reject) => {
+						try {
+							resolve(handler(error, arguments));
+						} catch (error) {
+							reject(error);
+						}
+					})
+						.then((args) => call.apply(this, args));
+				} else {
+					throw error;
+				}
+			});
 	};
