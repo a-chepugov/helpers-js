@@ -5,24 +5,25 @@
  * @name timeout
  * @memberof Standard/Promise
  * @param {Promise} promise - promise needs to be to resolve
- * @param {Number} timeout - time interval in milliseconds before reject will be raised
+ * @param {Number} delay - time interval in milliseconds before reject will be raised
  * @param {Error} error - error with which reject will be raised
  * @return {Promise}
  */
-module.exports = (promise, timeout, error) => {
-	let id;
+module.exports = (promise, delay = 0, error = new Error) => {
+	let timeout;
 	return Promise.race(
 		[
 			promise,
-			new Promise((resolve, reject) => id = setTimeout(() => reject(error), timeout))
-		]
-	)
+			new Promise((resolve, reject) => timeout = setTimeout(() => reject(error), delay))
+		])
 		.then((result) => {
-			clearTimeout(id);
+			clearTimeout(timeout);
+			timeout = undefined;
 			return result;
 		})
 		.catch((error) => {
-			clearTimeout(id);
+			clearTimeout(timeout);
+			timeout = undefined;
 			throw error;
 		});
 };

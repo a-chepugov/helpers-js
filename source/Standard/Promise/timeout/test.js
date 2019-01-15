@@ -4,13 +4,13 @@ const tested = require('./index');
 describe('timeout', () => {
 
 	describe('run', () => {
-		const getPromise = (timeout) => new Promise((resolve) => setTimeout(() => resolve(1), timeout));
+		const delayedFunction = (delay) => new Promise((resolve) => setTimeout(resolve, delay, 1));
 
-		it('promise', () => expect(tested(getPromise(50), 50)).to.be.an.instanceof(Promise));
+		it('promise', () => expect(tested(delayedFunction(50), 50)).to.be.an.instanceof(Promise));
 
-		it('resolve', () => tested(getPromise(50), 100).then((payload) => expect(payload).to.be.equal(1)));
+		it('resolve', () => tested(delayedFunction(50), 150).then((payload) => expect(payload).to.be.equal(1)));
 
-		it('reject', () => tested(getPromise(50), 1, 'some text').catch((error) => error).then((payload) => expect(payload).to.equal('some text')));
+		it('reject', () => tested(delayedFunction(150), 50, 'Oops').catch((error) => error).then((payload) => expect(payload).to.equal('Oops')));
 
 	});
 
