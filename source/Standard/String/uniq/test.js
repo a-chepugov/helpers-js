@@ -2,8 +2,10 @@ const expect = require('chai').expect;
 const testee = require('./index');
 
 describe('uniq', () => {
-	it('0', () => {
-		const result = testee('--', '--', {length: 10, radix: 36});
-		expect(result.length > 25).to.equal(true);
-	});
+
+	it('default',
+		() => expect(testee().length > 22).to.equal(true));
+
+	it('--',
+		() => expect(testee('--', '--', {length: 20, radix: 36}).length > 35).to.equal(true));
 });
