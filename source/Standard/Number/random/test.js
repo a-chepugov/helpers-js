@@ -5,11 +5,21 @@ describe('random', () => {
 
 	describe('run', () => {
 
-		it('is in range', () => {
+		it('defaults',
+			() => expect(testee()).to.gte(0).to.lt(1));
 
-			let r = testee(1000, 2000);
-			expect(r >= 1000 && r <= 2000).to.equal(true);
-		});
+		it('is in range', () =>
+			() => expect(testee(2, 3)).to.gte(2).to.lt(3));
+
+	});
+
+	describe('invalid', () => {
+
+		it('first',
+			() => expect(testee(NaN, 1)).to.deep.equal(NaN));
+
+		it('second',
+			() => expect(testee(0, NaN)).to.deep.equal(NaN));
 
 	});
 
