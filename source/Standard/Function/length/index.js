@@ -1,6 +1,8 @@
 module.exports = (fn, value = fn.length) =>
 	Object.defineProperty(
-		fn,
+		function () {
+			return fn.apply(this, arguments);
+		},
 		'length',
 		{value}
 	);
