@@ -1,18 +1,17 @@
 /** @namespace Standard/Function */
-module.exports = {
-	after: require('./after'),
-	before: require('./before'),
-	bottleneck: require('./bottleneck'),
-	bunching: require('./bunching'),
-	curry: require('./curry'),
-	length: require('./length'),
-	limit: require('./limit'),
-	memo: require('./memo'),
-	nextTick: require('./nextTick'),
-	promisify: require('./promisify'),
-	promisifyCb: require('./promisifyCb'),
-	redefine: require('./redefine'),
-	throttled: require('./throttled'),
-	'throttled-async': require('./throttled-async'),
-	Wraperizer: require('./Wraperizer')
-};
+module.exports.Wraperizer = require('./Wraperizer');
+module.exports.default = require('./Wraperizer');
+module.exports.after = require('./after');
+module.exports.before = require('./before');
+module.exports.bottleneck = require('./bottleneck');
+module.exports.bunching = require('./bunching');
+module.exports.curry = require('./curry');
+module.exports.length = require('./length');
+module.exports.limit = require('./limit');
+module.exports.memo = require('./memo');
+module.exports.nextTick = require('./nextTick');
+module.exports.promisify = require('./promisify');
+module.exports.promisifyCb = require('./promisifyCb');
+module.exports.redefine = require('./redefine');
+module.exports.throttled = require('./throttled');
+module.exports.throttledAsync = require('./throttledAsync');
