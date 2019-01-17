@@ -1,6 +1,5 @@
 /** @namespace Standard/Function */
 module.exports.Wraperizer = require('./Wraperizer');
-module.exports.default = require('./Wraperizer');
 module.exports.after = require('./after');
 module.exports.before = require('./before');
 module.exports.bottleneck = require('./bottleneck');
@@ -15,3 +14,5 @@ module.exports.promisifyCb = require('./promisifyCb');
 module.exports.redefine = require('./redefine');
 module.exports.throttled = require('./throttled');
 module.exports.throttledAsync = require('./throttledAsync');
+
+module.exports.default = module.exports.Wraperizer;
