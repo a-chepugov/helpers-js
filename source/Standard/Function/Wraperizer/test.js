@@ -25,6 +25,16 @@ describe('Wraperizer', () => {
 			expect(wrapered(2)).to.be.equal(18);
 		});
 
+		it('wrap. internal. wrap chain', () => {
+			const fn = (a) => a + 1;
+			const wraperer = new testee(fn);
+			const wrapered = wraperer
+				.pipe((a) => a ** 2)
+				.pipe((a) => a * 2)
+				.$;
+			expect(wrapered(2)).to.be.equal(18);
+		});
+
 		it('add', () => {
 			const fn = (a) => a + 1;
 			const wraperer = new testee(fn);
