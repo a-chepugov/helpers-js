@@ -6,30 +6,46 @@ describe('Wraperizer', () => {
 
 	describe('run', () => {
 
-		it('sync', () => {
-			function q(a) {
-				return a;
-			}
+		it('wrap', () => {
+			const fn = (a) => a;
+			const wraperer = new testee(fn);
+			expect(wraperer).to.be.instanceof(testee);
+			expect(wraperer.$).to.equal(fn);
+			expect(wraperer.after((a) => a)).to.be.instanceof(testee);
+			expect(wraperer.after((a) => a).$).to.be.instanceof(Function).to.be.not.equal(fn);
+		});
 
-			const z = new testee(q);
+		it('wrap. internal. pipe', () => {
+			const fn = (a) => a + 1;
+			const wraperer = new testee(fn);
+			const wrapered = wraperer.pipe(
+				(a) => a ** 2,
+				(a) => a * 2,
+			).$;
+			expect(wrapered(2)).to.be.equal(18);
+		});
 
-			const fnLimited = z.limit().$;
-			let result1 = fnLimited(1);
-			console.log('DEBUG:test.js():20 =====================>', result1);
-			let result2 = fnLimited(2);
-			console.log('DEBUG:test.js():22 =====================>', result2);
-			let result3 = fnLimited(3);
-			console.log('DEBUG:test.js():24 =====================>', result3);
+		it('add', () => {
+			const fn = (a) => a + 1;
+			const wraperer = new testee(fn);
+			const $$$ = () => () => '$$$';
+			expect(wraperer.$$$).to.be.equal(undefined);
+			wraperer[testee.add]('$$$', $$$);
+			expect(wraperer.$$$).to.be.instanceof(Function);
+			expect(wraperer.$$$()).to.be.instanceof(testee);
+			expect(wraperer.$$$().$).to.be.instanceof(Function);
+			expect(wraperer.$$$().$(1)).to.be.equal('$$$');
+		});
 
-			function q2(a) {
-				console.log('DEBUG:test.js(q2):31 =>');
-			}
-
-			const z2 = new testee(q2);
-			const fnMemo = z2.memo().$;
-
-			fnMemo(1);
-			fnMemo(1);
+		it('del', () => {
+			const fn = (a) => a + 1;
+			const wraperer = new testee(fn);
+			const $$$ = () => () => '$$$';
+			expect(wraperer.$$$).to.be.equal(undefined);
+			wraperer[testee.add]('$$$');
+			expect(wraperer.$$$).to.be.instanceof(Function);
+			wraperer[testee.del]('$$$', $$$);
+			expect(wraperer.$$$).to.be.equal(undefined);
 		});
 
 	});
