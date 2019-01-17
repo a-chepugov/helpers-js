@@ -35,6 +35,14 @@ describe('Wraperizer', () => {
 			expect(wrapered(2)).to.be.equal(18);
 		});
 
+		it('wrap. internal. length', () => {
+			const fn = (a) => a + 1;
+			const wraperer = new testee(fn);
+			expect(fn.length).to.be.equal(1);
+			expect(wraperer.length(2).$.length).to.be.equal(2);
+			expect(fn.length).to.be.equal(1);
+		});
+
 		it('add', () => {
 			const fn = (a) => a + 1;
 			const wraperer = new testee(fn);

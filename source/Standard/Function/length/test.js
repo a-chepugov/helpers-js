@@ -16,5 +16,14 @@ describe('length', () => {
 		it('_!', () => expect(fn(3, 4)).to.deep.equal(7));
 		it('3!', () => expect(testee(fn, 3)(4, 5)).to.deep.equal(9));
 
+		it('immutable', () => {
+			const fn = (a, b) => a + b;
+			expect(fn.length).to.deep.equal(2);
+			const wrapped = testee(fn, 9);
+			expect(wrapped.length).to.deep.equal(9);
+			expect(fn.length).to.deep.equal(2);
+		});
+
 	});
+
 });
