@@ -1,12 +1,11 @@
 /**
- * Create function to bunching data of multiply {@link bunching} function
+ * Creates function to bunching data of multiply {@link bunching} function result invokes
  * @name bunching
  * @memberof Standard/Function
  * @param {Function} handler - function for processing {@link `bunch`} of data
  * @param {Function} checker - function to invoke handler
  * @param {Function} separator - function to parse result from `handler`
- * @param {*} [thisArg] - context for `handler` call
- * @return {Function}
+ * @return {Function} result
  * @example
  * // const bunching = require('helpers-js/Standard/Function/bunching');
  * let timer;
@@ -27,8 +26,7 @@
 module.exports = function (
 	handler,
 	checker = (resolve) => resolve(),
-	separator = (responce, index) => responce[index],
-	thisArg
+	separator = (responce, index) => responce[index]
 ) {
 	const bunch = [];
 	let __defer = {};
@@ -44,7 +42,7 @@ module.exports = function (
 				__defer.resolve = () => {
 					try {
 						const argumentsBunch = bunch.splice(0, bunch.length);
-						resolve(handler.apply(thisArg, argumentsBunch));
+						resolve(handler.apply(this, argumentsBunch));
 						__defer = {};
 					} catch (error) {
 						reject(error);
@@ -60,13 +58,13 @@ module.exports = function (
 	return function () {
 		bunch.push(arguments);
 		const index = bunch.length - 1;
-		const promise = createPromise().then((response) => separator(response, index, arguments));
+		const promise = createPromise.call(this).then((response) => separator.call(this, response, index, arguments));
 
 		return new Promise((resolve, reject) => {
 			try {
 				resolve(
 					checker.call(
-						thisArg,
+						this,
 						function () {
 							__defer.resolve();
 						},

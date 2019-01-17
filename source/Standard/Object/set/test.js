@@ -11,17 +11,17 @@ describe('set', () => {
 
 	it('child', () => {
 		testee(source, 'data.user.score', 3);
-		expect(source.data.user.score).to.deep.equal(3);
+		expect(source.data.user.score).to.equal(3);
 	});
 
 	it('nested', () => {
 		testee(source, 'data.user.name.first', 'Alex');
-		expect(source.data.user.name.first).to.deep.equal('Alex');
+		expect(source.data.user.name.first).to.equal('Alex');
 	});
 
 	it('custom separator', () => {
 		testee(source, 'data/user/score', 5, '/');
-		expect(source.data.user.score).to.deep.equal(5);
+		expect(source.data.user.score).to.equal(5);
 	});
 
 	it('return', () => {

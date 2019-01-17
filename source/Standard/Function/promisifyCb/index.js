@@ -2,13 +2,12 @@
 
 /**
  * Wrap node-style function with a Promise
- * @name promisify-node
- * @memberof Standard/Promise
- * @param {function} fn - node-style function (last argument is callback)
- * @param {any} [thisArg] - context for `fn`
+ * @name promisifyCb
+ * @memberof Standard/Function
+ * @param {Function} fn - node-style function (last argument is callback)
  * @return {function<Promise>} - function returns Promise for `fn` invoking
  * @example
- * const promisify = require('helpers-js/Standard/Promise/promisify');
+ * const promisify = require('helpers-js/Standard/Function/promisifyCb');
  * function fn(payload, cb) {
  *  payload += 1;
  *  cb(null, payload);
@@ -19,11 +18,11 @@
  *    console.log(payload); // 2
  *  });
  */
-module.exports = (fn, thisArg) =>
+module.exports = (fn) =>
 	function () {
 		return new Promise((resolve, reject) => {
 			try {
-				fn.apply(thisArg,
+				fn.apply(this,
 					Array.prototype.slice.call(arguments).concat(
 						(error, response) =>
 							error ?

@@ -8,10 +8,10 @@ describe('InMemoryStorage', () => {
 		const i = new Class();
 		i.set(1, {q: 'q'});
 		expect(i.get(1)).to.deep.equal({q: 'q'});
-		expect(i.has(1)).to.deep.equal(true);
+		expect(i.has(1)).to.equal(true);
 
-		expect(i.get(2)).to.deep.equal(undefined);
-		expect(i.has(2)).to.deep.equal(false);
+		expect(i.get(2)).to.equal(undefined);
+		expect(i.has(2)).to.equal(false);
 
 	});
 

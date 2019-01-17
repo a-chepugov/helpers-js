@@ -1,7 +1,8 @@
 'use strict';
+
 /**
  * Creates function throttling wrapper
- * @name throttled
+ * @name throttledAsync
  * @memberof Standard/Function
  * @param {Function} fn
  * @param {Function} stay - function which define must `fn` be invoked or not
@@ -9,7 +10,11 @@
  */
 module.exports = (fn, stay = () => false) =>
 	function () {
-		return stay.apply(this, arguments) ?
-			undefined :
-			fn.apply(this, arguments);
+		return new Promise((resolve, reject) => {
+			try {
+				resolve(stay.apply(this, arguments));
+			} catch (error) {
+				reject(error);
+			}
+		}).then((stay) => stay ? undefined : fn.apply(this, arguments));
 	};

@@ -2,7 +2,8 @@ const expect = require('chai').expect;
 
 const tested = require('./index');
 
-describe('throttled-async', () => {
+describe('throttledAsync', () => {
+
 	describe('run', () => {
 
 		it('arguments', () => {
@@ -19,10 +20,13 @@ describe('throttled-async', () => {
 
 		it('this', () => {
 			const ctx = [1, 2, 3];
-			const wrapped = tested(() => true, function () {
-				expect(this).to.deep.equal(ctx);
-			});
-			return wrapped.call(ctx);
+			const wrapped = tested(
+				() => true,
+				function () {
+					expect(this).to.deep.equal(ctx);
+				}
+			).bind(ctx);
+			return wrapped();
 		});
 
 		it('this binded', () => {
@@ -39,15 +43,15 @@ describe('throttled-async', () => {
 	describe('throws', () => {
 
 		it('fn', () => {
-			expect(() => {
-				const wrapped = tested(1);
-			}).to.throw();
+			return tested(1)()
+				.catch((error) => error)
+				.then((payload) => expect(payload).to.be.an.instanceof(Error));
 		});
 
 		it('stay', () => {
-			expect(() => {
-				const wrapped = tested(() => true, 1);
-			}).to.throw();
+			return tested(() => true, 1)()
+				.catch((error) => error)
+				.then((payload) => expect(payload).to.be.an.instanceof(Error));
 		});
 
 	});
