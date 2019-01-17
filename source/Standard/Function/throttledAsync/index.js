@@ -2,7 +2,7 @@
 
 /**
  * Creates function throttling wrapper
- * @name throttled-async
+ * @name throttledAsync
  * @memberof Standard/Function
  * @param {Function} fn
  * @param {Function} stay - function which define must `fn` be invoked or not

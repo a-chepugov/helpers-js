@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 
 const tested = require('./index');
 
-describe('throttled-async', () => {
+describe('throttledAsync', () => {
 
 	describe('run', () => {
 

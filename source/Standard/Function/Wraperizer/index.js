@@ -44,8 +44,6 @@ Wraperizer.del = del;
 
 module.exports = Wraperizer;
 
-/////////////
-
 const wrappers = [
 	'after',
 	'before',
@@ -63,7 +61,7 @@ const wrappers = [
 	'redefine',
 	'retry',
 	'throttled',
-	'throttled-async'
+	'throttledAsync'
 ];
 
 wrappers.forEach((name) => Wraperizer.prototype[add](name, require(`../${name}`)));
