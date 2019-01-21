@@ -1,13 +1,13 @@
 module.exports = function (fn, hasher = JSON.stringify) {
-	const saved = new Map();
-	return (...args) => {
-		const hash = hasher(args);
-		if (saved.has(hash)) {
-			return saved.get(hash);
+	const memory = new Map();
+	return function () {
+		const hash = hasher.call(this, arguments);
+		if (memory.has(hash)) {
+			return memory.get(hash);
 		} else {
-			const result = fn(...args);
-			saved.set(hash, result);
+			const result = fn.apply(this, arguments);
+			memory.set(hash, result);
 			return result;
 		}
-	}
+	};
 };
