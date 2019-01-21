@@ -2,7 +2,7 @@
  * Postprocesses `fn` results with `wrapper`
  * @param {Function} fn
  * @param {Function} wrapper
- * @return {Function}
+ * @return {Function<Promise>}
  */
 module.exports = (fn, wrapper) =>
 	function () {

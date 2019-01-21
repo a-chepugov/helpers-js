@@ -2,7 +2,7 @@
  * Preprocesses arguments with `wrapper` before `fn`
  * @param {Function} fn
  * @param {Function} wrapper
- * @return {Function}
+ * @return {Function<Promise>}
  */
 module.exports = (fn, wrapper) =>
 	function () {
