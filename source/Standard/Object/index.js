@@ -1,7 +1,7 @@
 /** @namespace Standard/Object */
 module.exports = {
 	'async-init': require('./async-get'),
-	deepClone: require('./deepClone'),
+	clone: require('./clone'),
 	get: require('./get'),
 	repack: require('./repack'),
 	set: require('./set')
