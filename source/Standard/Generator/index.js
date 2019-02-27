@@ -1,5 +1,6 @@
-/** @namespace Standard/Generator */
+/** @namespace Generator */
 module.exports = {
 	plunger: require('./plunger'),
-	portioner: require('./portioner')
+	portioner: require('./portioner'),
+	Navigable: require('./Navigable')
 };

@@ -1,9 +1,7 @@
-'use strict';
-
 /**
  * Creates bunching iterator for `iterable`
  * @name portioner
- * @memberof Standard/Generator
+ * @memberof Generator
  * @param {IterableIterator} iterable - any data implements [Symbol.iterator] method
  * @param {Number} count - portion size for bunching `iterable`
  * @yield {IterableIterator<any[]>}

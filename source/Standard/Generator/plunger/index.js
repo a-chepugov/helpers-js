@@ -1,10 +1,10 @@
 /**
  * Creates iterator for any object
- * @name generator
- * @memberof Generator/plunger
+ * @name plunger
+ * @memberof Generator
  * @param {*} object
  * @param {Function} plunger - determines to return a value or destruct and take its keys
- * @yield {IterableIterator<*|*>}
+ * @yield {IterableIterator<*>}
  */
 module.exports = function* (object, plunger) {
 	plunger = typeof plunger === 'function' ? plunger : (k, v) => typeof v === 'object';
