@@ -20,7 +20,8 @@
 	"scripts": {
 		"test": "mocha `find ./ -name '*test.js' -not -path '*/node_modules/*'`",
 		"test:watch": "mocha `find ./ -name '*test.js' -not -path '*/node_modules/*'` --watch",
-		"doc": "gulp docs:md"
+		"docs": "gulp docs:md",
+		"docs:watch": "gulp docs:watch"
 	},
 	"repository": {
 		"type": "git",
