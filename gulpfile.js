@@ -4,14 +4,8 @@ const {name, version} = require('./package.json');
 
 const paths = {
 	source: './source/**/!(*test).js',
-	clear: ['doc'],
 	doc: 'doc'
 };
-
-gulp.task('clean', () => {
-	const del = require('del');
-	return del([...paths.clear]);
-});
 
 gulp.task('docs:md', function () {
 	const gulpDocumentation = require('gulp-documentation');
