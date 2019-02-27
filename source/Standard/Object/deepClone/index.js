@@ -1,23 +1,24 @@
-'use strict';
-
 /**
  * Выполняет глубокое клонирование объекта
- * @name deepClone
- * @memberof Standard/Object
- * @param {Object} obj - объект для клонирования
+ * @name clone
+ * @memberof Object
+ * @param {Object} source - объект для клонирования
  * @return {Object} - клон исходного объекта
  */
-module.exports = function (obj) {
-	// "string", number, boolean
-	if (!(obj instanceof Object || typeof obj === 'object')) {
-		return obj;
-	}
-
-	const result = (obj instanceof Array) ? [] : {};
-	for (let key in obj) {
-		if (obj.hasOwnProperty(key)) {
-			result[key] = deepClone(obj[key]);
+module.exports = function (source) {
+	function clone(source) {
+		if (!(typeof source === 'object')) {
+			return source;
+		} else {
+			const result = (source instanceof Array) ? [] : {};
+			for (let key in source) {
+				if (source.hasOwnProperty(key)) {
+					result[key] = clone(source[key]);
+				}
+			}
+			return result;
 		}
 	}
-	return result;
+
+	return clone(source);
 };
