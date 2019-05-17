@@ -4,5 +4,6 @@ module.exports = {
 	HTML: require('./HTML'),
 	Node: require('./Node'),
 	Patterns: require('./Patterns'),
-	Standard: require('./Standard')
+	Standard: require('./Standard'),
+	Modules: require('./Modules')
 };
