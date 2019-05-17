@@ -1,9 +1,6 @@
-'use strict';
-module.exports = {
-	Constants: require('./Constants'),
-	HTML: require('./HTML'),
-	Node: require('./Node'),
-	Patterns: require('./Patterns'),
-	Standard: require('./Standard'),
-	Modules: require('./Modules')
-};
+module.exports.Constants = require('./Constants');
+module.exports.HTML = require('./HTML');
+module.exports.Node = require('./Node');
+module.exports.Patterns = require('./Patterns');
+module.exports.Standard = require('./Standard');
+module.exports.Modules = require('./Modules');
