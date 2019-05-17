@@ -1,5 +1,5 @@
 module.exports = {
-	Function: require('./Function'),
+	// Function: require('./Function'),
 	Generator: require('./Generator'),
 	Object: require('./Object'),
 	Map: require('./Map'),
