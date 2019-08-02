@@ -4,10 +4,13 @@
 	"description": "Different functions for development",
 	"main": "index.js",
 	"directories": {},
-	"dependencies": {},
+	"dependencies": {
+		"typescript": "^3.5.3"
+	},
 	"devDependencies": {
-		"babel-eslint": "^8.2.5",
-		"chai": "^4.1.2",
+		"@types/chai": "^4.1.7",
+		"@types/mocha": "^5.2.7",
+		"chai": "^4.2.0",
 		"documentation": "^5.3.5",
 		"eslint": "^5.0.0",
 		"eslint-config-wikimedia": "^0.5.0",
@@ -15,13 +18,20 @@
 		"gulp-babel": "^7.0.0",
 		"gulp-documentation": "^3.2.1",
 		"gulp-run": "^1.7.1",
-		"mocha": "^5.0.0"
+		"mocha": "^6.2.0",
+		"nodemon": "^1.19.1",
+		"ts-node": "^8.3.0",
+		"typedoc": "^0.15.0"
 	},
 	"scripts": {
 		"test": "mocha `find ./ -name '*test.js' -not -path '*/node_modules/*'`",
 		"test:watch": "mocha `find ./ -name '*test.js' -not -path '*/node_modules/*'` --watch",
 		"docs": "gulp docs:md",
-		"docs:watch": "gulp docs:watch"
+		"docs:watch": "gulp docs:watch",
+		"build": "tsc --watch",
+		"start:nodemon": "nodemon ./build/index.js",
+		"doc": "typedoc --readme README.md --name typedin --out ./doc/ --tsconfig tsconfig.json --excludePrivate --excludeNotExported --excludeExternals",
+		"test:ts": "mocha -r ts-node/register source/**/*.test.ts"
 	},
 	"repository": {
 		"type": "git",
@@ -36,5 +46,8 @@
 	"bugs": {
 		"url": "https://github.com/a-chepugov/helpers-js/issues"
 	},
-	"homepage": "https://github.com/a-chepugov/helpers-js#readme"
+	"homepage": "https://github.com/a-chepugov/helpers-js#readme",
+	"workspaces": [
+		"source/Standard/Function"
+	]
 }
