@@ -16,8 +16,7 @@ export default class Factory {
     getInstance(type: any, ...args: any[]) {
         const Constructor = this.Constructors.get(type);
         if (Constructor) {
-            const q = new Constructor(...args);
-            return q
+            return new Constructor(...args);
         } else {
             throw new Error(`Unknown type: ${type}`)
         }

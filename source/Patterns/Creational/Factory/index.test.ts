@@ -4,7 +4,7 @@ import Testee from './index';
 
 describe('Factory', () => {
 
-    class CA {
+    class SomeClass {
         a: any;
 
         constructor(payload: any) {
@@ -21,14 +21,14 @@ describe('Factory', () => {
     }
 
     it('creates instances', () => {
-        const test = new Testee(['a', CA], ['b', CB]);
+        const test = new Testee(['a', SomeClass], ['b', CB]);
 
         const result1 = test.getInstance('a', 1);
-        expect(result1).to.instanceOf(CA);
+        expect(result1).to.instanceOf(SomeClass);
         expect(result1.a).to.equal(1);
 
         const result2 = test.getInstance('a', 2);
-        expect(result2).to.instanceOf(CA);
+        expect(result2).to.instanceOf(SomeClass);
         expect(result2.a).to.equal(2);
 
         const result3 = test.getInstance('b', 3);
