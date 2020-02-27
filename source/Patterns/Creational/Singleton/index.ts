@@ -6,23 +6,22 @@ interface AnyClass {
 
 /**
  * @example
- *     const singleton = require('helpers-js/Patterns/singleton');
- *     class Ctor {
+ *     class SomeClass {
  *      constructor(payload) {
  *        this.payload = payload;
  *      }
  *     }
  *
- *     let singleton = new Testee(Ctor);
+ *     let singleton = new Singleton(SomeClass);
  *     const r1 = singleton.getInstance(1); // r1.payload === 1
  *     const r2 = singleton.getInstance(2); // r2.payload === 1
  */
 export default class Singleton {
     private instance: any;
-    private readonly Ctor: any;
+    private readonly Class: any;
 
-    constructor(Ctor: AnyClass) {
-        this.Ctor = Ctor;
+    constructor(Class: AnyClass) {
+        this.Class = Class;
     }
 
     /**
@@ -32,9 +31,9 @@ export default class Singleton {
     getInstance(...args: any[]) {
         return this.instance ?
             this.instance :
-            (this && this.constructor === this.Ctor) ?
+            (this && this.constructor === this.Class) ?
                 this.instance = this :
-                this.instance = new this.Ctor(...args);
+                this.instance = new this.Class(...args);
     }
 
 }

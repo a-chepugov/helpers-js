@@ -4,27 +4,26 @@ import Testee from './index';
 
 describe('Singleton', () => {
 
-    it('creates an instance', () => {
-        class C {
-            payload: any;
+    it('Creates an instance of simple class', () => {
+        class SomeClass {
+            payload: number;
 
-            constructor(payload: any) {
-                this.payload = payload;
+            constructor() {
+                this.payload = Math.random();
             }
         }
 
-        const singleton = new Testee(C);
+        const singleton = new Testee(SomeClass);
 
         const r1 = singleton.getInstance(1);
         const r2 = singleton.getInstance(2);
 
-        expect(r1.payload).to.equal(1);
-        expect(r2.payload).to.equal(1);
+        expect(r1.payload).to.equal(r2.payload);
         expect(r1).to.equal(r2);
     });
 
-    it('accepts arguments', () => {
-        class C {
+    it('Creates an instance with arguments', () => {
+        class SomeClass {
             a1: any;
             a2: any;
             a3: any;
@@ -36,13 +35,14 @@ describe('Singleton', () => {
             }
         }
 
-        const singleton = new Testee(C);
+        const singleton = new Testee(SomeClass);
 
-        const r1 = singleton.getInstance(1, '1', {a: 1, b: 2, c: 3});
+        const r1 = singleton.getInstance(1, '2', [3]);
         const r2 = singleton.getInstance();
 
-        const standard = {a1: 1, a2: '1', a3: {a: 1, b: 2, c: 3}};
+        const standard = {a1: 1, a2: '2', a3: [3]};
         expect(r1).to.deep.equal(standard);
         expect(r2).to.deep.equal(standard);
+        expect(r1).to.be.equal(r2);
     });
 });
