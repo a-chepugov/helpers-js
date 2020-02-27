@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"directories": {},
 	"dependencies": {
-		"typescript": "^3.5.3"
+		"typescript": "^3.8.2"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.1.7",
@@ -28,7 +28,9 @@
 		"test:watch": "mocha `find ./ -name '*test.js' -not -path '*/node_modules/*'` --watch",
 		"docs": "gulp docs:md",
 		"docs:watch": "gulp docs:watch",
-		"build": "tsc --watch",
+		"build": "tsc",
+		"build:watch": "tsc --watch",
+		"build:declaration": "find ./build -type f -name \"*.d.ts\" -delete && tsc --declaration",
 		"start:nodemon": "nodemon ./build/index.js",
 		"doc": "typedoc --readme README.md --name typedin --out ./doc/ --tsconfig tsconfig.json --excludePrivate --excludeNotExported --excludeExternals",
 		"test:ts": "mocha -r ts-node/register source/**/*.test.ts"

@@ -5,10 +5,9 @@
     "rootDir": "source/",
     "module": "commonjs",
     "target": "ES2015",
-    "noImplicitAny": true,
     "removeComments": true,
     "sourceMap": true,
-    "isolatedModules": true,
+    "strict": true,
     "noErrorTruncation": true,
     "pretty": true
   },
