@@ -17,7 +17,7 @@ class AddCommand implements Command<Fn> {
     };
 }
 
-class NumInvoker<CommandT extends Command<Fn>> implements Invoker<CommandT>{
+class NumInvoker<CommandT extends Command<Fn>> implements Invoker<CommandT> {
     // @ts-ignore
     private command: CommandT;
 
@@ -31,14 +31,13 @@ class NumInvoker<CommandT extends Command<Fn>> implements Invoker<CommandT>{
 }
 
 describe('Command', () => {
-    it('_', () => {
+    it('simple run', () => {
         let accumulator = {value: 0};
 
         const command = new AddCommand(accumulator);
         const invoker = new NumInvoker();
         invoker.setCommand(command);
         invoker.run(5);
-
 
         expect(accumulator.value).to.be.equal(5);
     });
