@@ -2,7 +2,7 @@ import {expect} from 'chai';
 
 import Testee from './index';
 
-describe('Singleton', () => {
+describe('SingletonWrapper', () => {
 
     it('Creates an instance of simple class', () => {
         class SomeClass {

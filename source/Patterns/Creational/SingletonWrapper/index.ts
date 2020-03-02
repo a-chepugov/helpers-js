@@ -12,9 +12,9 @@ interface AnyClass {
  *      }
  *     }
  *
- *     let singleton = new Singleton(SomeClass);
- *     const r1 = singleton.getInstance(1); // r1.payload === 1
- *     const r2 = singleton.getInstance(2); // r2.payload === 1
+ *     let wrapper = new SingletonWrapper(SomeClass);
+ *     const r1 = wrapper.getInstance(1); // r1.payload === 1
+ *     const r2 = wrapper.getInstance(2); // r2.payload === 1
  */
 export default class Singleton {
     private instance: any;
