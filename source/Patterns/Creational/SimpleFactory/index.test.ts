@@ -2,7 +2,7 @@ import {expect} from 'chai';
 
 import Testee from './index';
 
-describe('Factory', () => {
+describe('SimpleFactory', () => {
 
     class SomeClassA {
         a: any;
