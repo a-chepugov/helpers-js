@@ -5,8 +5,9 @@ export default class Registry<T> {
         this.items = new Map();
     }
 
-    set(key: string, value: T) {
+    set(key: string, value: T): Registry<T> {
         this.items.set(key, value);
+        return this;
     }
 
     get(key: string): T | never {
