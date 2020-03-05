@@ -10,30 +10,23 @@
 	"devDependencies": {
 		"@types/chai": "^4.1.7",
 		"@types/mocha": "^5.2.7",
+		"@types/node": "^13.7.7",
 		"chai": "^4.2.0",
-		"documentation": "^5.3.5",
 		"eslint": "^5.0.0",
 		"eslint-config-wikimedia": "^0.5.0",
-		"gulp": "^4.0.0",
-		"gulp-babel": "^7.0.0",
-		"gulp-documentation": "^3.2.1",
-		"gulp-run": "^1.7.1",
 		"mocha": "^6.2.0",
 		"nodemon": "^1.19.1",
 		"ts-node": "^8.3.0",
 		"typedoc": "^0.15.0"
 	},
 	"scripts": {
-		"test": "mocha `find ./ -name '*test.js' -not -path '*/node_modules/*'`",
-		"test:watch": "mocha `find ./ -name '*test.js' -not -path '*/node_modules/*'` --watch",
-		"docs": "gulp docs:md",
-		"docs:watch": "gulp docs:watch",
 		"build": "tsc",
 		"build:watch": "tsc --watch",
 		"build:declaration": "find ./build -type f -name \"*.d.ts\" -delete && tsc --declaration",
-		"start:nodemon": "nodemon ./build/index.js",
 		"doc": "typedoc --readme README.md --name typedin --out ./doc/ --tsconfig tsconfig.json --excludePrivate --excludeNotExported --excludeExternals",
-		"test:ts": "mocha -r ts-node/register source/**/*.test.ts"
+		"test": "mocha -r ts-node/register source/**/*.test.ts",
+		"test:watch": "mocha --watch -r ts-node/register source/**/*.test.ts",
+		"test:js": "mocha `find ./ -name '*test.js' -not -path '*/node_modules/*'`"
 	},
 	"repository": {
 		"type": "git",
@@ -48,8 +41,5 @@
 	"bugs": {
 		"url": "https://github.com/a-chepugov/helpers-js/issues"
 	},
-	"homepage": "https://github.com/a-chepugov/helpers-js#readme",
-	"workspaces": [
-		"source/Standard/Function"
-	]
+	"homepage": "https://github.com/a-chepugov/helpers-js#readme"
 }
