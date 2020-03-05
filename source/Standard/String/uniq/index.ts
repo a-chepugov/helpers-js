@@ -1,8 +1,9 @@
-const random = require('../random');
+import random from '../random';
+
 /**
  * Creates uniq string
  * @name uniq
- * @memberof Standard/String
+ * @memberOf Standard/String
  * @param {String} [prefix=10] - prefix for returned value
  * @param {String} [postfix=36] - postfix for returned value
  * @param {Object} config
@@ -10,4 +11,11 @@ const random = require('../random');
  * @param {Number} [config.radix=36]
  * @return {String}
  */
-module.exports = (prefix = '', postfix = '', {length = 10, radix = 36} = {}) => `${prefix}${random(length, radix)}${Date.now()}${postfix}`;
+export default function (
+    prefix: string = '',
+    postfix: string = '',
+    {length = 10, radix = 36} = {}
+) {
+    return `${prefix}${random(length, radix)}${Date.now()}${postfix}`;
+}
+
