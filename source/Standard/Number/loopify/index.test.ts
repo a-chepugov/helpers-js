@@ -1,5 +1,5 @@
-const expect = require('chai').expect;
-const testee = require('./index');
+import {expect} from 'chai';
+import testee from './index';
 
 describe('loopify', () => {
 

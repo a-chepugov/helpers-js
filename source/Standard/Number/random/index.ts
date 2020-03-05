@@ -6,4 +6,8 @@
  * @param {Number} b
  * @return {Number}
  */
-module.exports = (a = 0, b = 1) => Math.floor((Math.random() * (b - a)) + a);
+export default (
+    a: number = 0,
+    b: number = 1
+): number =>
+    Math.floor( ( Math.random() * ( b - a ) ) + a );

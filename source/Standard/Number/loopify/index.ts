@@ -6,4 +6,8 @@
  * @param {Number} N - количество элементов в массиве
  * @return {Number} - откорректированная позиция в массиве
  */
-module.exports = (i, N) => ((i % N) + N) % N;
+export default (
+    i: number,
+    N: number
+): number =>
+    ( ( i % N ) + N ) % N;
