@@ -1,5 +1,9 @@
 'use strict';
 
+interface Fn {
+	(...args: any[]): any
+}
+
 /**
  * Promise.all variant with concurrency limitation
  * @name all
@@ -8,7 +12,7 @@
  * @param {Number} concurrency - number of concurrently running by Promise.all functions
  * @return {Promise<Array.any>}
  */
-module.exports = async function (fnsList, concurrency) {
+export default async function (fnsList: Array<Fn>, concurrency: number) {
 	if (!(Number.isInteger(concurrency) && concurrency > 0)) {
 		return Promise.reject(new Error(`Second argument must be a positive Integer. Got: ${concurrency}`));
 	}
@@ -19,7 +23,7 @@ module.exports = async function (fnsList, concurrency) {
 	const list = fnsList.slice(0, fnsList.length);
 	let chunk;
 
-	const resultsAll = [];
+	const resultsAll: Array<any> = [];
 
 	while ((chunk = list.splice(0, concurrency)).length) {
 		await

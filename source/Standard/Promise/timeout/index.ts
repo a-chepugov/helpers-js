@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * Wrap promise with a timeout
  * @name timeout
@@ -9,21 +8,21 @@
  * @param {Error} error - error with which reject will be raised
  * @return {Promise}
  */
-module.exports = (promise, delay = 0, error = new Error) => {
-	let timeout;
+export default (promise: Promise<any>, delay: number = 0, error = new Error) => {
+	let timeout: NodeJS.Timeout;
 	return Promise.race(
 		[
 			promise,
-			new Promise((resolve, reject) => timeout = setTimeout(() => reject(error), delay))
+			new Promise((resolve, reject) => {
+				timeout = setTimeout(() => reject(error), delay)
+			})
 		])
 		.then((result) => {
 			clearTimeout(timeout);
-			timeout = undefined;
 			return result;
 		})
 		.catch((error) => {
 			clearTimeout(timeout);
-			timeout = undefined;
 			throw error;
 		});
 };
