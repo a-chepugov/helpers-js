@@ -6,9 +6,9 @@
  * @param {HTMLElement} child
  * @return {boolean}
  */
-module.exports = function (parent, child) {
+export default function isChildElement(parent: HTMLElement, child: HTMLElement) {
 	if (parent instanceof HTMLElement && child instanceof HTMLElement) {
-		let parentNode = child;
+		let {parentNode} = child;
 		while (parentNode instanceof Object) {
 			if (parentNode === parent) {
 				return true;
