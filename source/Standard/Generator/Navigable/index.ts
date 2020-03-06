@@ -2,7 +2,6 @@ export interface Fn {
     (position: number): { value: any, done: Boolean }
 }
 
-
 export default class Navigable {
     private fn: Fn;
 
