@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+import {expect} from 'chai';
 const Testee = require('./index').default;
 
 describe('Navigable', () => {
