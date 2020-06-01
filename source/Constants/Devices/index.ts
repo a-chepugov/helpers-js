@@ -33,3 +33,14 @@ export const DEVICES: {
 };
 
 export default DEVICES;
+
+export function fromSize(size: number): DeviceType | never {
+    if (Number.isFinite(size) && size > 0) {
+        // @ts-ignore
+        return Object
+            .values(DEVICES)
+            .find(({min, max}: DeviceType) => (min <= size) && (size <= max));
+    } else {
+        throw new Error('Invalid device size: ' + size)
+    }
+}

@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {DeviceType, DEVICES} from './index';
+import {DeviceType, DEVICES, DEVICES_TYPES, fromSize} from './index';
 
 describe('device', () => {
 
@@ -13,12 +13,17 @@ describe('device', () => {
 
         const position = devicesListOrderedBySize
             .reduce((position: number, {min, max}: DeviceType) => {
-                return position === min ||  position === (min - 1) ?
+                return position === min || position === (min - 1) ?
                     max :
                     position;
             }, START);
 
         expect(position).to.be.equal(FINISH);
+    });
+
+    it('guess from size', () => {
+        const {type} = fromSize(1000) || {};
+        expect(type).to.be.equal(DEVICES_TYPES.LAPTOP);
     });
 
 });
