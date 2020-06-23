@@ -9,7 +9,11 @@ export default class Semaphore {
 		this.counter = 0;
 	}
 
-	enter(this: any): Promise<boolean> {
+	/**
+	 * @description Takes semaphore lock
+	 * @returns {Promise<Boolean>} - show was promise resolved immediately or deferred
+	 */
+	enter(): Promise<Boolean> {
 		return new Promise((resolve) => {
 			if (this.counter < this.concurrency) {
 				this.counter++;
@@ -20,6 +24,9 @@ export default class Semaphore {
 		});
 	}
 
+	/**
+	 * @description Releases semaphore lock
+	 */
 	leave(): void | never {
 		if (this.queue.length === 0) {
 			if (this.counter > 0) {
