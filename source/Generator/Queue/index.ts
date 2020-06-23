@@ -20,33 +20,41 @@ export default class Queue<T> {
 
 	private init(concurrency: number) {
 		for (let i = 0; i < concurrency; i++) {
-			const worker = this.spawn(next);
-			worker.next();
+			this.spawn();
+		}
+	}
 
-			function next(error: any) {
-				setTimeout(() => {
-					if (error) {
-						try {
-							return worker.throw(error);
-						} catch (error) {
-							console.error(error);
-						}
-					} else {
-						worker.next.apply(worker, Array.prototype.slice.call(arguments, 1));
+	private spawn() {
+		const worker = this.work(next);
+		worker.next();
+
+		function next(error: any) {
+			setTimeout(() => {
+				if (error) {
+					try {
+						return worker.throw(error);
+					} catch (error) {
+						console.error(error);
 					}
-				})
+				} else {
+					worker.next.apply(worker, Array.prototype.slice.call(arguments, 1));
+				}
+			})
+		}
+	}
+
+	private* work(next: TNext) {
+		while (true) {
+			try {
+				yield this.nextHandler()(next);
+			} catch (error) {
+				console.error(error);
 			}
 		}
 	}
 
-	private* spawn(next: any) {
-		while (true) {
-			yield this.nextHandler()(next);
-		}
-	}
-
 	private nextHandler() {
-		return function (callback: any) {
+		return function (callback: TNext) {
 			if (this.tasks.length === 0) {
 				// become idle
 				this.idle.push((task: T) => this.strategy(callback, task));
@@ -56,7 +64,7 @@ export default class Queue<T> {
 		}.bind(this);
 	}
 
-	pushTask(task: T) {
+	push(task: T) {
 		if (this.idle.length === 0) {
 			this.tasks.push(task);
 		} else {

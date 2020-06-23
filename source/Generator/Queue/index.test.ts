@@ -6,10 +6,10 @@ describe('Queue', () => {
 	it('tasks go in series with concurrency 1', async () => {
 		const testee = new Testee(1);
 		testee
-			.pushTask((callback: any) => {
+			.push((callback: any) => {
 				console.log('DEBUG:index.test.ts():10 =>');
 				console.log(1);
-				// callback();
+				callback();
 			})
 			// .pushTask((callback: any) => {
 			// 	console.log('DEBUG:index.test.ts:15 =>');
