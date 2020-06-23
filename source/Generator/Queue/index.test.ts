@@ -9,7 +9,7 @@ describe('Queue', () => {
 			.pushTask((callback: any) => {
 				console.log('DEBUG:index.test.ts():10 =>');
 				console.log(1);
-				callback();
+				// callback();
 			})
 			// .pushTask((callback: any) => {
 			// 	console.log('DEBUG:index.test.ts:15 =>');

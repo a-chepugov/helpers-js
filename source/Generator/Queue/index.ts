@@ -1,10 +1,19 @@
-export default class Queue<T extends Function> {
-	private tasks: Array<T>;
-	private consumers: Array<(task: T) => any>;
+type TNext = (error: any, ...args: any[]) => any;
 
-	constructor(concurrency = 1) {
+type TStrategy<T> = (next: TNext, task: T) => any;
+
+// @ts-ignore
+const strategyDefault = <T>(next: TNext, task: T) => task(next);
+
+export default class Queue<T> {
+	private tasks: Array<T>;
+	private idle: Array<(task: T) => any>;
+	private strategy: TStrategy<T>;
+
+	constructor(concurrency = 1, strategy = strategyDefault) {
 		this.tasks = [];
-		this.consumers = [];
+		this.idle = [];
+		this.strategy = strategy;
 
 		this.init(concurrency);
 	}
@@ -32,26 +41,26 @@ export default class Queue<T extends Function> {
 
 	private* spawn(next: any) {
 		while (true) {
-			yield this.nextTask()(next);
+			yield this.nextHandler()(next);
 		}
 	}
 
-	private nextTask() {
+	private nextHandler() {
 		return function (callback: any) {
 			if (this.tasks.length === 0) {
 				// become idle
-				this.consumers.push((task: T) => task(callback));
+				this.idle.push((task: T) => this.strategy(callback, task));
 			} else {
-				this.tasks.shift()(callback);
+				this.strategy(callback, this.tasks.shift());
 			}
 		}.bind(this);
 	}
 
-	pushTask(task: any) {
-		if (this.consumers.length === 0) {
+	pushTask(task: T) {
+		if (this.idle.length === 0) {
 			this.tasks.push(task);
 		} else {
-			this.consumers.shift()(task);
+			this.idle.shift()(task);
 		}
 		return this;
 	}
