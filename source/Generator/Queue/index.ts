@@ -1,75 +1,86 @@
-type TNext = (error: any, ...args: any[]) => any;
+type THandler<T> = (task: T) => any;
+type TSubscribe<T> = (handler: THandler<T>) => any;
 
-type TStrategy<T> = (next: TNext, task: T) => any;
+import {TNext, TStrategy, ASYNC} from "./strategies";
 
-// @ts-ignore
-const strategyDefault = <T>(next: TNext, task: T) => task(next);
+export * as STRATEGIES from './strategies';
 
-export default class Queue<T> {
-	private tasks: Array<T>;
-	private idle: Array<(task: T) => any>;
-	private strategy: TStrategy<T>;
+class Worker<T> {
+	private readonly strategy: TStrategy<T>;
+	private readonly subscribeToATask: TSubscribe<T>;
 
-	constructor(concurrency = 1, strategy = strategyDefault) {
-		this.tasks = [];
-		this.idle = [];
+	constructor(strategy: TStrategy<T>, subscribeToATask: TSubscribe<T>) {
 		this.strategy = strategy;
-
-		this.init(concurrency);
+		this.subscribeToATask = subscribeToATask;
+		this.init();
 	}
 
-	private init(concurrency: number) {
-		for (let i = 0; i < concurrency; i++) {
-			this.spawn();
-		}
-	}
-
-	private spawn() {
-		const worker = this.work(next);
-		worker.next();
+	private init() {
+		const work = this.engage(next);
+		work.next();
 
 		function next(error: any) {
 			setTimeout(() => {
 				if (error) {
-					try {
-						return worker.throw(error);
-					} catch (error) {
-						console.error(error);
-					}
+					work.throw(error);
 				} else {
-					worker.next.apply(worker, Array.prototype.slice.call(arguments, 1));
+					work.next.apply(work, Array.prototype.slice.call(arguments, 1));
 				}
 			})
 		}
 	}
 
-	private* work(next: TNext) {
+	private* engage(next: TNext) {
 		while (true) {
 			try {
-				yield this.nextHandler()(next);
+				yield this.subscribeToATask((task: T) => this.strategy(task, next));
 			} catch (error) {
 				console.error(error);
 			}
 		}
 	}
+}
 
-	private nextHandler() {
-		return function (callback: TNext) {
-			if (this.tasks.length === 0) {
-				// become idle
-				this.idle.push((task: T) => this.strategy(callback, task));
-			} else {
-				this.strategy(callback, this.tasks.shift());
-			}
-		}.bind(this);
+export default class Queue<T> {
+	private tasks: Array<T>;
+	private idle: Array<(task: T) => any>;
+
+	constructor(concurrency = 3, strategy = ASYNC) {
+		this.tasks = [];
+		this.idle = [];
+
+		this.spawn(concurrency, strategy);
+	}
+
+	private spawn(concurrency: number, strategy: TStrategy<T>) {
+		const subscribeToATask = this.subscribeToATask.bind(this);
+		for (let i = 0; i < concurrency; i++) {
+			new Worker<T>(strategy, subscribeToATask);
+		}
+	}
+
+	private subscribeToATask(notify: (task: T) => unknown) {
+		if (this.tasks.length) {
+			notify(this.tasks.shift());
+		} else {
+			this.idle.push(notify);
+		}
 	}
 
 	push(task: T) {
-		if (this.idle.length === 0) {
-			this.tasks.push(task);
-		} else {
+		if (this.idle.length) {
 			this.idle.shift()(task);
+		} else {
+			this.tasks.push(task);
 		}
 		return this;
+	}
+
+	get queued() {
+		return this.tasks.length;
+	}
+
+	get awaiting() {
+		return this.idle.length;
 	}
 }
