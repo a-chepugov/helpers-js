@@ -1,4 +1,4 @@
-import Semaphore from "../../Promise/Semaphore";
+import Semaphore from "../../Entities/Semaphore";
 
 class PromiseExposed {
 	public promise: Promise<any>;
