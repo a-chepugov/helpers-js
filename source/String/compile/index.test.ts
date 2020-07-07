@@ -34,7 +34,7 @@ describe('compile', () => {
 	});
 
 	it('absent parameter', () => {
-		const result = testee('Great {time} for {action};')({time: 'day'});
+		const result = testee('Great {time} for {action}')({time: 'day'});
 		expect(result).to.equal('Great day for {action}');
 	});
 
