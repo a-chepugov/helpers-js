@@ -15,6 +15,6 @@ max_line_length = 120
 [{*.ts,*.ats}]
 max_line_length = 120
 
-[{*.md}]
+[{*.md, *.markdown}]
 max_line_length = 120
 indent_style = tab

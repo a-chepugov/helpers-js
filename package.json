@@ -1,19 +1,8 @@
 {
 	"name": "helpers-js",
-	"version": "2.0.0",
+	"version": "3.0.0",
 	"description": "Different functions for development",
 	"main": "index.js",
-	"directories": {},
-	"devDependencies": {
-		"@types/chai": "^4.1.7",
-		"@types/mocha": "^5.2.7",
-		"@types/node": "^12.12.6",
-		"chai": "^4.2.0",
-		"mocha": "^6.2.0",
-		"ts-node": "^8.3.0",
-		"typedoc": "^0.17.7",
-		"typescript": "^3.5.3"
-	},
 	"scripts": {
 		"prepublishOnly": "npm run test",
 		"prepack": "npm install --only=production && npm run js:build",
@@ -29,8 +18,9 @@
 		"version:minor": "npm version minor",
 		"version:patch": "npm version patch",
 		"preversion": "npm run test",
-		"test": "mocha -r ts-node/register source/**/*test.ts",
-		"test:watch": "mocha --watch -r ts-node/register source/**/*test.ts"
+		"lint": "eslint source/**/*.js",
+		"lint:fix": "eslint --fix source/**/*.js",
+		"test": "mocha --check-leaks source/**/*test.js"
 	},
 	"repository": {
 		"type": "git",
@@ -45,5 +35,16 @@
 	"bugs": {
 		"url": "https://github.com/a-chepugov/helpers-js/issues"
 	},
-	"homepage": "https://github.com/a-chepugov/helpers-js#readme"
+	"homepage": "https://github.com/a-chepugov/helpers-js#readme",
+	"type": "module",
+	"devDependencies": {
+		"chai": "^4.2.0",
+		"eslint": "^7.10.0",
+		"eslint-config-standard": "^14.1.1",
+		"eslint-plugin-import": "^2.22.1",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^4.2.1",
+		"eslint-plugin-standard": "^4.0.1",
+		"mocha": "^8.1.3"
+	}
 }
