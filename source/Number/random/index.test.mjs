@@ -1,5 +1,5 @@
 import chai from 'chai'
-import testee from './index.js'
+import testee from './index.mjs'
 
 const {expect} = chai
 

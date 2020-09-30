@@ -20,7 +20,7 @@
 		"preversion": "npm run test",
 		"lint": "eslint source/**/*.js",
 		"lint:fix": "eslint --fix source/**/*.js",
-		"test": "mocha --check-leaks source/**/*test.js"
+		"test": "mocha --check-leaks --experimental-modules source/**/*.test.mjs"
 	},
 	"repository": {
 		"type": "git",
