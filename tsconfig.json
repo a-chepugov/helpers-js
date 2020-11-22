@@ -8,6 +8,9 @@
 		"declaration": true,
 		"alwaysStrict": true,
 		"noImplicitAny": true,
+		"allowJs": true,
+		"checkJs": true,
+		"emitDeclarationOnly": true,
 		"removeComments": true,
 		"stripInternal": true,
 		"sourceMap": true,
@@ -15,14 +18,14 @@
 		"pretty": true
 	},
 	"files": [
-		"./source/index.ts"
+		"./source/index.js"
 	],
 	"exclude": [
 		"./*.js",
 		"./*.ts",
 		"build",
 		"docs",
-		"node_modules",
+		"./node_modules/**/*.ts",
 		"**/*.test.ts"
 	]
 }

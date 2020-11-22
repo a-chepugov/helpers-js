@@ -2,18 +2,12 @@
 	"name": "helpers-js",
 	"version": "3.0.0",
 	"description": "Different functions for development",
-	"main": "index.js",
+	"main": "index.mjs",
 	"scripts": {
 		"prepublishOnly": "npm run test",
-		"prepack": "npm install --only=production && npm run js:build",
 		"js:build": "tsc",
 		"js:delete": "rm -rf ./build",
 		"js:build:clear": "npm run js:delete && npm run js:build",
-		"js:build:watch": "tsc --watch",
-		"docs:build": "typedoc source/index.ts",
-		"docs:delete": "rm -rf ./docs",
-		"docs:build:clear": "npm run docs:delete && npm run docs:build",
-		"all:build": "npm run js:build:clear && npm run docs:build:clear",
 		"version:major": "npm version major",
 		"version:minor": "npm version minor",
 		"version:patch": "npm version patch",
@@ -45,6 +39,8 @@
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.0.1",
-		"mocha": "^8.1.3"
+		"mocha": "^8.1.3",
+		"typedoc": "^0.19.2",
+		"typescript": "^4.0.3"
 	}
 }
