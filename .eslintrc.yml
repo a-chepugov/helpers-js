@@ -11,6 +11,7 @@ rules:
   comma-dangle: [0]
   indent: [error, tab]
   no-tabs: 0
+  operator-linebreak: [2, never]
   space-before-function-paren: [2, never]
   object-curly-spacing: [1, never]
   no-unused-vars: [ 2, {
