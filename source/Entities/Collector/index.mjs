@@ -1,5 +1,3 @@
-import Channel from '../PubSub/index.mjs'
-
 const settled = (keys, map) => keys.every((key) => map.has(key))
 
 const pack = (keys, storage) =>
@@ -14,7 +12,26 @@ const packResult = (keys, storage) =>
 		return a
 	}, [])
 
+class VolatileCommand {
+	constructor(fn = null) {
+		this.set(fn);
+	}
+
+	set(fn = null) {
+		if (typeof fn === 'function') {
+			this.execute = fn
+			this.executable = true
+		} else {
+			this.execute = new Function
+			this.executable = false
+		}
+	}
+}
+
 export class TimeoutError extends Error {
+	constructor(timeout) {
+		super(timeout);
+	}
 }
 
 /**
@@ -28,9 +45,13 @@ export default class Collector {
 	constructor(keys) {
 		this.keys = keys
 		this.storage = new Map()
-		this.channel = new Channel()
 		this._failed = false
 		this._populated = false
+
+		this.onData = new VolatileCommand(null)
+		this.onError = new VolatileCommand(null)
+		this.onDone = new VolatileCommand(null)
+		this.onSettled = new VolatileCommand(null)
 
 		this.timer = null
 	}
@@ -59,13 +80,17 @@ export default class Collector {
 	 */
 	push(key, result) {
 		this.storage.set(key, {result})
-		this.channel.publish('data', {key, result})
+		this.onData.execute({key, result})
+
 		if (this.populated) {
-			const settled = pack(this.keys, this.storage)
-			this.channel.publish('settled', settled)
-			if (this.ok) {
+			if (this.onSettled.executable) {
+				const settled = pack(this.keys, this.storage)
+				this.onSettled.execute(settled)
+			}
+
+			if (this.onDone.executable && this.ok) {
 				const data = packResult(this.keys, this.storage)
-				this.channel.publish('done', data)
+				this.onDone.execute(data)
 			}
 		}
 		return this
@@ -77,11 +102,12 @@ export default class Collector {
 	 */
 	fail(key, error) {
 		this.storage.set(key, {error})
-		this.channel.publish('error', {key, error})
+		this.onError.execute({key, error})
+
 		this._failed = true
-		if (this.populated) {
+		if (this.onSettled.executable && this.populated) {
 			const data = pack(this.keys, this.storage)
-			this.channel.publish('settled', data)
+			this.onSettled.execute(data)
 		}
 		return this
 	}
@@ -96,33 +122,33 @@ export default class Collector {
 		this.timer = setTimeout(() => {
 			clearTimeout(this.timer)
 			const error = new TimeoutError(timeout)
-			this.channel.publish('error', {error})
+			this.onError.execute({error})
 		}, timeout)
 		return this
 	}
 
-	data(cb) {
-		this.channel.subscribe('data', cb)
+	data(cb = null) {
+		this.onData.set(cb)
 		return this
 	}
 
-	error(cb) {
-		this.channel.subscribe('error', cb)
+	error(cb = null) {
+		this.onError.set(cb)
 		return this
 	}
 
-	done(cb) {
-		this.channel.subscribe('done', cb)
-		if (this.populated && this.ok) {
-			setTimeout(cb, 0, packResult(this.keys, this.storage))
+	done(cb = null) {
+		this.onDone.set(cb)
+		if (this.onDone.executable && this.populated && this.ok) {
+			this.onDone.execute(packResult(this.keys, this.storage))
 		}
 		return this
 	}
 
-	settled(cb) {
-		this.channel.subscribe('settled', cb)
-		if (this.populated) {
-			setTimeout(cb, 0, pack(this.keys, this.storage))
+	settled(cb = null) {
+		this.onSettled.set(cb)
+		if (this.onSettled.executable && this.populated) {
+			this.onSettled.execute(pack(this.keys, this.storage))
 		}
 		return this
 	}
