@@ -11,15 +11,12 @@ describe('Collector', () => {
 			.data(({result}) => {
 				sum += result
 			})
-			.data(({result}) => {
-				sum += result
-			})
 			.insert('a', undefined, 1)
 			.insert('b', undefined, 2)
 			.insert('c', undefined, 3)
 
 		setTimeout(() => {
-			expect(sum).to.be.equal(12)
+			expect(sum).to.be.equal(6)
 			done()
 		}, 9)
 	})
