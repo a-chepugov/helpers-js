@@ -1,7 +1,8 @@
-import {expect} from 'chai';
+import chai from 'chai';
 import Testee, {STRATEGIES} from './index';
+const {expect} = chai
 
-describe('Queue', () => {
+describe('Pool', () => {
 	const sleep = (timeout = 0) => new Promise((resolve) => setTimeout(resolve, timeout));
 
 	it('10 tasks with concurrency 1', () => {
