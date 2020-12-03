@@ -1,5 +1,7 @@
-import {expect} from 'chai';
-import testee from './index';
+import chai from 'chai'
+import Testee from './index.mjs'
+
+const {expect} = chai
 
 const source = {
 	user: {
@@ -16,54 +18,61 @@ const source = {
 		],
 		// @ts-ignore
 		car: null,
-		debt: 0
+		debt: 0,
+		credit: 1,
 	}
 };
 
 describe('get', () => {
+	const get = Testee;
 
 	it('get nested item', () => {
-		const result = testee('user.name.first')(source);
+		const result = get('user.name.first')(source);
 		expect(result).to.be.equal(source.user.name.first);
 	});
 
 	it('get item using custom separator', () => {
-		const result = testee('user->birth->date', '->')(source);
+		const result = get('user->birth->date', '->')(source);
 		expect(result).to.be.equal(source.user.birth.date);
 	});
 
 	it('get item from array', () => {
-		const result = testee('user.children.1.name.first')(source);
+		const result = get('user.children.1.name.first')(source);
 		expect(result).to.be.equal(source.user.children[1].name.first);
 	});
 
 	it('get undefined', () => {
-		const result = testee('user.phones')(source);
+		const result = get('user.phones')(source);
 		expect(result).to.be.equal(source.user.phones);
 	});
 
 	it('try to get item inside undefined', () => {
-		const result = testee('user.phones.1')(source);
+		const result = get('user.phones.1')(source);
 		expect(result).to.be.equal(undefined);
 	});
 
 	it('get null', () => {
-		const result = testee('user.car')(source);
+		const result = get('user.car')(source);
 		expect(result).to.be.equal(source.user.car);
 	});
 
 	it('try to get item inside null', () => {
-		const result = testee('user.car.brand')(source);
+		const result = get('user.car.brand')(source);
 		expect(result).to.be.equal(undefined);
 	});
 
 	it('get 0', () => {
-		const result = testee('user.debt')(source);
+		const result = get('user.debt')(source);
 		expect(result).to.be.equal(source.user.debt);
 	});
 
 	it('try to get item inside 0', () => {
-		const result = testee('user.debt.cause')(source);
+		const result = get('user.debt.cause')(source);
+		expect(result).to.be.equal(undefined);
+	});
+
+	it('try to get item inside 1', () => {
+		const result = get('user.credit.max')(source);
 		expect(result).to.be.equal(undefined);
 	});
 
