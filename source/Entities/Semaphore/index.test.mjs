@@ -70,4 +70,18 @@ describe('Semaphore', () => {
 				expect(() => instance.leave()).to.throw
 			})
 	})
+
+	it('rejects on max queue lengt', () => {
+		const instance = new Semaphore(1).max(2);
+		const run = new Function();
+		instance.enter(run);
+		instance.enter(run);
+		instance.enter(run);
+		return instance.enter(run)
+			.then((response) => new Error('Invalid flow'),
+				() => new Error('Valid flow'))
+			.catch((error) => {
+				return expect(error.message).to.be.equal('Valid flow')
+			})
+	})
 })
