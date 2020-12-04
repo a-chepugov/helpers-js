@@ -4,31 +4,32 @@ import Testee from './index.mjs';
 const {expect} = chai;
 
 describe('Semaphore', () => {
+	const Semaphore = Testee;
 
-	it('tasks go in series with concurrency 1', async () => {
-		const testee = new Testee(1);
+	it('tasks go in series with concurrency 1', async() => {
+		const instance = new Semaphore(1);
 
 		let i = 0;
 		const sleepThenInc = (t) => new Promise((resolve, reject) => {
 			setTimeout(() => (i++, resolve()), t)
 		})
 
-		const p1 = testee.enter()
+		const p1 = instance.enter()
 			.then((isImmediateInvoke) => expect(isImmediateInvoke).to.be.equal(true))
 			.then(() => sleepThenInc(100))
 			.then(() => expect(i).to.be.equal(1))
-			.then(testee.leave.bind(testee))
+			.then(instance.leave.bind(instance))
 
 		const p1_1 = Promise.resolve()
 			.then(() => setTimeout(() => {
 				expect(i).to.be.equal(1)
 			}, 150))
 
-		const p2 = testee.enter()
+		const p2 = instance.enter()
 			.then((isImmediateInvoke) => expect(isImmediateInvoke).to.be.equal(false))
 			.then(() => sleepThenInc(100))
 			.then(() => expect(i).to.be.equal(2))
-			.then(testee.leave.bind(testee))
+			.then(instance.leave.bind(instance))
 
 		return Promise.all([p1, p1_1, p2])
 	});
@@ -38,15 +39,15 @@ describe('Semaphore', () => {
 		const CONCURRENCY = 5
 		const TIMEOUT = 50
 
-		const testee = new Testee(CONCURRENCY)
+		const instance = new Semaphore(CONCURRENCY)
 
 		const sleep = (t) => new Promise((resolve, _reject) => setTimeout(() => resolve(), t))
 
 		const promises = Array.from(new Array(AMOUNT), () =>
-				testee.enter()
-					.then(sleep.bind(this, TIMEOUT))
-					.then(testee.leave.bind(testee))
-			)
+			instance.enter()
+				.then(sleep.bind(this, TIMEOUT))
+				.then(instance.leave.bind(instance))
+		)
 
 		const start = Date.now()
 		return Promise.all(promises)
@@ -57,16 +58,16 @@ describe('Semaphore', () => {
 	})
 
 	it('throws an error on too many leaves', () => {
-		const testee = new Testee(1)
+		const instance = new Semaphore(1)
 
 		const run = () => ({})
 
-		return testee.enter()
+		return instance.enter()
 			.then((immediate) => expect(immediate).to.be.equal(true))
 			.then(run)
-			.then(testee.leave.bind(testee))
+			.then(instance.leave.bind(instance))
 			.then(() => {
-				expect(() => testee.leave()).to.throw
+				expect(() => instance.leave()).to.throw
 			})
 	})
 })

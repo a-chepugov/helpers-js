@@ -1,8 +1,8 @@
 export default class Semaphore {
 	constructor(concurrency = 1) {
-		this.concurrency = concurrency
-		this.queue = []
-		this.counter = 0
+		this._concurrency = concurrency
+		this._queue = []
+		this._counter = 0
 	}
 
 	/**
@@ -10,12 +10,12 @@ export default class Semaphore {
 	 * @returns {Promise<Boolean>} - show was promise resolved immediately or deferred
 	 */
 	enter() {
-		return new Promise((resolve) => {
-			if (this.counter < this.concurrency) {
-				this.counter++
+		return new Promise((resolve, reject) => {
+			if (this._counter < this._concurrency) {
+				this._counter++
 				resolve(true)
 			} else {
-				this.queue.push(resolve)
+				this._queue.push(resolve)
 			}
 		})
 	}
@@ -24,14 +24,14 @@ export default class Semaphore {
 	 * @description Releases semaphore lock
 	 */
 	leave() {
-		if (this.queue.length === 0) {
-			if (this.counter > 0) {
-				this.counter--
+		if (this._queue.length === 0) {
+			if (this._counter > 0) {
+				this._counter--
 			} else {
 				throw new Error('Semaphore has been leaved too many times')
 			}
 		} else {
-			const resolve = this.queue.shift()
+			const resolve = this._queue.shift()
 			resolve(false)
 		}
 	}
